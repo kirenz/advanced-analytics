@@ -1,0 +1,6 @@
+book_filename: "advanced-analytics"
+delete_merged_file: true
+output_dir: "."
+language:
+  ui:
+    chapter_name: "Chapter "
