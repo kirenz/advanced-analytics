@@ -23,12 +23,15 @@ In this chapter you will learn how to specify a regression model with the tidymo
 * [tidymodels](https://www.tidymodels.org/) 
 * [skimr](https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html) 
 * [GGally](https://ggobi.github.io/ggally/index.html)
+* [ggmap]()
 
 ```{r}
 library(tidyverse)
 library(tidymodels)
 library(skimr)
 library(GGally)
+library(ggmap)
+
 ```
 
 
@@ -173,27 +176,21 @@ housing %>%
 
 ```
 
-```{r}
-#install.packages(c("maps", "mapdata"))
-
-
-
-```
 
 
 ```{r}
 library(ggmap)
 
-ca <- ca_stamen
+qmplot(x = longitude, 
+       y = latitude, 
+       data = housing, 
+       geom = "point", 
+       color = median_house_value, 
+       size = population,
+       alpha = 0.4) +
+  scale_colour_gradientn(colours=rev(rainbow(4)))
 
-ggmap(chicago)
-
-ggmap(chicago) +
-  geom_point(data = crimes,
-             mapping = aes(x = Longitude,
-                           y = Latitude))
 ```
-
 
 
 ## Model type
