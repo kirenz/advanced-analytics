@@ -41,6 +41,46 @@
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -73,7 +113,7 @@
 
 \title{Advanced Analytics with Tidymodels}
 \author{Prof.~Dr.~Jan Kirenz}
-\date{2020-11-02}
+\date{2020-11-05}
 
 \begin{document}
 \maketitle
@@ -98,11 +138,345 @@ This online book is licensed using the \href{https://creativecommons.org/license
 
 \hfill\break
 
-\hypertarget{part-preparation}{%
-\part{PREPARATION}\label{part-preparation}}
+\hypertarget{part-build-a-model}{%
+\part{BUILD A MODEL}\label{part-build-a-model}}
 
-\hypertarget{installation}{%
-\chapter{Installation}\label{installation}}
+\hypertarget{intro}{%
+\chapter{Build a Model}\label{intro}}
+
+\emph{This tutorial is based on Alisson Hill's excellent \href{https://alison.rbind.io/tags/tidymodels/}{tidymodels workshop}.}
+
+In this tutorial you will learn how to specify a model with the tidymodels package.
+
+As data, we use 2,930 houses sold in Ames, IA from 2006 to 2010, collected by the Ames Assessor's Oﬃce. From this dataset, we only select our dependent variable (\texttt{Sale\_Price}) and one predictor variable (\texttt{Gr\_Liv\_Area}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
+## when loading 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.4     v dplyr   1.0.0
+## v tidyr   1.1.0     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ames \textless{}{-}}\StringTok{ }\KeywordTok{read\_csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/kirenz/datasets/master/ames.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   Lot_Frontage = col_double(),
+##   Lot_Area = col_double(),
+##   Year_Built = col_double(),
+##   Year_Remod_Add = col_double(),
+##   Mas_Vnr_Area = col_double(),
+##   BsmtFin_SF_1 = col_double(),
+##   BsmtFin_SF_2 = col_double(),
+##   Bsmt_Unf_SF = col_double(),
+##   Total_Bsmt_SF = col_double(),
+##   First_Flr_SF = col_double(),
+##   Second_Flr_SF = col_double(),
+##   Low_Qual_Fin_SF = col_double(),
+##   Gr_Liv_Area = col_double(),
+##   Bsmt_Full_Bath = col_double(),
+##   Bsmt_Half_Bath = col_double(),
+##   Full_Bath = col_double(),
+##   Half_Bath = col_double(),
+##   Bedroom_AbvGr = col_double(),
+##   Kitchen_AbvGr = col_double(),
+##   TotRms_AbvGrd = col_double()
+##   # ... with 15 more columns
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## See spec(...) for full column specifications.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ames \textless{}{-}}\StringTok{ }
+\StringTok{  }\NormalTok{ames }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(Sale\_Price, Gr\_Liv\_Area)}
+
+\KeywordTok{glimpse}\NormalTok{(ames)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 2,930
+## Columns: 2
+## $ Sale_Price  <dbl> 215000, 105000, 172000, 244000, 189900, 195500, 213500,...
+## $ Gr_Liv_Area <dbl> 1656, 896, 1329, 2110, 1629, 1604, 1338, 1280, 1616, 18...
+\end{verbatim}
+
+In this first example, we don't use data splitting.
+
+\hypertarget{model-type}{%
+\section{Model type}\label{model-type}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Pick an \texttt{model\ type}: choose from this \href{https://www.tidymodels.org/find/parsnip/}{list}
+\item
+  Set the \texttt{engine}: choose from this \href{https://www.tidymodels.org/find/parsnip/}{list}
+\item
+  Set the \texttt{mode}: regression or classification
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidymodels)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages -------------------------------------- tidymodels 0.1.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v broom     0.5.6      v rsample   0.0.7 
+## v dials     0.0.7      v tune      0.1.0 
+## v infer     0.5.2      v workflows 0.1.1 
+## v parsnip   0.1.2      v yardstick 0.0.6 
+## v recipes   0.1.13
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ----------------------------------------- tidymodels_conflicts() --
+## x scales::discard() masks purrr::discard()
+## x dplyr::filter()   masks stats::filter()
+## x recipes::fixed()  masks stringr::fixed()
+## x dplyr::lag()      masks stats::lag()
+## x yardstick::spec() masks readr::spec()
+## x recipes::step()   masks stats::step()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_spec \textless{}{-}}\StringTok{ }\CommentTok{\# your model specification}
+\StringTok{  }\KeywordTok{linear\_reg}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}\StringTok{  }\CommentTok{\# model type}
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\DataTypeTok{engine =} \StringTok{"lm"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{  }\CommentTok{\# model engine}
+\StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\StringTok{"regression"}\NormalTok{) }\CommentTok{\# model mode}
+
+\CommentTok{\# Show your model specification}
+\NormalTok{lm\_spec}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
+\end{verbatim}
+
+\hypertarget{model-training}{%
+\section{Model training}\label{model-training}}
+
+In the training process, you run an algorithm on data and thereby produce a model. This process is also called model fitting.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_fit \textless{}{-}}\StringTok{ }\CommentTok{\# your fitted model}
+\StringTok{  }\KeywordTok{fit}\NormalTok{( }
+\NormalTok{  lm\_spec, }\CommentTok{\# your model specification }
+\NormalTok{  Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{Gr\_Liv\_Area, }\CommentTok{\# a Linear Regression formula }
+  \DataTypeTok{data =}\NormalTok{ ames }\CommentTok{\# your data}
+\NormalTok{  )}
+
+\CommentTok{\# Show your fitted model}
+\NormalTok{lm\_fit}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## parsnip model object
+## 
+## Fit time:  4ms 
+## 
+## Call:
+## stats::lm(formula = Sale_Price ~ Gr_Liv_Area, data = data)
+## 
+## Coefficients:
+## (Intercept)  Gr_Liv_Area  
+##     13289.6        111.7
+\end{verbatim}
+
+\hypertarget{model-predictions}{%
+\section{Model predictions}\label{model-predictions}}
+
+We use our fitted model to make predictions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{price\_pred \textless{}{-}}\StringTok{ }
+\StringTok{  }\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{new\_data =}\NormalTok{ ames) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{price\_truth =}\NormalTok{ ames}\OperatorTok{$}\NormalTok{Sale\_Price)}
+
+\KeywordTok{head}\NormalTok{(price\_pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##     .pred price_truth
+##     <dbl>       <dbl>
+## 1 198255.      215000
+## 2 113367.      105000
+## 3 161731.      172000
+## 4 248964.      244000
+## 5 195239.      189900
+## 6 192447.      195500
+\end{verbatim}
+
+If we would want to make predictions for new houses, we could proceed as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# New values (our x variable)}
+\NormalTok{new\_homes \textless{}{-}}\StringTok{ }
+\StringTok{  }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{Gr\_Liv\_Area =} \KeywordTok{c}\NormalTok{(}\DecValTok{334}\NormalTok{, }\DecValTok{1126}\NormalTok{, }\DecValTok{1442}\NormalTok{, }\DecValTok{1500}\NormalTok{, }\DecValTok{1743}\NormalTok{, }\DecValTok{5642}\NormalTok{)) }
+
+\CommentTok{\# Prediction for new houses (predict y)}
+\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}
+\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{new\_data =}\NormalTok{ new\_homes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 1
+##     .pred
+##     <dbl>
+## 1  50595.
+## 2 139057.
+## 3 174352.
+## 4 180831.
+## 5 207972.
+## 6 643467.
+\end{verbatim}
+
+\hypertarget{model-evaluation}{%
+\section{Model evaluation}\label{model-evaluation}}
+
+We use the Root Mean Squared Error (RMSE) to evaluate our regression model. Therefore, we use the function \(rmse(data, truth, estimate)\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rmse}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ price\_pred, }
+     \DataTypeTok{truth =}\NormalTok{ price\_truth, }
+     \DataTypeTok{estimate =}\NormalTok{ .pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   <chr>   <chr>          <dbl>
+## 1 rmse    standard      56505.
+\end{verbatim}
+
+\hypertarget{process-with-data-splitting}{%
+\chapter{Process with data splitting}\label{process-with-data-splitting}}
+
+The best way to measure a model's performance at predicting new data is to actually predict new data.
+
+This function ``splits'' data randomly into a single testing and a single training set: \texttt{initial\_split(data,\ prop\ =\ 3/4,\ strata,\ breaks)}. We also use \href{https://en.wikipedia.org/wiki/Stratified_sampling}{stratified sampling} in this example.
+
+\hypertarget{data-splitting}{%
+\section{Data splitting}\label{data-splitting}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{100}\NormalTok{) }
+
+\NormalTok{ames\_split \textless{}{-}}\StringTok{  }\KeywordTok{initial\_split}\NormalTok{(ames,}
+                             \DataTypeTok{strata =}\NormalTok{ Sale\_Price,}
+                             \DataTypeTok{breaks =} \DecValTok{4}\NormalTok{)}
+
+\NormalTok{ames\_train \textless{}{-}}\StringTok{  }\KeywordTok{training}\NormalTok{(ames\_split)}
+\NormalTok{ames\_test \textless{}{-}}\StringTok{ }\KeywordTok{testing}\NormalTok{(ames\_split)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{model-type-1}{%
+\section{Model type}\label{model-type-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_spec\_}\DecValTok{2}\NormalTok{ \textless{}{-}}
+\StringTok{  }\KeywordTok{linear\_reg}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}\StringTok{  }
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\DataTypeTok{engine =} \StringTok{"lm"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{  }
+\StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\StringTok{"regression"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{model-training-1}{%
+\section{Model training}\label{model-training-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_fit\_}\DecValTok{2}\NormalTok{ \textless{}{-}}\StringTok{ }
+\StringTok{  }\NormalTok{lm\_spec\_}\DecValTok{2} \OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{fit}\NormalTok{(Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{Gr\_Liv\_Area,}
+      \DataTypeTok{data =}\NormalTok{ ames\_train) }\CommentTok{\# only use training data}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{model-predictions-1}{%
+\section{Model predictions}\label{model-predictions-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{price\_pred\_}\DecValTok{2}\NormalTok{ \textless{}{-}}\StringTok{ }
+\StringTok{  }\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{new\_data =}\NormalTok{ ames\_test) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{price\_truth =}\NormalTok{ ames\_test}\OperatorTok{$}\NormalTok{Sale\_Price)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{model-evaluation-1}{%
+\section{Model evaluation}\label{model-evaluation-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rmse}\NormalTok{(price\_pred\_}\DecValTok{2}\NormalTok{, }
+     \DataTypeTok{truth =}\NormalTok{ price\_truth, }
+     \DataTypeTok{estimate =}\NormalTok{ .pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   <chr>   <chr>          <dbl>
+## 1 rmse    standard      59054.
+\end{verbatim}
 
 \hypertarget{import}{%
 \chapter{Import}\label{import}}

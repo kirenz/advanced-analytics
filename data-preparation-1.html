@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Build a Model | Advanced Analytics with Tidymodels</title>
+  <title>Chapter 13 Data preparation | Advanced Analytics with Tidymodels</title>
   <meta name="description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Build a Model | Advanced Analytics with Tidymodels" />
+  <meta property="og:title" content="Chapter 13 Data preparation | Advanced Analytics with Tidymodels" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Build a Model | Advanced Analytics with Tidymodels" />
+  <meta name="twitter:title" content="Chapter 13 Data preparation | Advanced Analytics with Tidymodels" />
   
   <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="process-with-data-splitting.html"/>
+<link rel="prev" href="workflows.html"/>
+<link rel="next" href="data-splitting-1.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -274,114 +274,139 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Build a Model</h1>
-<p><em>This tutorial is based on Alisson Hill’s excellent <a href="https://alison.rbind.io/tags/tidymodels/">tidymodels workshop</a>.</em></p>
-<p>In this tutorial you will learn how to specify a model with the tidymodels package.</p>
-<p>As data, we use 2,930 houses sold in Ames, IA from 2006 to 2010, collected by the Ames Assessor’s Oﬃce. From this dataset, we only select our dependent variable (<code>Sale_Price</code>) and one predictor variable (<code>Gr_Liv_Area</code>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="intro.html#cb1-2"></a></span>
-<span id="cb1-3"><a href="intro.html#cb1-3"></a>ames &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/kirenz/datasets/master/ames.csv&quot;</span>)</span>
-<span id="cb1-4"><a href="intro.html#cb1-4"></a></span>
-<span id="cb1-5"><a href="intro.html#cb1-5"></a>ames &lt;-<span class="st"> </span></span>
-<span id="cb1-6"><a href="intro.html#cb1-6"></a><span class="st">  </span>ames <span class="op">%&gt;%</span></span>
-<span id="cb1-7"><a href="intro.html#cb1-7"></a><span class="st">  </span><span class="kw">select</span>(Sale_Price, Gr_Liv_Area)</span>
-<span id="cb1-8"><a href="intro.html#cb1-8"></a></span>
-<span id="cb1-9"><a href="intro.html#cb1-9"></a><span class="kw">glimpse</span>(ames)</span></code></pre></div>
-<pre><code>## Rows: 2,930
-## Columns: 2
-## $ Sale_Price  &lt;dbl&gt; 215000, 105000, 172000, 244000, 189900, 195500, 213500, 1…
-## $ Gr_Liv_Area &lt;dbl&gt; 1656, 896, 1329, 2110, 1629, 1604, 1338, 1280, 1616, 1804…</code></pre>
-<p>In this first example, we don’t use data splitting.</p>
-<div id="model-type" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Model type</h2>
-<ol style="list-style-type: decimal">
-<li>Pick an <code>model type</code>: choose from this <a href="https://www.tidymodels.org/find/parsnip/">list</a></li>
-<li>Set the <code>engine</code>: choose from this <a href="https://www.tidymodels.org/find/parsnip/">list</a></li>
-<li>Set the <code>mode</code>: regression or classification</li>
-</ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1"></a><span class="kw">library</span>(tidymodels)</span>
-<span id="cb3-2"><a href="intro.html#cb3-2"></a></span>
-<span id="cb3-3"><a href="intro.html#cb3-3"></a>lm_spec &lt;-<span class="st"> </span><span class="co"># your model specification</span></span>
-<span id="cb3-4"><a href="intro.html#cb3-4"></a><span class="st">  </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># model type</span></span>
-<span id="cb3-5"><a href="intro.html#cb3-5"></a><span class="st">  </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># model engine</span></span>
-<span id="cb3-6"><a href="intro.html#cb3-6"></a><span class="st">  </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="co"># model mode</span></span>
-<span id="cb3-7"><a href="intro.html#cb3-7"></a></span>
-<span id="cb3-8"><a href="intro.html#cb3-8"></a><span class="co"># Show your model specification</span></span>
-<span id="cb3-9"><a href="intro.html#cb3-9"></a>lm_spec</span></code></pre></div>
-<pre><code>## Linear Regression Model Specification (regression)
-## 
-## Computational engine: lm</code></pre>
-</div>
-<div id="model-training" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Model training</h2>
-<p>In the training process, you run an algorithm on data and thereby produce a model. This process is also called model fitting.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1"></a>lm_fit &lt;-<span class="st"> </span><span class="co"># your fitted model</span></span>
-<span id="cb5-2"><a href="intro.html#cb5-2"></a><span class="st">  </span><span class="kw">fit</span>( </span>
-<span id="cb5-3"><a href="intro.html#cb5-3"></a>  lm_spec, <span class="co"># your model specification </span></span>
-<span id="cb5-4"><a href="intro.html#cb5-4"></a>  Sale_Price <span class="op">~</span><span class="st"> </span>Gr_Liv_Area, <span class="co"># a Linear Regression formula </span></span>
-<span id="cb5-5"><a href="intro.html#cb5-5"></a>  <span class="dt">data =</span> ames <span class="co"># your data</span></span>
-<span id="cb5-6"><a href="intro.html#cb5-6"></a>  )</span>
-<span id="cb5-7"><a href="intro.html#cb5-7"></a></span>
-<span id="cb5-8"><a href="intro.html#cb5-8"></a><span class="co"># Show your fitted model</span></span>
-<span id="cb5-9"><a href="intro.html#cb5-9"></a>lm_fit</span></code></pre></div>
-<pre><code>## parsnip model object
-## 
-## Fit time:  4ms 
-## 
-## Call:
-## stats::lm(formula = Sale_Price ~ Gr_Liv_Area, data = data)
-## 
-## Coefficients:
-## (Intercept)  Gr_Liv_Area  
-##     13289.6        111.7</code></pre>
-</div>
-<div id="model-predictions" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Model predictions</h2>
-<p>We use our fitted model to make predictions.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1"></a>price_pred &lt;-<span class="st"> </span></span>
-<span id="cb7-2"><a href="intro.html#cb7-2"></a><span class="st">  </span>lm_fit <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-3"><a href="intro.html#cb7-3"></a><span class="st">  </span><span class="kw">predict</span>(<span class="dt">new_data =</span> ames) <span class="op">%&gt;%</span></span>
-<span id="cb7-4"><a href="intro.html#cb7-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">price_truth =</span> ames<span class="op">$</span>Sale_Price)</span>
-<span id="cb7-5"><a href="intro.html#cb7-5"></a></span>
-<span id="cb7-6"><a href="intro.html#cb7-6"></a><span class="kw">head</span>(price_pred)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 2
-##     .pred price_truth
-##     &lt;dbl&gt;       &lt;dbl&gt;
-## 1 198255.      215000
-## 2 113367.      105000
-## 3 161731.      172000
-## 4 248964.      244000
-## 5 195239.      189900
-## 6 192447.      195500</code></pre>
-<p>If we would want to make predictions for new houses, we could proceed as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1"></a><span class="co"># New values (our x variable)</span></span>
-<span id="cb9-2"><a href="intro.html#cb9-2"></a>new_homes &lt;-<span class="st"> </span></span>
-<span id="cb9-3"><a href="intro.html#cb9-3"></a><span class="st">  </span><span class="kw">tibble</span>(<span class="dt">Gr_Liv_Area =</span> <span class="kw">c</span>(<span class="dv">334</span>, <span class="dv">1126</span>, <span class="dv">1442</span>, <span class="dv">1500</span>, <span class="dv">1743</span>, <span class="dv">5642</span>)) </span>
-<span id="cb9-4"><a href="intro.html#cb9-4"></a></span>
-<span id="cb9-5"><a href="intro.html#cb9-5"></a><span class="co"># Prediction for new houses (predict y)</span></span>
-<span id="cb9-6"><a href="intro.html#cb9-6"></a>lm_fit <span class="op">%&gt;%</span></span>
-<span id="cb9-7"><a href="intro.html#cb9-7"></a><span class="st"> </span><span class="kw">predict</span>(<span class="dt">new_data =</span> new_homes)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 1
-##     .pred
-##     &lt;dbl&gt;
-## 1  50595.
-## 2 139057.
-## 3 174352.
-## 4 180831.
-## 5 207972.
-## 6 643467.</code></pre>
-</div>
-<div id="model-evaluation" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Model evaluation</h2>
-<p>We use the Root Mean Squared Error (RMSE) to evaluate our regression model. Therefore, we use the function <span class="math inline">\(rmse(data, truth, estimate)\)</span>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1"></a><span class="kw">rmse</span>(<span class="dt">data =</span> price_pred, </span>
-<span id="cb11-2"><a href="intro.html#cb11-2"></a>     <span class="dt">truth =</span> price_truth, </span>
-<span id="cb11-3"><a href="intro.html#cb11-3"></a>     <span class="dt">estimate =</span> .pred)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 3
-##   .metric .estimator .estimate
-##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-## 1 rmse    standard      56505.</code></pre>
+<div id="data-preparation-1" class="section level1" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Data preparation</h1>
+<p>Let’s use the <code>nycflights13</code> data to predict whether a plane arrives more than 30 minutes late. This data set contains information on 325,819 flights departing near New York City in 2013. Furthermore, it contains weather data (hourly meterological data for LGA, JFK and EWR).</p>
+<p>Let’s start by loading the data and making a few changes to the variables:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="data-preparation-1.html#cb64-1"></a>flight_data_all &lt;-<span class="st"> </span></span>
+<span id="cb64-2"><a href="data-preparation-1.html#cb64-2"></a><span class="st">  </span>flights <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb64-3"><a href="data-preparation-1.html#cb64-3"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb64-4"><a href="data-preparation-1.html#cb64-4"></a>    <span class="co"># Convert the arrival delay to a factor</span></span>
+<span id="cb64-5"><a href="data-preparation-1.html#cb64-5"></a>    <span class="dt">arr_delay =</span> <span class="kw">ifelse</span>(arr_delay <span class="op">&gt;=</span><span class="st"> </span><span class="dv">30</span>, </span>
+<span id="cb64-6"><a href="data-preparation-1.html#cb64-6"></a>                       <span class="st">&quot;late&quot;</span>, </span>
+<span id="cb64-7"><a href="data-preparation-1.html#cb64-7"></a>                       <span class="st">&quot;on_time&quot;</span>),</span>
+<span id="cb64-8"><a href="data-preparation-1.html#cb64-8"></a>    <span class="dt">arr_delay =</span> <span class="kw">factor</span>(arr_delay),</span>
+<span id="cb64-9"><a href="data-preparation-1.html#cb64-9"></a>    <span class="co"># We will use the date (not date-time) </span></span>
+<span id="cb64-10"><a href="data-preparation-1.html#cb64-10"></a>    <span class="co"># in the recipe below</span></span>
+<span id="cb64-11"><a href="data-preparation-1.html#cb64-11"></a>    <span class="dt">date =</span> <span class="kw">as.Date</span>(time_hour)</span>
+<span id="cb64-12"><a href="data-preparation-1.html#cb64-12"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb64-13"><a href="data-preparation-1.html#cb64-13"></a><span class="st">  </span><span class="co"># Include  weather data</span></span>
+<span id="cb64-14"><a href="data-preparation-1.html#cb64-14"></a><span class="st">  </span><span class="kw">inner_join</span>(weather, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;origin&quot;</span>, <span class="st">&quot;time_hour&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb64-15"><a href="data-preparation-1.html#cb64-15"></a><span class="st">  </span><span class="co"># Only retain the specific columns we will use</span></span>
+<span id="cb64-16"><a href="data-preparation-1.html#cb64-16"></a><span class="st">  </span><span class="kw">select</span>(dep_time, flight, origin, </span>
+<span id="cb64-17"><a href="data-preparation-1.html#cb64-17"></a>         dest, air_time, distance, </span>
+<span id="cb64-18"><a href="data-preparation-1.html#cb64-18"></a>         carrier, date, arr_delay, time_hour) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb64-19"><a href="data-preparation-1.html#cb64-19"></a><span class="st">  </span><span class="co"># Exclude missing data</span></span>
+<span id="cb64-20"><a href="data-preparation-1.html#cb64-20"></a><span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb64-21"><a href="data-preparation-1.html#cb64-21"></a><span class="st">  </span><span class="co"># For creating models, it is </span></span>
+<span id="cb64-22"><a href="data-preparation-1.html#cb64-22"></a><span class="st">  </span><span class="co"># better to have qualitative columns</span></span>
+<span id="cb64-23"><a href="data-preparation-1.html#cb64-23"></a><span class="st">  </span><span class="co"># encoded as factors (instead of character strings)</span></span>
+<span id="cb64-24"><a href="data-preparation-1.html#cb64-24"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="kw">across</span>(<span class="kw">where</span>(is.character), as.factor))</span></code></pre></div>
+<p>To speed up later calculations we only use a sample of the data:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="data-preparation-1.html#cb65-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb65-2"><a href="data-preparation-1.html#cb65-2"></a></span>
+<span id="cb65-3"><a href="data-preparation-1.html#cb65-3"></a>flight_data &lt;-<span class="st"> </span><span class="kw">sample_n</span>(flight_data_all, </span>
+<span id="cb65-4"><a href="data-preparation-1.html#cb65-4"></a>                        <span class="dv">10000</span>)</span></code></pre></div>
+<p>We can see that around 16% of the flights in this data set arrived more than 30 minutes late:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="data-preparation-1.html#cb66-1"></a>flight_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb66-2"><a href="data-preparation-1.html#cb66-2"></a><span class="st">  </span><span class="kw">count</span>(arr_delay) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb66-3"><a href="data-preparation-1.html#cb66-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop =</span> n<span class="op">/</span><span class="kw">sum</span>(n))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##   arr_delay     n  prop
+##   &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;
+## 1 late       1589 0.159
+## 2 on_time    8411 0.841</code></pre>
+<div id="data-overview" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Data overview</h2>
+<p>Before we start building up our recipe, let’s take a quick look at a few specific variables that will be important for both preprocessing and modeling.</p>
+<p>First, notice that the variable we created called <code>arr_delay</code> is a factor variable; it is important that our outcome variable for training a classification model (at least a logistic regression model) is numeric.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="data-preparation-1.html#cb68-1"></a><span class="kw">glimpse</span>(flight_data)</span></code></pre></div>
+<pre><code>## Rows: 10,000
+## Columns: 10
+## $ dep_time  &lt;int&gt; 825, 657, 1835, 1827, 1600, 1039, 1142, 1723, 1446, 2140, 2…
+## $ flight    &lt;int&gt; 120, 4122, 4517, 373, 4502, 4589, 4646, 4195, 3588, 3660, 1…
+## $ origin    &lt;fct&gt; JFK, EWR, LGA, JFK, EWR, LGA, LGA, EWR, LGA, LGA, JFK, EWR,…
+## $ dest      &lt;fct&gt; LAX, SDF, CRW, CLT, BNA, DTW, MSP, BNA, MSP, BNA, LAX, DCA,…
+## $ air_time  &lt;dbl&gt; 316, 104, 75, 90, 119, 93, 139, 130, 138, 104, 323, 36, 126…
+## $ distance  &lt;dbl&gt; 2475, 642, 444, 541, 748, 502, 1020, 748, 1020, 764, 2475, …
+## $ carrier   &lt;fct&gt; DL, EV, MQ, US, EV, MQ, MQ, EV, MQ, MQ, AA, EV, EV, EV, EV,…
+## $ date      &lt;date&gt; 2013-05-03, 2013-03-04, 2013-02-20, 2013-04-02, 2013-06-13…
+## $ arr_delay &lt;fct&gt; on_time, on_time, on_time, on_time, late, on_time, on_time,…
+## $ time_hour &lt;dttm&gt; 2013-05-03 08:00:00, 2013-03-04 07:00:00, 2013-02-20 18:00…</code></pre>
+<p>Second, there are two variables that we don’t want to use as predictors in our model, but that we would like to retain as identification variables that can be used to troubleshoot poorly predicted data points. These are flight, a numeric value, and time_hour, a date-time value.</p>
+<p>Third, there are 79 flight destinations contained in dest and 14 distinct carriers.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="data-preparation-1.html#cb70-1"></a>flight_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb70-2"><a href="data-preparation-1.html#cb70-2"></a><span class="st">  </span>skimr<span class="op">::</span><span class="kw">skim</span>(dest, carrier) </span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-45">Table 13.1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">10000</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">10</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">dest</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">97</td>
+<td align="left">ATL: 523, LAX: 506, BOS: 496, ORD: 482</td>
+</tr>
+<tr class="even">
+<td align="left">carrier</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">15</td>
+<td align="left">UA: 1757, EV: 1598, B6: 1589, DL: 1435</td>
+</tr>
+</tbody>
+</table>
+<p>Because we’ll be using a logistic regression model in this tutorial, the variables <code>dest</code> and <code>carrier</code> will be converted to dummy variables.</p>
+<p>However, some of these values do not occur very frequently and this could complicate our analysis. We’ll discuss specific steps later in this tutorial that we can add to our recipe to address this issue before modeling.</p>
 </div>
 </div>
             </section>
@@ -389,8 +414,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="process-with-data-splitting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="workflows.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-splitting-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Build a Model | Advanced Analytics with Tidymodels</title>
+  <title>Chapter 9 Recipe | Advanced Analytics with Tidymodels</title>
   <meta name="description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Build a Model | Advanced Analytics with Tidymodels" />
+  <meta property="og:title" content="Chapter 9 Recipe | Advanced Analytics with Tidymodels" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Build a Model | Advanced Analytics with Tidymodels" />
+  <meta name="twitter:title" content="Chapter 9 Recipe | Advanced Analytics with Tidymodels" />
   
   <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="process-with-data-splitting.html"/>
+<link rel="prev" href="data-preparation.html"/>
+<link rel="next" href="model-building.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -274,114 +274,137 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Build a Model</h1>
-<p><em>This tutorial is based on Alisson Hill’s excellent <a href="https://alison.rbind.io/tags/tidymodels/">tidymodels workshop</a>.</em></p>
-<p>In this tutorial you will learn how to specify a model with the tidymodels package.</p>
-<p>As data, we use 2,930 houses sold in Ames, IA from 2006 to 2010, collected by the Ames Assessor’s Oﬃce. From this dataset, we only select our dependent variable (<code>Sale_Price</code>) and one predictor variable (<code>Gr_Liv_Area</code>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="intro.html#cb1-2"></a></span>
-<span id="cb1-3"><a href="intro.html#cb1-3"></a>ames &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/kirenz/datasets/master/ames.csv&quot;</span>)</span>
-<span id="cb1-4"><a href="intro.html#cb1-4"></a></span>
-<span id="cb1-5"><a href="intro.html#cb1-5"></a>ames &lt;-<span class="st"> </span></span>
-<span id="cb1-6"><a href="intro.html#cb1-6"></a><span class="st">  </span>ames <span class="op">%&gt;%</span></span>
-<span id="cb1-7"><a href="intro.html#cb1-7"></a><span class="st">  </span><span class="kw">select</span>(Sale_Price, Gr_Liv_Area)</span>
-<span id="cb1-8"><a href="intro.html#cb1-8"></a></span>
-<span id="cb1-9"><a href="intro.html#cb1-9"></a><span class="kw">glimpse</span>(ames)</span></code></pre></div>
-<pre><code>## Rows: 2,930
-## Columns: 2
-## $ Sale_Price  &lt;dbl&gt; 215000, 105000, 172000, 244000, 189900, 195500, 213500, 1…
-## $ Gr_Liv_Area &lt;dbl&gt; 1656, 896, 1329, 2110, 1629, 1604, 1338, 1280, 1616, 1804…</code></pre>
-<p>In this first example, we don’t use data splitting.</p>
-<div id="model-type" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Model type</h2>
-<ol style="list-style-type: decimal">
-<li>Pick an <code>model type</code>: choose from this <a href="https://www.tidymodels.org/find/parsnip/">list</a></li>
-<li>Set the <code>engine</code>: choose from this <a href="https://www.tidymodels.org/find/parsnip/">list</a></li>
-<li>Set the <code>mode</code>: regression or classification</li>
-</ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1"></a><span class="kw">library</span>(tidymodels)</span>
-<span id="cb3-2"><a href="intro.html#cb3-2"></a></span>
-<span id="cb3-3"><a href="intro.html#cb3-3"></a>lm_spec &lt;-<span class="st"> </span><span class="co"># your model specification</span></span>
-<span id="cb3-4"><a href="intro.html#cb3-4"></a><span class="st">  </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># model type</span></span>
-<span id="cb3-5"><a href="intro.html#cb3-5"></a><span class="st">  </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># model engine</span></span>
-<span id="cb3-6"><a href="intro.html#cb3-6"></a><span class="st">  </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="co"># model mode</span></span>
-<span id="cb3-7"><a href="intro.html#cb3-7"></a></span>
-<span id="cb3-8"><a href="intro.html#cb3-8"></a><span class="co"># Show your model specification</span></span>
-<span id="cb3-9"><a href="intro.html#cb3-9"></a>lm_spec</span></code></pre></div>
-<pre><code>## Linear Regression Model Specification (regression)
+<div id="recipe" class="section level1" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Recipe</h1>
+<p>Next, we use a <code>recipe()</code> to build a set of steps for data preprocessing and feature engineering.</p>
+<ul>
+<li>First, we must tell the <code>recipe()</code> what our model is going to be (using a formula here) and what our training data is.</li>
+<li><code>step_novel()</code> will convert all nominal variables to factors.</li>
+<li>We then convert the factor columns into (one or more) numeric binary (0 and 1) variables for the levels of the training data.</li>
+<li>We remove any numeric variables that have zero variance.</li>
+<li>We normalize (center and scale) the numeric variables.</li>
+</ul>
+<div id="recipe-1" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> recipe()</h2>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="recipe.html#cb36-1"></a>ames_rec &lt;-</span>
+<span id="cb36-2"><a href="recipe.html#cb36-2"></a><span class="st">  </span><span class="kw">recipe</span>(Sale_Price <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> new_train) <span class="op">%&gt;%</span></span>
+<span id="cb36-3"><a href="recipe.html#cb36-3"></a><span class="st">  </span><span class="kw">step_novel</span>(<span class="kw">all_nominal</span>(), <span class="op">-</span><span class="kw">all_outcomes</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb36-4"><a href="recipe.html#cb36-4"></a><span class="st">  </span><span class="kw">step_dummy</span>(<span class="kw">all_nominal</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb36-5"><a href="recipe.html#cb36-5"></a><span class="st">  </span><span class="kw">step_zv</span>(<span class="kw">all_predictors</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb36-6"><a href="recipe.html#cb36-6"></a><span class="st">  </span><span class="kw">step_normalize</span>(<span class="kw">all_predictors</span>())</span>
+<span id="cb36-7"><a href="recipe.html#cb36-7"></a></span>
+<span id="cb36-8"><a href="recipe.html#cb36-8"></a><span class="co"># Show the content of our recipe</span></span>
+<span id="cb36-9"><a href="recipe.html#cb36-9"></a>ames_rec</span></code></pre></div>
+<pre><code>## Data Recipe
 ## 
-## Computational engine: lm</code></pre>
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor         73
+## 
+## Operations:
+## 
+## Novel factor level assignment for all_nominal(), -all_outcomes()
+## Dummy variables from all_nominal()
+## Zero variance filter on all_predictors()
+## Centering and scaling for all_predictors()</code></pre>
 </div>
-<div id="model-training" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Model training</h2>
-<p>In the training process, you run an algorithm on data and thereby produce a model. This process is also called model fitting.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1"></a>lm_fit &lt;-<span class="st"> </span><span class="co"># your fitted model</span></span>
-<span id="cb5-2"><a href="intro.html#cb5-2"></a><span class="st">  </span><span class="kw">fit</span>( </span>
-<span id="cb5-3"><a href="intro.html#cb5-3"></a>  lm_spec, <span class="co"># your model specification </span></span>
-<span id="cb5-4"><a href="intro.html#cb5-4"></a>  Sale_Price <span class="op">~</span><span class="st"> </span>Gr_Liv_Area, <span class="co"># a Linear Regression formula </span></span>
-<span id="cb5-5"><a href="intro.html#cb5-5"></a>  <span class="dt">data =</span> ames <span class="co"># your data</span></span>
-<span id="cb5-6"><a href="intro.html#cb5-6"></a>  )</span>
-<span id="cb5-7"><a href="intro.html#cb5-7"></a></span>
-<span id="cb5-8"><a href="intro.html#cb5-8"></a><span class="co"># Show your fitted model</span></span>
-<span id="cb5-9"><a href="intro.html#cb5-9"></a>lm_fit</span></code></pre></div>
-<pre><code>## parsnip model object
-## 
-## Fit time:  4ms 
-## 
-## Call:
-## stats::lm(formula = Sale_Price ~ Gr_Liv_Area, data = data)
-## 
-## Coefficients:
-## (Intercept)  Gr_Liv_Area  
-##     13289.6        111.7</code></pre>
+<div id="prep" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> prep()</h2>
+<p>Finally, we <code>prep()</code> the <code>recipe()</code>. This means we actually do something with the steps and our training data.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="recipe.html#cb38-1"></a>ames_prep &lt;-<span class="st"> </span><span class="kw">prep</span>(ames_rec)</span></code></pre></div>
+<p>Print a summary of our prepped recipe:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="recipe.html#cb39-1"></a><span class="kw">summary</span>(ames_prep)</span></code></pre></div>
+<pre><code>## # A tibble: 269 x 4
+##    variable       type    role      source  
+##    &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   
+##  1 Lot_Frontage   numeric predictor original
+##  2 Lot_Area       numeric predictor original
+##  3 Year_Built     numeric predictor original
+##  4 Year_Remod_Add numeric predictor original
+##  5 Mas_Vnr_Area   numeric predictor original
+##  6 BsmtFin_SF_1   numeric predictor original
+##  7 BsmtFin_SF_2   numeric predictor original
+##  8 Bsmt_Unf_SF    numeric predictor original
+##  9 Total_Bsmt_SF  numeric predictor original
+## 10 First_Flr_SF   numeric predictor original
+## # … with 259 more rows</code></pre>
 </div>
-<div id="model-predictions" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Model predictions</h2>
-<p>We use our fitted model to make predictions.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1"></a>price_pred &lt;-<span class="st"> </span></span>
-<span id="cb7-2"><a href="intro.html#cb7-2"></a><span class="st">  </span>lm_fit <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-3"><a href="intro.html#cb7-3"></a><span class="st">  </span><span class="kw">predict</span>(<span class="dt">new_data =</span> ames) <span class="op">%&gt;%</span></span>
-<span id="cb7-4"><a href="intro.html#cb7-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">price_truth =</span> ames<span class="op">$</span>Sale_Price)</span>
-<span id="cb7-5"><a href="intro.html#cb7-5"></a></span>
-<span id="cb7-6"><a href="intro.html#cb7-6"></a><span class="kw">head</span>(price_pred)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 2
-##     .pred price_truth
-##     &lt;dbl&gt;       &lt;dbl&gt;
-## 1 198255.      215000
-## 2 113367.      105000
-## 3 161731.      172000
-## 4 248964.      244000
-## 5 195239.      189900
-## 6 192447.      195500</code></pre>
-<p>If we would want to make predictions for new houses, we could proceed as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1"></a><span class="co"># New values (our x variable)</span></span>
-<span id="cb9-2"><a href="intro.html#cb9-2"></a>new_homes &lt;-<span class="st"> </span></span>
-<span id="cb9-3"><a href="intro.html#cb9-3"></a><span class="st">  </span><span class="kw">tibble</span>(<span class="dt">Gr_Liv_Area =</span> <span class="kw">c</span>(<span class="dv">334</span>, <span class="dv">1126</span>, <span class="dv">1442</span>, <span class="dv">1500</span>, <span class="dv">1743</span>, <span class="dv">5642</span>)) </span>
-<span id="cb9-4"><a href="intro.html#cb9-4"></a></span>
-<span id="cb9-5"><a href="intro.html#cb9-5"></a><span class="co"># Prediction for new houses (predict y)</span></span>
-<span id="cb9-6"><a href="intro.html#cb9-6"></a>lm_fit <span class="op">%&gt;%</span></span>
-<span id="cb9-7"><a href="intro.html#cb9-7"></a><span class="st"> </span><span class="kw">predict</span>(<span class="dt">new_data =</span> new_homes)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 1
-##     .pred
-##     &lt;dbl&gt;
-## 1  50595.
-## 2 139057.
-## 3 174352.
-## 4 180831.
-## 5 207972.
-## 6 643467.</code></pre>
+<div id="juice" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> juice()</h2>
+<p>To obtain the Dataframe from the prepped recipe, we use the function <code>juice()</code>. When we <code>juice()</code> the recipe, we squeeze that training data back out, transformed in the ways we specified:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="recipe.html#cb41-1"></a><span class="kw">juice</span>(ames_prep)</span></code></pre></div>
+<pre><code>## # A tibble: 2,198 x 269
+##    Lot_Frontage Lot_Area Year_Built Year_Remod_Add Mas_Vnr_Area BsmtFin_SF_1
+##           &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+##  1       0.693    0.582      -0.442         -1.26        0.0310       -1.44 
+##  2       0.484    0.521       0.849          0.651      -0.570        -0.540
+##  3       0.603   -0.0104      0.882          0.651      -0.459        -0.540
+##  4      -0.498   -0.708       0.982          0.795      -0.570        -0.540
+##  5      -0.439   -0.697       0.684          0.364      -0.570        -1.44 
+##  6      -0.558   -0.644       0.783          0.555      -0.570        -0.540
+##  7       0.0674  -0.352       0.915          0.699      -0.570         1.26 
+##  8      -1.72    -0.286       0.684          1.08       -0.570        -1.44 
+##  9       0.157   -0.228       0.882          0.651      -0.570         1.26 
+## 10       0.812    0.0170      0.617          0.268      -0.570        -0.540
+## # … with 2,188 more rows, and 263 more variables: BsmtFin_SF_2 &lt;dbl&gt;,
+## #   Bsmt_Unf_SF &lt;dbl&gt;, Total_Bsmt_SF &lt;dbl&gt;, First_Flr_SF &lt;dbl&gt;,
+## #   Second_Flr_SF &lt;dbl&gt;, Gr_Liv_Area &lt;dbl&gt;, Bsmt_Full_Bath &lt;dbl&gt;,
+## #   Bsmt_Half_Bath &lt;dbl&gt;, Full_Bath &lt;dbl&gt;, Half_Bath &lt;dbl&gt;,
+## #   Bedroom_AbvGr &lt;dbl&gt;, Kitchen_AbvGr &lt;dbl&gt;, TotRms_AbvGrd &lt;dbl&gt;,
+## #   Fireplaces &lt;dbl&gt;, Garage_Cars &lt;dbl&gt;, Garage_Area &lt;dbl&gt;, Wood_Deck_SF &lt;dbl&gt;,
+## #   Open_Porch_SF &lt;dbl&gt;, Enclosed_Porch &lt;dbl&gt;, Three_season_porch &lt;dbl&gt;,
+## #   Screen_Porch &lt;dbl&gt;, Pool_Area &lt;dbl&gt;, Misc_Val &lt;dbl&gt;, Mo_Sold &lt;dbl&gt;,
+## #   Year_Sold &lt;dbl&gt;, Longitude &lt;dbl&gt;, Latitude &lt;dbl&gt;, Sale_Price &lt;dbl&gt;,
+## #   MS_SubClass_One_and_Half_Story_Finished_All_Ages &lt;dbl&gt;,
+## #   MS_SubClass_One_and_Half_Story_Unfinished_All_Ages &lt;dbl&gt;,
+## #   MS_SubClass_One_Story_1945_and_Older &lt;dbl&gt;,
+## #   MS_SubClass_One_Story_1946_and_Newer_All_Styles &lt;dbl&gt;,
+## #   MS_SubClass_One_Story_PUD_1946_and_Newer &lt;dbl&gt;,
+## #   MS_SubClass_One_Story_with_Finished_Attic_All_Ages &lt;dbl&gt;,
+## #   MS_SubClass_PUD_Multilevel_Split_Level_Foyer &lt;dbl&gt;,
+## #   MS_SubClass_Split_Foyer &lt;dbl&gt;, MS_SubClass_Split_or_Multilevel &lt;dbl&gt;,
+## #   MS_SubClass_Two_and_Half_Story_All_Ages &lt;dbl&gt;,
+## #   MS_SubClass_Two_Family_conversion_All_Styles_and_Ages &lt;dbl&gt;,
+## #   MS_SubClass_Two_Story_1945_and_Older &lt;dbl&gt;,
+## #   MS_SubClass_Two_Story_1946_and_Newer &lt;dbl&gt;,
+## #   MS_SubClass_Two_Story_PUD_1946_and_Newer &lt;dbl&gt;, MS_Zoning_C_all &lt;dbl&gt;,
+## #   MS_Zoning_Floating_Village_Residential &lt;dbl&gt;,
+## #   MS_Zoning_Residential_High_Density &lt;dbl&gt;,
+## #   MS_Zoning_Residential_Low_Density &lt;dbl&gt;,
+## #   MS_Zoning_Residential_Medium_Density &lt;dbl&gt;, Street_Pave &lt;dbl&gt;,
+## #   Alley_No_Alley_Access &lt;dbl&gt;, Alley_Paved &lt;dbl&gt;,
+## #   Lot_Shape_Moderately_Irregular &lt;dbl&gt;, Lot_Shape_Regular &lt;dbl&gt;,
+## #   Lot_Shape_Slightly_Irregular &lt;dbl&gt;, Land_Contour_HLS &lt;dbl&gt;,
+## #   Land_Contour_Low &lt;dbl&gt;, Land_Contour_Lvl &lt;dbl&gt;, Utilities_NoSeWa &lt;dbl&gt;,
+## #   Utilities_NoSewr &lt;dbl&gt;, Lot_Config_CulDSac &lt;dbl&gt;, Lot_Config_FR2 &lt;dbl&gt;,
+## #   Lot_Config_FR3 &lt;dbl&gt;, Lot_Config_Inside &lt;dbl&gt;, Land_Slope_Mod &lt;dbl&gt;,
+## #   Land_Slope_Sev &lt;dbl&gt;, Neighborhood_Blueste &lt;dbl&gt;,
+## #   Neighborhood_Briardale &lt;dbl&gt;, Neighborhood_Brookside &lt;dbl&gt;,
+## #   Neighborhood_Clear_Creek &lt;dbl&gt;, Neighborhood_College_Creek &lt;dbl&gt;,
+## #   Neighborhood_Crawford &lt;dbl&gt;, Neighborhood_Edwards &lt;dbl&gt;,
+## #   Neighborhood_Gilbert &lt;dbl&gt;, Neighborhood_Green_Hills &lt;dbl&gt;,
+## #   Neighborhood_Greens &lt;dbl&gt;, Neighborhood_Iowa_DOT_and_Rail_Road &lt;dbl&gt;,
+## #   Neighborhood_Landmark &lt;dbl&gt;, Neighborhood_Meadow_Village &lt;dbl&gt;,
+## #   Neighborhood_Mitchell &lt;dbl&gt;, Neighborhood_North_Ames &lt;dbl&gt;,
+## #   Neighborhood_Northpark_Villa &lt;dbl&gt;, Neighborhood_Northridge &lt;dbl&gt;,
+## #   Neighborhood_Northridge_Heights &lt;dbl&gt;, Neighborhood_Northwest_Ames &lt;dbl&gt;,
+## #   Neighborhood_Old_Town &lt;dbl&gt;, Neighborhood_Sawyer &lt;dbl&gt;,
+## #   Neighborhood_Sawyer_West &lt;dbl&gt;, Neighborhood_Somerset &lt;dbl&gt;,
+## #   Neighborhood_South_and_West_of_Iowa_State_University &lt;dbl&gt;,
+## #   Neighborhood_Stone_Brook &lt;dbl&gt;, Neighborhood_Timberland &lt;dbl&gt;,
+## #   Neighborhood_Veenker &lt;dbl&gt;, Condition_1_Feedr &lt;dbl&gt;,
+## #   Condition_1_Norm &lt;dbl&gt;, Condition_1_PosA &lt;dbl&gt;, Condition_1_PosN &lt;dbl&gt;,
+## #   Condition_1_RRAe &lt;dbl&gt;, Condition_1_RRAn &lt;dbl&gt;, Condition_1_RRNe &lt;dbl&gt;,
+## #   Condition_1_RRNn &lt;dbl&gt;, Condition_2_Feedr &lt;dbl&gt;, …</code></pre>
+<p>The prepped recipe <code>ames_prep</code> contains all our transformations for data preprocessing and feature engineering, <em>as well as</em> the data these transformations were estimated from.</p>
 </div>
-<div id="model-evaluation" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Model evaluation</h2>
-<p>We use the Root Mean Squared Error (RMSE) to evaluate our regression model. Therefore, we use the function <span class="math inline">\(rmse(data, truth, estimate)\)</span>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1"></a><span class="kw">rmse</span>(<span class="dt">data =</span> price_pred, </span>
-<span id="cb11-2"><a href="intro.html#cb11-2"></a>     <span class="dt">truth =</span> price_truth, </span>
-<span id="cb11-3"><a href="intro.html#cb11-3"></a>     <span class="dt">estimate =</span> .pred)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 3
-##   .metric .estimator .estimate
-##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-## 1 rmse    standard      56505.</code></pre>
+<div id="bake" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> bake()</h2>
+<p>We now can simply apply all of the recipe transformations to the testing data. The function to perform this is called <code>bake()</code>:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="recipe.html#cb43-1"></a>test_trans &lt;-<span class="st"> </span><span class="kw">bake</span>(ames_prep, <span class="dt">new_data =</span> new_test)</span></code></pre></div>
+<p>Now it’s time to <strong>specify</strong> and then <strong>fit</strong> our models.</p>
 </div>
 </div>
             </section>
@@ -389,8 +412,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="process-with-data-splitting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-preparation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-building.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
