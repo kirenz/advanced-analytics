@@ -1,5 +1,5 @@
 --- 
-title: "Advanced Analytics with Tidymodels"
+title: "Advanced Analytics with Tidymodels in R"
 author: "Prof. Dr. Jan Kirenz"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -7,18 +7,17 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "How to build, evaluate, compare, and tune predictive models with R's Tidymodels."
+description: "How to build, evaluate, compare, and tune predictive models with Tidymodels in R."
 ---
 
 # Welcome {-}
 
-This book provides an introduction to advanced analytics with R using the modeling packages called [tidymodels](https://tidymodels.org) to build, evaluate, compare, and tune predictive models. 
+This book provides an introduction to advanced analytics with R using the [tidymodels](https://tidymodels.org) framework, a collection of packages for modeling and machine learning using tidyverse principles. You will learn how to build, evaluate, compare, and tune predictive models. 
+
 
 We’ll cover key concepts in statistical learning and machine learning including overfitting, the holdout method, the bias-variance trade-off, ensembling, cross-validation, and feature engineering.
 
 \
-
-
 
 ***
 

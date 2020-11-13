@@ -3,31 +3,97 @@
 
 # Build a Model {#intro}
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-```
 
-
-*This tutorial is based on Alisson Hill's excellent [tidymodels workshop](https://alison.rbind.io/tags/tidymodels/).* 
-
-In this tutorial you will learn how to specify a model with the tidymodels package.
-
-As data, we use 2,930 houses sold in Ames, IA from 2006 to 2010, collected by the Ames Assessor’s Oﬃce. From this dataset, we only select our dependent variable (`Sale_Price`) and one predictor variable (`Gr_Liv_Area`).
-
-```{r message=FALSE, warning=FALSE}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
+                      echo = TRUE, dpi = 300, cache.lazy = FALSE,
+                      tidy = "styler", fig.width = 8, fig.height = 5,
+                      eval=FALSE)
 library(tidyverse)
+library(tidymodels)
+```
 
-ames <- read_csv("https://raw.githubusercontent.com/kirenz/datasets/master/ames.csv")
+In this chapter you will learn how to specify a regression model with the tidymodels package. To use the code in this article, you will need to install the following packages: 
 
-ames <- 
-  ames %>%
-  select(Sale_Price, Gr_Liv_Area)
+* [`tidyverse`](https://www.tidyverse.org/) 
+* [`tidymodels`](https://www.tidymodels.org/) 
+* [`skimr`](https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html) 
+* [`GGally`](https://ggobi.github.io/ggally/index.html)
 
-glimpse(ames)
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(skimr)
+library(GGally)
+```
+
+
+*The following content is adapted from the excellent book “Hands-on machine learning with scikit-learn, keras and tensorflow” from @Geron2019.*
+
+In this example, our goal is to build a model of housing prices in California. In particular, the model should learn from California census data and be able to predict the median house price in any district (population of 600 to 3000 people), given some predictor variables. We use the root mean square error (RMSE) as a performance measure for our regression problem.
+
+## Data understanding
+
+
+:::puzzle
+- Import data 
+- Get an overview about the data structure
+:::
+
+
+
+First of all, let's import the data:
+
+```{r}
+
+LINK <- "https://raw.githubusercontent.com/kirenz/datasets/master/housing.csv"
+housing <- read_csv(LINK)
 
 ```
 
-In this first example, we don't use data splitting.
+Next, we take a look at the data structure:
+
+California census top 4 rows of the DataFrame: 
+
+```{r}
+
+head(housing, 4)
+
+```
+
+Data info:
+
+```{r}
+
+glimpse(housing)
+
+```
+
+Data summary of numerical and categorical attributes using a function from the package `skimr`:
+
+```{r}
+
+skim(housing)
+
+```
+
+The function `ggscatmat` from the package `GGally` creates a matrix with scatterplots, densities and correlations for numeric columns. In our code, we enter the dataset `housing`, an color column for our categorical variable `ocean_proximity`, and an alpha level of 0.8 (for transparency).
+
+```{r eval=FALSE}
+
+ggscatmat(housing, color="ocean_proximity", alpha=0.8)
+
+```
+
+To obtain an overview of even more visualizations, we can use the function `ggpairs`:
+
+```{r eval=FALSE}
+
+ggpairs(housing)
+
+```
+
+
 
 ## Model type
 
@@ -35,7 +101,7 @@ In this first example, we don't use data splitting.
 2. Set the `engine`: choose from this [list](https://www.tidymodels.org/find/parsnip/)
 3. Set the `mode`: regression or classification
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 library(tidymodels)
 
 lm_spec <- # your model specification
