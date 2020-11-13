@@ -140,7 +140,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>I BUILD A MODEL</b></span></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Build a Model</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#data-understanding"><i class="fa fa-check"></i><b>1.1</b> Data understanding</a></li>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#data-understanding"><i class="fa fa-check"></i><b>1.1</b> Data understanding</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#imort-data"><i class="fa fa-check"></i><b>1.1.1</b> Imort Data</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#data-overview"><i class="fa fa-check"></i><b>1.1.2</b> Data overview</a></li>
+<li class="chapter" data-level="1.1.3" data-path="intro.html"><a href="intro.html#data-splitting"><i class="fa fa-check"></i><b>1.1.3</b> Data splitting</a></li>
+</ul></li>
 <li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#model-type"><i class="fa fa-check"></i><b>1.2</b> Model type</a></li>
 <li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#model-training"><i class="fa fa-check"></i><b>1.3</b> Model training</a></li>
 <li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#model-predictions"><i class="fa fa-check"></i><b>1.4</b> Model predictions</a></li>
@@ -148,7 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html"><i class="fa fa-check"></i><b>2</b> Process with data splitting</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting"><i class="fa fa-check"></i><b>2.1</b> Data splitting</a></li>
+<li class="chapter" data-level="2.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting-1"><i class="fa fa-check"></i><b>2.1</b> Data splitting</a></li>
 <li class="chapter" data-level="2.2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-type-1"><i class="fa fa-check"></i><b>2.2</b> Model type</a></li>
 <li class="chapter" data-level="2.3" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-training-1"><i class="fa fa-check"></i><b>2.3</b> Model training</a></li>
 <li class="chapter" data-level="2.4" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-predictions-1"><i class="fa fa-check"></i><b>2.4</b> Model predictions</a></li>
@@ -181,7 +186,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path=""><a href="#part-workflows-models"><i class="fa fa-check"></i>(PART) WORKFLOWS &amp; MODELS</a>
 <ul>
-<li class="chapter" data-level="2.25" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-overview"><i class="fa fa-check"></i><b>2.25</b> Data overview</a></li>
+<li class="chapter" data-level="2.25" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-overview-1"><i class="fa fa-check"></i><b>2.25</b> Data overview</a></li>
 <li class="chapter" data-level="2.26" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#create-features"><i class="fa fa-check"></i><b>2.26</b> Create features</a>
 <ul>
 <li class="chapter" data-level="2.26.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#date"><i class="fa fa-check"></i><b>2.26.1</b> Date</a></li>
@@ -247,30 +252,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="intro" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Build a Model</h1>
+<p><em>The following content is adapted from the excellent book “Hands-on machine learning with scikit-learn, keras and tensorflow” from <span class="citation">Géron (<a href="#ref-Geron2019" role="doc-biblioref">2019</a>)</span>.</em></p>
 <p>In this chapter you will learn how to specify a regression model with the tidymodels package. To use the code in this article, you will need to install the following packages:</p>
 <ul>
-<li><a href="https://www.tidyverse.org/"><code>tidyverse</code></a></li>
-<li><a href="https://www.tidymodels.org/"><code>tidymodels</code></a></li>
-<li><a href="https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html"><code>skimr</code></a></li>
-<li><a href="https://ggobi.github.io/ggally/index.html"><code>GGally</code></a></li>
+<li><a href="https://www.tidyverse.org/">tidyverse</a></li>
+<li><a href="https://www.tidymodels.org/">tidymodels</a></li>
+<li><a href="https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html">skimr</a></li>
+<li><a href="https://ggobi.github.io/ggally/index.html">GGally</a></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="intro.html#cb1-2"></a><span class="kw">library</span>(tidymodels)</span>
 <span id="cb1-3"><a href="intro.html#cb1-3"></a><span class="kw">library</span>(skimr)</span>
 <span id="cb1-4"><a href="intro.html#cb1-4"></a><span class="kw">library</span>(GGally)</span></code></pre></div>
-<p><em>The following content is adapted from the excellent book “Hands-on machine learning with scikit-learn, keras and tensorflow” from <span class="citation">Géron (<a href="#ref-Geron2019" role="doc-biblioref">2019</a>)</span>.</em></p>
 <p>In this example, our goal is to build a model of housing prices in California. In particular, the model should learn from California census data and be able to predict the median house price in any district (population of 600 to 3000 people), given some predictor variables. We use the root mean square error (RMSE) as a performance measure for our regression problem.</p>
 <div id="data-understanding" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Data understanding</h2>
-<div class="puzzle">
+<div class="note">
+<p>In Data Understanding, you will learn how to:</p>
 <ul>
 <li>Import data</li>
 <li>Get an overview about the data structure</li>
+<li>Split data into training and test set</li>
 </ul>
 </div>
+<div id="imort-data" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Imort Data</h3>
 <p>First of all, let’s import the data:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1"></a>LINK &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/kirenz/datasets/master/housing.csv&quot;</span></span>
 <span id="cb2-2"><a href="intro.html#cb2-2"></a>housing &lt;-<span class="st"> </span><span class="kw">read_csv</span>(LINK)</span></code></pre></div>
+</div>
+<div id="data-overview" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Data overview</h3>
 <p>Next, we take a look at the data structure:</p>
 <p>California census top 4 rows of the DataFrame:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1"></a><span class="kw">head</span>(housing, <span class="dv">4</span>)</span></code></pre></div>
@@ -278,10 +290,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1"></a><span class="kw">glimpse</span>(housing)</span></code></pre></div>
 <p>Data summary of numerical and categorical attributes using a function from the package <code>skimr</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1"></a><span class="kw">skim</span>(housing)</span></code></pre></div>
+<p>Count levels of our categorical variable:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1"></a>housing <span class="op">%&gt;%</span></span>
+<span id="cb6-2"><a href="intro.html#cb6-2"></a><span class="st">  </span><span class="kw">count</span>(ocean_proximity,</span>
+<span id="cb6-3"><a href="intro.html#cb6-3"></a>    <span class="dt">sort =</span> <span class="ot">TRUE</span></span>
+<span id="cb6-4"><a href="intro.html#cb6-4"></a>  )</span></code></pre></div>
 <p>The function <code>ggscatmat</code> from the package <code>GGally</code> creates a matrix with scatterplots, densities and correlations for numeric columns. In our code, we enter the dataset <code>housing</code>, an color column for our categorical variable <code>ocean_proximity</code>, and an alpha level of 0.8 (for transparency).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1"></a><span class="kw">ggscatmat</span>(housing, <span class="dt">color =</span> <span class="st">&quot;ocean_proximity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1"></a><span class="kw">ggscatmat</span>(housing, <span class="dt">color =</span> <span class="st">&quot;ocean_proximity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <p>To obtain an overview of even more visualizations, we can use the function <code>ggpairs</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1"></a><span class="kw">ggpairs</span>(housing)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1"></a><span class="kw">ggpairs</span>(housing)</span></code></pre></div>
+</div>
+<div id="data-splitting" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Data splitting</h3>
+<p>Let’s assume we would know that the median income is a very important attribute to predict median housing prices. Take a look at <a href="#fig:hist-med-income"><strong>??</strong></a></p>
+<p>Histogram for median income</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1"></a>housing <span class="op">%&gt;%</span></span>
+<span id="cb9-2"><a href="intro.html#cb9-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(median_income)) <span class="op">+</span></span>
+<span id="cb9-3"><a href="intro.html#cb9-3"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">30</span>)</span></code></pre></div>
+<p>Therefore, we would want to ensure that the test set is representative of the the various categories of incomes in the whole dataset. Hence, we use stratified sampling</p>
+<p>Let’s create a training and test set using stratified sampling.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb10-2"><a href="intro.html#cb10-2"></a></span>
+<span id="cb10-3"><a href="intro.html#cb10-3"></a>new_split &lt;-<span class="st"> </span><span class="kw">initial_split</span>(housing,</span>
+<span id="cb10-4"><a href="intro.html#cb10-4"></a>  <span class="dt">prop =</span> <span class="dv">3</span> <span class="op">/</span><span class="st"> </span><span class="dv">4</span>,</span>
+<span id="cb10-5"><a href="intro.html#cb10-5"></a>  <span class="dt">strata =</span> median_income,</span>
+<span id="cb10-6"><a href="intro.html#cb10-6"></a>  <span class="dt">breaks =</span> <span class="dv">5</span></span>
+<span id="cb10-7"><a href="intro.html#cb10-7"></a>)</span>
+<span id="cb10-8"><a href="intro.html#cb10-8"></a></span>
+<span id="cb10-9"><a href="intro.html#cb10-9"></a>new_train &lt;-<span class="st"> </span><span class="kw">training</span>(new_split)</span>
+<span id="cb10-10"><a href="intro.html#cb10-10"></a>new_test &lt;-<span class="st"> </span><span class="kw">testing</span>(new_split)</span></code></pre></div>
+</div>
 </div>
 <div id="model-type" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Model type</h2>
@@ -290,55 +328,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Set the <code>engine</code>: choose from this <a href="https://www.tidymodels.org/find/parsnip/">list</a></li>
 <li>Set the <code>mode</code>: regression or classification</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1"></a><span class="kw">library</span>(tidymodels)</span>
-<span id="cb8-2"><a href="intro.html#cb8-2"></a></span>
-<span id="cb8-3"><a href="intro.html#cb8-3"></a>lm_spec &lt;-<span class="st"> </span><span class="co"># your model specification</span></span>
-<span id="cb8-4"><a href="intro.html#cb8-4"></a><span class="st">  </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># model type</span></span>
-<span id="cb8-5"><a href="intro.html#cb8-5"></a><span class="st">  </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># model engine</span></span>
-<span id="cb8-6"><a href="intro.html#cb8-6"></a><span class="st">  </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="co"># model mode</span></span>
-<span id="cb8-7"><a href="intro.html#cb8-7"></a></span>
-<span id="cb8-8"><a href="intro.html#cb8-8"></a><span class="co"># Show your model specification</span></span>
-<span id="cb8-9"><a href="intro.html#cb8-9"></a>lm_spec</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb11-2"><a href="intro.html#cb11-2"></a></span>
+<span id="cb11-3"><a href="intro.html#cb11-3"></a>lm_spec &lt;-<span class="st"> </span><span class="co"># your model specification</span></span>
+<span id="cb11-4"><a href="intro.html#cb11-4"></a><span class="st">  </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># model type</span></span>
+<span id="cb11-5"><a href="intro.html#cb11-5"></a><span class="st">  </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># model engine</span></span>
+<span id="cb11-6"><a href="intro.html#cb11-6"></a><span class="st">  </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="co"># model mode</span></span>
+<span id="cb11-7"><a href="intro.html#cb11-7"></a></span>
+<span id="cb11-8"><a href="intro.html#cb11-8"></a><span class="co"># Show your model specification</span></span>
+<span id="cb11-9"><a href="intro.html#cb11-9"></a>lm_spec</span></code></pre></div>
 </div>
 <div id="model-training" class="section level2" number="1.3">
 <h2><span class="header-section-number">1.3</span> Model training</h2>
 <p>In the training process, you run an algorithm on data and thereby produce a model. This process is also called model fitting.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1"></a>lm_fit &lt;-<span class="st"> </span><span class="co"># your fitted model</span></span>
-<span id="cb9-2"><a href="intro.html#cb9-2"></a><span class="st">  </span><span class="kw">fit</span>(</span>
-<span id="cb9-3"><a href="intro.html#cb9-3"></a>    lm_spec, <span class="co"># your model specification</span></span>
-<span id="cb9-4"><a href="intro.html#cb9-4"></a>    Sale_Price <span class="op">~</span><span class="st"> </span>Gr_Liv_Area, <span class="co"># a Linear Regression formula</span></span>
-<span id="cb9-5"><a href="intro.html#cb9-5"></a>    <span class="dt">data =</span> ames <span class="co"># your data</span></span>
-<span id="cb9-6"><a href="intro.html#cb9-6"></a>  )</span>
-<span id="cb9-7"><a href="intro.html#cb9-7"></a></span>
-<span id="cb9-8"><a href="intro.html#cb9-8"></a><span class="co"># Show your fitted model</span></span>
-<span id="cb9-9"><a href="intro.html#cb9-9"></a>lm_fit</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1"></a>lm_fit &lt;-<span class="st"> </span><span class="co"># your fitted model</span></span>
+<span id="cb12-2"><a href="intro.html#cb12-2"></a><span class="st">  </span><span class="kw">fit</span>(</span>
+<span id="cb12-3"><a href="intro.html#cb12-3"></a>    lm_spec, <span class="co"># your model specification</span></span>
+<span id="cb12-4"><a href="intro.html#cb12-4"></a>    Sale_Price <span class="op">~</span><span class="st"> </span>Gr_Liv_Area, <span class="co"># a Linear Regression formula</span></span>
+<span id="cb12-5"><a href="intro.html#cb12-5"></a>    <span class="dt">data =</span> ames <span class="co"># your data</span></span>
+<span id="cb12-6"><a href="intro.html#cb12-6"></a>  )</span>
+<span id="cb12-7"><a href="intro.html#cb12-7"></a></span>
+<span id="cb12-8"><a href="intro.html#cb12-8"></a><span class="co"># Show your fitted model</span></span>
+<span id="cb12-9"><a href="intro.html#cb12-9"></a>lm_fit</span></code></pre></div>
 </div>
 <div id="model-predictions" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span> Model predictions</h2>
 <p>We use our fitted model to make predictions.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1"></a>price_pred &lt;-</span>
-<span id="cb10-2"><a href="intro.html#cb10-2"></a><span class="st">  </span>lm_fit <span class="op">%&gt;%</span></span>
-<span id="cb10-3"><a href="intro.html#cb10-3"></a><span class="st">  </span><span class="kw">predict</span>(<span class="dt">new_data =</span> ames) <span class="op">%&gt;%</span></span>
-<span id="cb10-4"><a href="intro.html#cb10-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">price_truth =</span> ames<span class="op">$</span>Sale_Price)</span>
-<span id="cb10-5"><a href="intro.html#cb10-5"></a></span>
-<span id="cb10-6"><a href="intro.html#cb10-6"></a><span class="kw">head</span>(price_pred)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="intro.html#cb13-1"></a>price_pred &lt;-</span>
+<span id="cb13-2"><a href="intro.html#cb13-2"></a><span class="st">  </span>lm_fit <span class="op">%&gt;%</span></span>
+<span id="cb13-3"><a href="intro.html#cb13-3"></a><span class="st">  </span><span class="kw">predict</span>(<span class="dt">new_data =</span> ames) <span class="op">%&gt;%</span></span>
+<span id="cb13-4"><a href="intro.html#cb13-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">price_truth =</span> ames<span class="op">$</span>Sale_Price)</span>
+<span id="cb13-5"><a href="intro.html#cb13-5"></a></span>
+<span id="cb13-6"><a href="intro.html#cb13-6"></a><span class="kw">head</span>(price_pred)</span></code></pre></div>
 <p>If we would want to make predictions for new houses, we could proceed as follows:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1"></a><span class="co"># New values (our x variable)</span></span>
-<span id="cb11-2"><a href="intro.html#cb11-2"></a>new_homes &lt;-</span>
-<span id="cb11-3"><a href="intro.html#cb11-3"></a><span class="st">  </span><span class="kw">tibble</span>(<span class="dt">Gr_Liv_Area =</span> <span class="kw">c</span>(<span class="dv">334</span>, <span class="dv">1126</span>, <span class="dv">1442</span>, <span class="dv">1500</span>, <span class="dv">1743</span>, <span class="dv">5642</span>))</span>
-<span id="cb11-4"><a href="intro.html#cb11-4"></a></span>
-<span id="cb11-5"><a href="intro.html#cb11-5"></a><span class="co"># Prediction for new houses (predict y)</span></span>
-<span id="cb11-6"><a href="intro.html#cb11-6"></a>lm_fit <span class="op">%&gt;%</span></span>
-<span id="cb11-7"><a href="intro.html#cb11-7"></a><span class="st">  </span><span class="kw">predict</span>(<span class="dt">new_data =</span> new_homes)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1"></a><span class="co"># New values (our x variable)</span></span>
+<span id="cb14-2"><a href="intro.html#cb14-2"></a>new_homes &lt;-</span>
+<span id="cb14-3"><a href="intro.html#cb14-3"></a><span class="st">  </span><span class="kw">tibble</span>(<span class="dt">Gr_Liv_Area =</span> <span class="kw">c</span>(<span class="dv">334</span>, <span class="dv">1126</span>, <span class="dv">1442</span>, <span class="dv">1500</span>, <span class="dv">1743</span>, <span class="dv">5642</span>))</span>
+<span id="cb14-4"><a href="intro.html#cb14-4"></a></span>
+<span id="cb14-5"><a href="intro.html#cb14-5"></a><span class="co"># Prediction for new houses (predict y)</span></span>
+<span id="cb14-6"><a href="intro.html#cb14-6"></a>lm_fit <span class="op">%&gt;%</span></span>
+<span id="cb14-7"><a href="intro.html#cb14-7"></a><span class="st">  </span><span class="kw">predict</span>(<span class="dt">new_data =</span> new_homes)</span></code></pre></div>
 </div>
 <div id="model-evaluation" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Model evaluation</h2>
 <p>We use the Root Mean Squared Error (RMSE) to evaluate our regression model. Therefore, we use the function <span class="math inline">\(rmse(data, truth, estimate)\)</span>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1"></a><span class="kw">rmse</span>(</span>
-<span id="cb12-2"><a href="intro.html#cb12-2"></a>  <span class="dt">data =</span> price_pred,</span>
-<span id="cb12-3"><a href="intro.html#cb12-3"></a>  <span class="dt">truth =</span> price_truth,</span>
-<span id="cb12-4"><a href="intro.html#cb12-4"></a>  <span class="dt">estimate =</span> .pred</span>
-<span id="cb12-5"><a href="intro.html#cb12-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="intro.html#cb15-1"></a><span class="kw">rmse</span>(</span>
+<span id="cb15-2"><a href="intro.html#cb15-2"></a>  <span class="dt">data =</span> price_pred,</span>
+<span id="cb15-3"><a href="intro.html#cb15-3"></a>  <span class="dt">truth =</span> price_truth,</span>
+<span id="cb15-4"><a href="intro.html#cb15-4"></a>  <span class="dt">estimate =</span> .pred</span>
+<span id="cb15-5"><a href="intro.html#cb15-5"></a>)</span></code></pre></div>
 </div>
 </div>
 <h3>References</h3>
