@@ -1,4 +1,6 @@
 bookdown::gitbook:
+  bibliography: book.bib
+  biblio-style: "apalike"
   css: style.css
   config:
     toc:
@@ -14,5 +16,4 @@ bookdown::pdf_book:
   citation_package: natbib
   keep_tex: yes
 bookdown::epub_book: default
-bibliography: book.bib
-biblio-style: "apalike"
+

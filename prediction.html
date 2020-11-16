@@ -4,27 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 18 Prediction | Advanced Analytics with Tidymodels</title>
-  <meta name="description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
+  <title>Chapter 18 Prediction | Advanced Analytics with Tidymodels in R</title>
+  <meta name="description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 18 Prediction | Advanced Analytics with Tidymodels" />
+  <meta property="og:title" content="Chapter 18 Prediction | Advanced Analytics with Tidymodels in R" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
+  <meta property="og:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 18 Prediction | Advanced Analytics with Tidymodels" />
+  <meta name="twitter:title" content="Chapter 18 Prediction | Advanced Analytics with Tidymodels in R" />
   
-  <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
+  <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   
 
 <meta name="author" content="Prof. Dr. Jan Kirenz" />
 
 
-<meta name="date" content="2020-11-05" />
+<meta name="date" content="2020-11-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -140,14 +140,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>I BUILD A MODEL</b></span></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Build a Model</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#model-type"><i class="fa fa-check"></i><b>1.1</b> Model type</a></li>
-<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#model-training"><i class="fa fa-check"></i><b>1.2</b> Model training</a></li>
-<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#model-predictions"><i class="fa fa-check"></i><b>1.3</b> Model predictions</a></li>
-<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#model-evaluation"><i class="fa fa-check"></i><b>1.4</b> Model evaluation</a></li>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#data-understanding"><i class="fa fa-check"></i><b>1.1</b> Data understanding</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#imort-data"><i class="fa fa-check"></i><b>1.1.1</b> Imort Data</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#data-overview"><i class="fa fa-check"></i><b>1.1.2</b> Data overview</a></li>
+<li class="chapter" data-level="1.1.3" data-path="intro.html"><a href="intro.html#data-splitting"><i class="fa fa-check"></i><b>1.1.3</b> Data splitting</a></li>
+<li class="chapter" data-level="1.1.4" data-path="intro.html"><a href="intro.html#data-exploration"><i class="fa fa-check"></i><b>1.1.4</b> Data exploration</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#model-type"><i class="fa fa-check"></i><b>1.2</b> Model type</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#model-training"><i class="fa fa-check"></i><b>1.3</b> Model training</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#model-predictions"><i class="fa fa-check"></i><b>1.4</b> Model predictions</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#model-evaluation"><i class="fa fa-check"></i><b>1.5</b> Model evaluation</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html"><i class="fa fa-check"></i><b>2</b> Process with data splitting</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting"><i class="fa fa-check"></i><b>2.1</b> Data splitting</a></li>
+<li class="chapter" data-level="2.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting-1"><i class="fa fa-check"></i><b>2.1</b> Data splitting</a></li>
 <li class="chapter" data-level="2.2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-type-1"><i class="fa fa-check"></i><b>2.2</b> Model type</a></li>
 <li class="chapter" data-level="2.3" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-training-1"><i class="fa fa-check"></i><b>2.3</b> Model training</a></li>
 <li class="chapter" data-level="2.4" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-predictions-1"><i class="fa fa-check"></i><b>2.4</b> Model predictions</a></li>
@@ -197,9 +204,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>IV WORKFLOWS &amp; MODELS</b></span></li>
 <li class="chapter" data-level="13" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>13</b> Data preparation</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview"><i class="fa fa-check"></i><b>13.1</b> Data overview</a></li>
+<li class="chapter" data-level="13.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>13.1</b> Data overview</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="data-splitting-1.html"><a href="data-splitting-1.html"><i class="fa fa-check"></i><b>14</b> Data splitting</a></li>
+<li class="chapter" data-level="14" data-path="data-splitting-2.html"><a href="data-splitting-2.html"><i class="fa fa-check"></i><b>14</b> Data splitting</a></li>
 <li class="chapter" data-level="15" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>15</b> Create recipe and roles</a>
 <ul>
 <li class="chapter" data-level="15.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>15.1</b> Create features</a>
@@ -266,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Analytics with Tidymodels</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Analytics with Tidymodels in R</a>
           </h1>
         </div>
 
@@ -279,100 +286,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>predict()</code> method applies the recipe to the new data, then passes them to the fitted model. Let`s use the logistic regression model as an example for the next steps.</p>
 <div id="logistic-regression-4" class="section level2" number="18.1">
 <h2><span class="header-section-number">18.1</span> Logistic regression</h2>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="prediction.html#cb111-1"></a><span class="kw">predict</span>(flights_fit_lr_mode, </span>
-<span id="cb111-2"><a href="prediction.html#cb111-2"></a>        test_data)</span></code></pre></div>
-<pre><code>## # A tibble: 2,500 x 1
-##    .pred_class
-##    &lt;fct&gt;      
-##  1 on_time    
-##  2 on_time    
-##  3 on_time    
-##  4 on_time    
-##  5 on_time    
-##  6 on_time    
-##  7 on_time    
-##  8 on_time    
-##  9 on_time    
-## 10 on_time    
-## # … with 2,490 more rows</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="prediction.html#cb84-1"></a><span class="kw">predict</span>(</span>
+<span id="cb84-2"><a href="prediction.html#cb84-2"></a>  flights_fit_lr_mode,</span>
+<span id="cb84-3"><a href="prediction.html#cb84-3"></a>  test_data</span>
+<span id="cb84-4"><a href="prediction.html#cb84-4"></a>)</span></code></pre></div>
 <p>Because our outcome variable here is a factor, the output from <code>predict()</code> returns the predicted class: late versus on_time. But, let’s say we want the predicted class <em>probabilities</em> for each flight instead. To return those, we can specify <code>type = "prob"</code> when we use <code>predict()</code>. We’ll also bind the output with some variables from the test data and save them together:</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="prediction.html#cb113-1"></a>flights_pred_lr_mod &lt;-<span class="st"> </span></span>
-<span id="cb113-2"><a href="prediction.html#cb113-2"></a><span class="st">  </span><span class="kw">predict</span>(flights_fit_lr_mode, </span>
-<span id="cb113-3"><a href="prediction.html#cb113-3"></a>          test_data, </span>
-<span id="cb113-4"><a href="prediction.html#cb113-4"></a>          <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb113-5"><a href="prediction.html#cb113-5"></a><span class="st">  </span><span class="kw">bind_cols</span>(test_data <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb113-6"><a href="prediction.html#cb113-6"></a><span class="st">              </span><span class="kw">select</span>(arr_delay, </span>
-<span id="cb113-7"><a href="prediction.html#cb113-7"></a>                     time_hour, </span>
-<span id="cb113-8"><a href="prediction.html#cb113-8"></a>                     flight)) </span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="prediction.html#cb85-1"></a>flights_pred_lr_mod &lt;-</span>
+<span id="cb85-2"><a href="prediction.html#cb85-2"></a><span class="st">  </span><span class="kw">predict</span>(flights_fit_lr_mode,</span>
+<span id="cb85-3"><a href="prediction.html#cb85-3"></a>    test_data,</span>
+<span id="cb85-4"><a href="prediction.html#cb85-4"></a>    <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span></span>
+<span id="cb85-5"><a href="prediction.html#cb85-5"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb85-6"><a href="prediction.html#cb85-6"></a><span class="st">  </span><span class="kw">bind_cols</span>(test_data <span class="op">%&gt;%</span></span>
+<span id="cb85-7"><a href="prediction.html#cb85-7"></a><span class="st">    </span><span class="kw">select</span>(</span>
+<span id="cb85-8"><a href="prediction.html#cb85-8"></a>      arr_delay,</span>
+<span id="cb85-9"><a href="prediction.html#cb85-9"></a>      time_hour,</span>
+<span id="cb85-10"><a href="prediction.html#cb85-10"></a>      flight</span>
+<span id="cb85-11"><a href="prediction.html#cb85-11"></a>    ))</span></code></pre></div>
 <p>The data look like:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="prediction.html#cb114-1"></a><span class="kw">head</span>(flights_pred_lr_mod)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 5
-##   .pred_late .pred_on_time arr_delay time_hour           flight
-##        &lt;dbl&gt;         &lt;dbl&gt; &lt;fct&gt;     &lt;dttm&gt;               &lt;int&gt;
-## 1     0.0358         0.964 on_time   2013-03-04 07:00:00   4122
-## 2     0.0987         0.901 on_time   2013-02-20 18:00:00   4517
-## 3     0.310          0.690 on_time   2013-04-02 18:00:00    373
-## 4     0.102          0.898 on_time   2013-12-10 06:00:00   4424
-## 5     0.0373         0.963 on_time   2013-10-30 10:00:00   2602
-## 6     0.0867         0.913 late      2013-05-25 08:00:00   3608</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="prediction.html#cb86-1"></a><span class="kw">head</span>(flights_pred_lr_mod)</span></code></pre></div>
 <p>Now that we have a tibble with our predicted class probabilities, how will we evaluate the performance of our workflow? We would like to calculate a metric that tells how well our model predicted late arrivals, compared to the true status of our outcome variable, <code>arr_delay</code>.</p>
 <div id="roc-curve" class="section level3" number="18.1.1">
 <h3><span class="header-section-number">18.1.1</span> ROC curve</h3>
 <p>Let’s use the area under the <a href="https://bookdown.org/max/FES/measuring-performance.html#class-metrics">ROC curve</a> as our metric, computed using <code>roc_curve()</code> and <code>roc_auc()</code> from the <code>yardstick</code> package.</p>
 <p>To generate a ROC curve, we need the predicted class probabilities for <code>late</code> and <code>on_time</code>, which we just calculated in the code chunk above. We can create the ROC curve with these values, using <code>roc_curve()</code> and then piping to the <code>autoplot()</code> method:</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="prediction.html#cb116-1"></a>flights_pred_lr_mod <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb116-2"><a href="prediction.html#cb116-2"></a><span class="st">  </span><span class="kw">roc_curve</span>(<span class="dt">truth =</span> arr_delay, </span>
-<span id="cb116-3"><a href="prediction.html#cb116-3"></a>            .pred_late) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb116-4"><a href="prediction.html#cb116-4"></a><span class="st">  </span><span class="kw">autoplot</span>()</span></code></pre></div>
-<p><img src="advanced-analytics_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="prediction.html#cb87-1"></a>flights_pred_lr_mod <span class="op">%&gt;%</span></span>
+<span id="cb87-2"><a href="prediction.html#cb87-2"></a><span class="st">  </span><span class="kw">roc_curve</span>(</span>
+<span id="cb87-3"><a href="prediction.html#cb87-3"></a>    <span class="dt">truth =</span> arr_delay,</span>
+<span id="cb87-4"><a href="prediction.html#cb87-4"></a>    .pred_late</span>
+<span id="cb87-5"><a href="prediction.html#cb87-5"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb87-6"><a href="prediction.html#cb87-6"></a><span class="st">  </span><span class="kw">autoplot</span>()</span></code></pre></div>
 </div>
 <div id="auc" class="section level3" number="18.1.2">
 <h3><span class="header-section-number">18.1.2</span> AUC</h3>
 <p>Similarly, <code>roc_auc()</code> estimates the area under the curve:</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="prediction.html#cb117-1"></a>flights_pred_lr_mod <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb117-2"><a href="prediction.html#cb117-2"></a><span class="st">  </span><span class="kw">roc_auc</span>(<span class="dt">truth =</span> arr_delay, .pred_late)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 3
-##   .metric .estimator .estimate
-##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-## 1 roc_auc binary         0.746</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="prediction.html#cb88-1"></a>flights_pred_lr_mod <span class="op">%&gt;%</span></span>
+<span id="cb88-2"><a href="prediction.html#cb88-2"></a><span class="st">  </span><span class="kw">roc_auc</span>(<span class="dt">truth =</span> arr_delay, .pred_late)</span></code></pre></div>
 </div>
 <div id="accuracy" class="section level3" number="18.1.3">
 <h3><span class="header-section-number">18.1.3</span> Accuracy</h3>
 <p>We use the <code>metrics()</code> function to measure the performance of the model. It will automatically choose metrics appropriate for a given type of model. The function expects a tibble that contains the actual results (truth) and what the model predicted (estimate).</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="prediction.html#cb119-1"></a>flights_fit_lr_mode <span class="op">%&gt;%</span></span>
-<span id="cb119-2"><a href="prediction.html#cb119-2"></a><span class="st">  </span><span class="kw">predict</span>(test_data) <span class="op">%&gt;%</span></span>
-<span id="cb119-3"><a href="prediction.html#cb119-3"></a><span class="st">  </span><span class="kw">bind_cols</span>(test_data) <span class="op">%&gt;%</span></span>
-<span id="cb119-4"><a href="prediction.html#cb119-4"></a><span class="st">  </span><span class="kw">metrics</span>(<span class="dt">truth =</span> arr_delay, </span>
-<span id="cb119-5"><a href="prediction.html#cb119-5"></a>          <span class="dt">estimate =</span> .pred_class)</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 3
-##   .metric  .estimator .estimate
-##   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
-## 1 accuracy binary         0.847
-## 2 kap      binary         0.182</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="prediction.html#cb89-1"></a>flights_fit_lr_mode <span class="op">%&gt;%</span></span>
+<span id="cb89-2"><a href="prediction.html#cb89-2"></a><span class="st">  </span><span class="kw">predict</span>(test_data) <span class="op">%&gt;%</span></span>
+<span id="cb89-3"><a href="prediction.html#cb89-3"></a><span class="st">  </span><span class="kw">bind_cols</span>(test_data) <span class="op">%&gt;%</span></span>
+<span id="cb89-4"><a href="prediction.html#cb89-4"></a><span class="st">  </span><span class="kw">metrics</span>(</span>
+<span id="cb89-5"><a href="prediction.html#cb89-5"></a>    <span class="dt">truth =</span> arr_delay,</span>
+<span id="cb89-6"><a href="prediction.html#cb89-6"></a>    <span class="dt">estimate =</span> .pred_class</span>
+<span id="cb89-7"><a href="prediction.html#cb89-7"></a>  )</span></code></pre></div>
 </div>
 <div id="recall" class="section level3" number="18.1.4">
 <h3><span class="header-section-number">18.1.4</span> Recall</h3>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="prediction.html#cb121-1"></a>flights_fit_lr_mode <span class="op">%&gt;%</span></span>
-<span id="cb121-2"><a href="prediction.html#cb121-2"></a><span class="st">  </span><span class="kw">predict</span>(test_data) <span class="op">%&gt;%</span></span>
-<span id="cb121-3"><a href="prediction.html#cb121-3"></a><span class="st">    </span><span class="kw">bind_cols</span>(test_data) <span class="op">%&gt;%</span></span>
-<span id="cb121-4"><a href="prediction.html#cb121-4"></a><span class="st">  </span><span class="kw">recall</span>(<span class="dt">truth =</span> arr_delay, </span>
-<span id="cb121-5"><a href="prediction.html#cb121-5"></a>          <span class="dt">estimate =</span> .pred_class)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 3
-##   .metric .estimator .estimate
-##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-## 1 recall  binary         0.153</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="prediction.html#cb90-1"></a>flights_fit_lr_mode <span class="op">%&gt;%</span></span>
+<span id="cb90-2"><a href="prediction.html#cb90-2"></a><span class="st">  </span><span class="kw">predict</span>(test_data) <span class="op">%&gt;%</span></span>
+<span id="cb90-3"><a href="prediction.html#cb90-3"></a><span class="st">  </span><span class="kw">bind_cols</span>(test_data) <span class="op">%&gt;%</span></span>
+<span id="cb90-4"><a href="prediction.html#cb90-4"></a><span class="st">  </span><span class="kw">recall</span>(</span>
+<span id="cb90-5"><a href="prediction.html#cb90-5"></a>    <span class="dt">truth =</span> arr_delay,</span>
+<span id="cb90-6"><a href="prediction.html#cb90-6"></a>    <span class="dt">estimate =</span> .pred_class</span>
+<span id="cb90-7"><a href="prediction.html#cb90-7"></a>  )</span></code></pre></div>
 </div>
 <div id="precision" class="section level3" number="18.1.5">
 <h3><span class="header-section-number">18.1.5</span> Precision</h3>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="prediction.html#cb123-1"></a>flights_fit_lr_mode <span class="op">%&gt;%</span></span>
-<span id="cb123-2"><a href="prediction.html#cb123-2"></a><span class="st">  </span><span class="kw">predict</span>(test_data) <span class="op">%&gt;%</span></span>
-<span id="cb123-3"><a href="prediction.html#cb123-3"></a><span class="st">    </span><span class="kw">bind_cols</span>(test_data) <span class="op">%&gt;%</span></span>
-<span id="cb123-4"><a href="prediction.html#cb123-4"></a><span class="st">  </span><span class="kw">precision</span>(<span class="dt">truth =</span> arr_delay, </span>
-<span id="cb123-5"><a href="prediction.html#cb123-5"></a>          <span class="dt">estimate =</span> .pred_class)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 3
-##   .metric   .estimator .estimate
-##   &lt;chr&gt;     &lt;chr&gt;          &lt;dbl&gt;
-## 1 precision binary         0.541</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="prediction.html#cb91-1"></a>flights_fit_lr_mode <span class="op">%&gt;%</span></span>
+<span id="cb91-2"><a href="prediction.html#cb91-2"></a><span class="st">  </span><span class="kw">predict</span>(test_data) <span class="op">%&gt;%</span></span>
+<span id="cb91-3"><a href="prediction.html#cb91-3"></a><span class="st">  </span><span class="kw">bind_cols</span>(test_data) <span class="op">%&gt;%</span></span>
+<span id="cb91-4"><a href="prediction.html#cb91-4"></a><span class="st">  </span><span class="kw">precision</span>(</span>
+<span id="cb91-5"><a href="prediction.html#cb91-5"></a>    <span class="dt">truth =</span> arr_delay,</span>
+<span id="cb91-6"><a href="prediction.html#cb91-6"></a>    <span class="dt">estimate =</span> .pred_class</span>
+<span id="cb91-7"><a href="prediction.html#cb91-7"></a>  )</span></code></pre></div>
 
 </div>
 </div>

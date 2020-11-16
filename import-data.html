@@ -4,27 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Import data | Advanced Analytics with Tidymodels</title>
-  <meta name="description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
+  <title>Chapter 3 Import data | Advanced Analytics with Tidymodels in R</title>
+  <meta name="description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Import data | Advanced Analytics with Tidymodels" />
+  <meta property="og:title" content="Chapter 3 Import data | Advanced Analytics with Tidymodels in R" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
+  <meta property="og:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Import data | Advanced Analytics with Tidymodels" />
+  <meta name="twitter:title" content="Chapter 3 Import data | Advanced Analytics with Tidymodels in R" />
   
-  <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with R’s Tidymodels." />
+  <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   
 
 <meta name="author" content="Prof. Dr. Jan Kirenz" />
 
 
-<meta name="date" content="2020-11-05" />
+<meta name="date" content="2020-11-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -140,14 +140,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>I BUILD A MODEL</b></span></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Build a Model</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#model-type"><i class="fa fa-check"></i><b>1.1</b> Model type</a></li>
-<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#model-training"><i class="fa fa-check"></i><b>1.2</b> Model training</a></li>
-<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#model-predictions"><i class="fa fa-check"></i><b>1.3</b> Model predictions</a></li>
-<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#model-evaluation"><i class="fa fa-check"></i><b>1.4</b> Model evaluation</a></li>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#data-understanding"><i class="fa fa-check"></i><b>1.1</b> Data understanding</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#imort-data"><i class="fa fa-check"></i><b>1.1.1</b> Imort Data</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#data-overview"><i class="fa fa-check"></i><b>1.1.2</b> Data overview</a></li>
+<li class="chapter" data-level="1.1.3" data-path="intro.html"><a href="intro.html#data-splitting"><i class="fa fa-check"></i><b>1.1.3</b> Data splitting</a></li>
+<li class="chapter" data-level="1.1.4" data-path="intro.html"><a href="intro.html#data-exploration"><i class="fa fa-check"></i><b>1.1.4</b> Data exploration</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#model-type"><i class="fa fa-check"></i><b>1.2</b> Model type</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#model-training"><i class="fa fa-check"></i><b>1.3</b> Model training</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#model-predictions"><i class="fa fa-check"></i><b>1.4</b> Model predictions</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#model-evaluation"><i class="fa fa-check"></i><b>1.5</b> Model evaluation</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html"><i class="fa fa-check"></i><b>2</b> Process with data splitting</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting"><i class="fa fa-check"></i><b>2.1</b> Data splitting</a></li>
+<li class="chapter" data-level="2.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting-1"><i class="fa fa-check"></i><b>2.1</b> Data splitting</a></li>
 <li class="chapter" data-level="2.2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-type-1"><i class="fa fa-check"></i><b>2.2</b> Model type</a></li>
 <li class="chapter" data-level="2.3" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-training-1"><i class="fa fa-check"></i><b>2.3</b> Model training</a></li>
 <li class="chapter" data-level="2.4" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-predictions-1"><i class="fa fa-check"></i><b>2.4</b> Model predictions</a></li>
@@ -197,9 +204,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>IV WORKFLOWS &amp; MODELS</b></span></li>
 <li class="chapter" data-level="13" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>13</b> Data preparation</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview"><i class="fa fa-check"></i><b>13.1</b> Data overview</a></li>
+<li class="chapter" data-level="13.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>13.1</b> Data overview</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="data-splitting-1.html"><a href="data-splitting-1.html"><i class="fa fa-check"></i><b>14</b> Data splitting</a></li>
+<li class="chapter" data-level="14" data-path="data-splitting-2.html"><a href="data-splitting-2.html"><i class="fa fa-check"></i><b>14</b> Data splitting</a></li>
 <li class="chapter" data-level="15" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>15</b> Create recipe and roles</a>
 <ul>
 <li class="chapter" data-level="15.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>15.1</b> Create features</a>
@@ -266,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Analytics with Tidymodels</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Analytics with Tidymodels in R</a>
           </h1>
         </div>
 
@@ -276,19 +283,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="import-data" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Import data</h1>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="import-data.html#cb19-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb19-2"><a href="import-data.html#cb19-2"></a></span>
-<span id="cb19-3"><a href="import-data.html#cb19-3"></a>ames &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/kirenz/datasets/master/ames.csv&quot;</span>)</span>
-<span id="cb19-4"><a href="import-data.html#cb19-4"></a></span>
-<span id="cb19-5"><a href="import-data.html#cb19-5"></a>ames &lt;-<span class="st"> </span></span>
-<span id="cb19-6"><a href="import-data.html#cb19-6"></a><span class="st">  </span>ames <span class="op">%&gt;%</span></span>
-<span id="cb19-7"><a href="import-data.html#cb19-7"></a><span class="st">  </span><span class="kw">select</span>(Sale_Price, Gr_Liv_Area)</span>
-<span id="cb19-8"><a href="import-data.html#cb19-8"></a></span>
-<span id="cb19-9"><a href="import-data.html#cb19-9"></a><span class="kw">glimpse</span>(ames)</span></code></pre></div>
-<pre><code>## Rows: 2,930
-## Columns: 2
-## $ Sale_Price  &lt;dbl&gt; 215000, 105000, 172000, 244000, 189900, 195500, 213500, 1…
-## $ Gr_Liv_Area &lt;dbl&gt; 1656, 896, 1329, 2110, 1629, 1604, 1338, 1280, 1616, 1804…</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="import-data.html#cb25-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb25-2"><a href="import-data.html#cb25-2"></a></span>
+<span id="cb25-3"><a href="import-data.html#cb25-3"></a>ames &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/kirenz/datasets/master/ames.csv&quot;</span>)</span>
+<span id="cb25-4"><a href="import-data.html#cb25-4"></a></span>
+<span id="cb25-5"><a href="import-data.html#cb25-5"></a>ames &lt;-</span>
+<span id="cb25-6"><a href="import-data.html#cb25-6"></a><span class="st">  </span>ames <span class="op">%&gt;%</span></span>
+<span id="cb25-7"><a href="import-data.html#cb25-7"></a><span class="st">  </span><span class="kw">select</span>(Sale_Price, Gr_Liv_Area)</span>
+<span id="cb25-8"><a href="import-data.html#cb25-8"></a></span>
+<span id="cb25-9"><a href="import-data.html#cb25-9"></a><span class="kw">glimpse</span>(ames)</span></code></pre></div>
 </div>
             </section>
 

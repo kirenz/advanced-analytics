@@ -36,7 +36,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Advanced Analytics with Tidymodels},
+  pdftitle={Advanced Analytics with Tidymodels in R},
   pdfauthor={Prof.~Dr.~Jan Kirenz},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
@@ -111,9 +111,9 @@
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
-\title{Advanced Analytics with Tidymodels}
+\title{Advanced Analytics with Tidymodels in R}
 \author{Prof.~Dr.~Jan Kirenz}
-\date{2020-11-05}
+\date{2020-11-16}
 
 \begin{document}
 \maketitle
@@ -126,7 +126,7 @@
 \chapter*{Welcome}\label{welcome}}
 \addcontentsline{toc}{chapter}{Welcome}
 
-This book provides an introduction to advanced analytics with R using the modeling packages called \href{https://tidymodels.org}{tidymodels} to build, evaluate, compare, and tune predictive models.
+This book provides an introduction to advanced analytics with R using the \href{https://tidymodels.org}{tidymodels} framework, a collection of packages for modeling and machine learning using tidyverse principles. You will learn how to build, evaluate, compare, and tune predictive models.
 
 We'll cover key concepts in statistical learning and machine learning including overfitting, the holdout method, the bias-variance trade-off, ensembling, cross-validation, and feature engineering.
 
@@ -144,96 +144,203 @@ This online book is licensed using the \href{https://creativecommons.org/license
 \hypertarget{intro}{%
 \chapter{Build a Model}\label{intro}}
 
-\emph{This tutorial is based on Alisson Hill's excellent \href{https://alison.rbind.io/tags/tidymodels/}{tidymodels workshop}.}
+\emph{The following content is adapted from the excellent book ``Hands-on machine learning with scikit-learn, keras and tensorflow'' from \citet{Geron2019}.}
 
-In this tutorial you will learn how to specify a model with the tidymodels package.
+In this chapter you will learn how to specify a regression model with the tidymodels package. To use the code in this article, you will need to install the following packages:
 
-As data, we use 2,930 houses sold in Ames, IA from 2006 to 2010, collected by the Ames Assessor's Oﬃce. From this dataset, we only select our dependent variable (\texttt{Sale\_Price}) and one predictor variable (\texttt{Gr\_Liv\_Area}).
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.tidyverse.org/}{tidyverse}
+\item
+  \href{https://www.tidymodels.org/}{tidymodels}
+\item
+  \href{https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html}{skimr}
+\item
+  \href{https://ggobi.github.io/ggally/index.html}{GGally}
+\item
+  \href{}{ggmap}
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(tidymodels)}
+\KeywordTok{library}\NormalTok{(skimr)}
+\KeywordTok{library}\NormalTok{(GGally)}
+\KeywordTok{library}\NormalTok{(ggmap)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-## when loading 'dplyr'
-\end{verbatim}
+In this example, our goal is to build a model of housing prices in California. In particular, the model should learn from California census data and be able to predict the median house price in any district (population of 600 to 3000 people), given some predictor variables. We use the root mean square error (RMSE) as a performance measure for our regression problem.
 
-\begin{verbatim}
-## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-\end{verbatim}
+\hypertarget{data-understanding}{%
+\section{Data understanding}\label{data-understanding}}
 
-\begin{verbatim}
-## v ggplot2 3.3.2     v purrr   0.3.4
-## v tibble  3.0.4     v dplyr   1.0.0
-## v tidyr   1.1.0     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.5.0
-\end{verbatim}
+In Data Understanding, you will learn how to:
 
-\begin{verbatim}
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-\end{verbatim}
+\begin{itemize}
+\tightlist
+\item
+  Import data
+\item
+  Get an overview about the data structure
+\item
+  Split data into training and test set using stratified sampling
+\item
+  Discover and visualize the data to gain insights
+\end{itemize}
+
+\hypertarget{imort-data}{%
+\subsection{Imort Data}\label{imort-data}}
+
+First of all, let's import the data:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ames \textless{}{-}}\StringTok{ }\KeywordTok{read\_csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/kirenz/datasets/master/ames.csv"}\NormalTok{)}
+\NormalTok{LINK \textless{}{-}}\StringTok{ "https://raw.githubusercontent.com/kirenz/datasets/master/housing.csv"}
+\NormalTok{housing \textless{}{-}}\StringTok{ }\KeywordTok{read\_csv}\NormalTok{(LINK)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Parsed with column specification:
-## cols(
-##   .default = col_character(),
-##   Lot_Frontage = col_double(),
-##   Lot_Area = col_double(),
-##   Year_Built = col_double(),
-##   Year_Remod_Add = col_double(),
-##   Mas_Vnr_Area = col_double(),
-##   BsmtFin_SF_1 = col_double(),
-##   BsmtFin_SF_2 = col_double(),
-##   Bsmt_Unf_SF = col_double(),
-##   Total_Bsmt_SF = col_double(),
-##   First_Flr_SF = col_double(),
-##   Second_Flr_SF = col_double(),
-##   Low_Qual_Fin_SF = col_double(),
-##   Gr_Liv_Area = col_double(),
-##   Bsmt_Full_Bath = col_double(),
-##   Bsmt_Half_Bath = col_double(),
-##   Full_Bath = col_double(),
-##   Half_Bath = col_double(),
-##   Bedroom_AbvGr = col_double(),
-##   Kitchen_AbvGr = col_double(),
-##   TotRms_AbvGrd = col_double()
-##   # ... with 15 more columns
-## )
-\end{verbatim}
+\hypertarget{data-overview}{%
+\subsection{Data overview}\label{data-overview}}
 
-\begin{verbatim}
-## See spec(...) for full column specifications.
-\end{verbatim}
+Next, we take a look at the data structure:
+
+California census top 4 rows of the DataFrame:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ames \textless{}{-}}\StringTok{ }
-\StringTok{  }\NormalTok{ames }\OperatorTok{\%\textgreater{}\%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(Sale\_Price, Gr\_Liv\_Area)}
-
-\KeywordTok{glimpse}\NormalTok{(ames)}
+\KeywordTok{head}\NormalTok{(housing, }\DecValTok{4}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Rows: 2,930
-## Columns: 2
-## $ Sale_Price  <dbl> 215000, 105000, 172000, 244000, 189900, 195500, 213500,...
-## $ Gr_Liv_Area <dbl> 1656, 896, 1329, 2110, 1629, 1604, 1338, 1280, 1616, 18...
-\end{verbatim}
+Data info:
 
-In this first example, we don't use data splitting.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{glimpse}\NormalTok{(housing)}
+\end{Highlighting}
+\end{Shaded}
+
+Data summary of numerical and categorical attributes using a function from the package \texttt{skimr}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{skim}\NormalTok{(housing)}
+\end{Highlighting}
+\end{Shaded}
+
+Count levels of our categorical variable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{housing }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(ocean\_proximity,}
+    \DataTypeTok{sort =} \OtherTok{TRUE}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+The function \texttt{ggscatmat} from the package \texttt{GGally} creates a matrix with scatterplots, densities and correlations for numeric columns. In our code, we enter the dataset \texttt{housing}, an color column for our categorical variable \texttt{ocean\_proximity}, and an alpha level of 0.8 (for transparency).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggscatmat}\NormalTok{(housing, }\DataTypeTok{color =} \StringTok{"ocean\_proximity"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+To obtain an overview of even more visualizations, we can use the function \texttt{ggpairs}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggpairs}\NormalTok{(housing)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-splitting}{%
+\subsection{Data splitting}\label{data-splitting}}
+
+Let's assume we would know that the median income is a very important attribute to predict median housing prices. Therefore, we would want to create a training and test set using stratified sampling. A \emph{stratum} (plural strata) refers to a subset (part) of the population (entire collection of items under consideration) which is being sampled. Take a look at \ref{fig:hist-med-income}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{housing }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(median\_income)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_histogram}\NormalTok{(}\DataTypeTok{bins =} \DecValTok{30}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We want to ensure that the test set is representative of the the various categories of incomes in the whole dataset. In other words, we would like to have instances for each \emph{stratum}, or else the stimate of a strtum's importance may be biased. This means that you should not have too many starta, and each stratum should be large enough. We use 5 strata in our example.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+
+\NormalTok{new\_split \textless{}{-}}\StringTok{ }\KeywordTok{initial\_split}\NormalTok{(housing,}
+  \DataTypeTok{prop =} \DecValTok{3} \OperatorTok{/}\StringTok{ }\DecValTok{4}\NormalTok{,}
+  \DataTypeTok{strata =}\NormalTok{ median\_income,}
+  \DataTypeTok{breaks =} \DecValTok{5}
+\NormalTok{)}
+
+\NormalTok{new\_train \textless{}{-}}\StringTok{ }\KeywordTok{training}\NormalTok{(new\_split)}
+\NormalTok{new\_test \textless{}{-}}\StringTok{ }\KeywordTok{testing}\NormalTok{(new\_split)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-exploration}{%
+\subsection{Data exploration}\label{data-exploration}}
+
+A Geographical scatterplot of the data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{housing }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ longitude, }\DataTypeTok{y =}\NormalTok{ latitude)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\DataTypeTok{color =} \StringTok{"cornflowerblue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+A better visualization that highlights high-density areas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{housing }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ longitude, }\DataTypeTok{y =}\NormalTok{ latitude)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\DataTypeTok{color =} \StringTok{"cornflowerblue"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+California housing prices: red is expensive, purple is cheap and larger circles indicate areas with a larger population.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{housing }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ longitude, }\DataTypeTok{y =}\NormalTok{ latitude)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ population, }\DataTypeTok{color =}\NormalTok{ median\_house\_value),}
+    \DataTypeTok{alpha =} \FloatTok{0.4}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_colour\_gradientn}\NormalTok{(}\DataTypeTok{colours =} \KeywordTok{rev}\NormalTok{(}\KeywordTok{rainbow}\NormalTok{(}\DecValTok{4}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggmap)}
+
+\KeywordTok{qmplot}\NormalTok{(}
+  \DataTypeTok{x =}\NormalTok{ longitude,}
+  \DataTypeTok{y =}\NormalTok{ latitude,}
+  \DataTypeTok{data =}\NormalTok{ housing,}
+  \DataTypeTok{geom =} \StringTok{"point"}\NormalTok{,}
+  \DataTypeTok{color =}\NormalTok{ median\_house\_value,}
+  \DataTypeTok{size =}\NormalTok{ population,}
+  \DataTypeTok{alpha =} \FloatTok{0.4}
+\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_colour\_gradientn}\NormalTok{(}\DataTypeTok{colours =} \KeywordTok{rev}\NormalTok{(}\KeywordTok{rainbow}\NormalTok{(}\DecValTok{4}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{model-type}{%
 \section{Model type}\label{model-type}}
@@ -252,48 +359,16 @@ In this first example, we don't use data splitting.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(tidymodels)}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## -- Attaching packages -------------------------------------- tidymodels 0.1.0 --
-\end{verbatim}
-
-\begin{verbatim}
-## v broom     0.5.6      v rsample   0.0.7 
-## v dials     0.0.7      v tune      0.1.0 
-## v infer     0.5.2      v workflows 0.1.1 
-## v parsnip   0.1.2      v yardstick 0.0.6 
-## v recipes   0.1.13
-\end{verbatim}
-
-\begin{verbatim}
-## -- Conflicts ----------------------------------------- tidymodels_conflicts() --
-## x scales::discard() masks purrr::discard()
-## x dplyr::filter()   masks stats::filter()
-## x recipes::fixed()  masks stringr::fixed()
-## x dplyr::lag()      masks stats::lag()
-## x yardstick::spec() masks readr::spec()
-## x recipes::step()   masks stats::step()
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{lm\_spec \textless{}{-}}\StringTok{ }\CommentTok{\# your model specification}
-\StringTok{  }\KeywordTok{linear\_reg}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}\StringTok{  }\CommentTok{\# model type}
-\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\DataTypeTok{engine =} \StringTok{"lm"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{  }\CommentTok{\# model engine}
+\StringTok{  }\KeywordTok{linear\_reg}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\CommentTok{\# model type}
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\DataTypeTok{engine =} \StringTok{"lm"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\CommentTok{\# model engine}
 \StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\StringTok{"regression"}\NormalTok{) }\CommentTok{\# model mode}
 
 \CommentTok{\# Show your model specification}
 \NormalTok{lm\_spec}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Linear Regression Model Specification (regression)
-## 
-## Computational engine: lm
-\end{verbatim}
 
 \hypertarget{model-training}{%
 \section{Model training}\label{model-training}}
@@ -303,29 +378,16 @@ In the training process, you run an algorithm on data and thereby produce a mode
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{lm\_fit \textless{}{-}}\StringTok{ }\CommentTok{\# your fitted model}
-\StringTok{  }\KeywordTok{fit}\NormalTok{( }
-\NormalTok{  lm\_spec, }\CommentTok{\# your model specification }
-\NormalTok{  Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{Gr\_Liv\_Area, }\CommentTok{\# a Linear Regression formula }
-  \DataTypeTok{data =}\NormalTok{ ames }\CommentTok{\# your data}
+\StringTok{  }\KeywordTok{fit}\NormalTok{(}
+\NormalTok{    lm\_spec, }\CommentTok{\# your model specification}
+\NormalTok{    Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{Gr\_Liv\_Area, }\CommentTok{\# a Linear Regression formula}
+    \DataTypeTok{data =}\NormalTok{ ames }\CommentTok{\# your data}
 \NormalTok{  )}
 
 \CommentTok{\# Show your fitted model}
 \NormalTok{lm\_fit}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## parsnip model object
-## 
-## Fit time:  4ms 
-## 
-## Call:
-## stats::lm(formula = Sale_Price ~ Gr_Liv_Area, data = data)
-## 
-## Coefficients:
-## (Intercept)  Gr_Liv_Area  
-##     13289.6        111.7
-\end{verbatim}
 
 \hypertarget{model-predictions}{%
 \section{Model predictions}\label{model-predictions}}
@@ -334,8 +396,8 @@ We use our fitted model to make predictions.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{price\_pred \textless{}{-}}\StringTok{ }
-\StringTok{  }\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\NormalTok{price\_pred \textless{}{-}}
+\StringTok{  }\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}
 \StringTok{  }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{new\_data =}\NormalTok{ ames) }\OperatorTok{\%\textgreater{}\%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{price\_truth =}\NormalTok{ ames}\OperatorTok{$}\NormalTok{Sale\_Price)}
 
@@ -343,43 +405,19 @@ We use our fitted model to make predictions.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## # A tibble: 6 x 2
-##     .pred price_truth
-##     <dbl>       <dbl>
-## 1 198255.      215000
-## 2 113367.      105000
-## 3 161731.      172000
-## 4 248964.      244000
-## 5 195239.      189900
-## 6 192447.      195500
-\end{verbatim}
-
 If we would want to make predictions for new houses, we could proceed as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# New values (our x variable)}
-\NormalTok{new\_homes \textless{}{-}}\StringTok{ }
-\StringTok{  }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{Gr\_Liv\_Area =} \KeywordTok{c}\NormalTok{(}\DecValTok{334}\NormalTok{, }\DecValTok{1126}\NormalTok{, }\DecValTok{1442}\NormalTok{, }\DecValTok{1500}\NormalTok{, }\DecValTok{1743}\NormalTok{, }\DecValTok{5642}\NormalTok{)) }
+\NormalTok{new\_homes \textless{}{-}}
+\StringTok{  }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{Gr\_Liv\_Area =} \KeywordTok{c}\NormalTok{(}\DecValTok{334}\NormalTok{, }\DecValTok{1126}\NormalTok{, }\DecValTok{1442}\NormalTok{, }\DecValTok{1500}\NormalTok{, }\DecValTok{1743}\NormalTok{, }\DecValTok{5642}\NormalTok{))}
 
 \CommentTok{\# Prediction for new houses (predict y)}
 \NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}
-\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{new\_data =}\NormalTok{ new\_homes)}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{new\_data =}\NormalTok{ new\_homes)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 6 x 1
-##     .pred
-##     <dbl>
-## 1  50595.
-## 2 139057.
-## 3 174352.
-## 4 180831.
-## 5 207972.
-## 6 643467.
-\end{verbatim}
 
 \hypertarget{model-evaluation}{%
 \section{Model evaluation}\label{model-evaluation}}
@@ -388,18 +426,13 @@ We use the Root Mean Squared Error (RMSE) to evaluate our regression model. Ther
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{rmse}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ price\_pred, }
-     \DataTypeTok{truth =}\NormalTok{ price\_truth, }
-     \DataTypeTok{estimate =}\NormalTok{ .pred)}
+\KeywordTok{rmse}\NormalTok{(}
+  \DataTypeTok{data =}\NormalTok{ price\_pred,}
+  \DataTypeTok{truth =}\NormalTok{ price\_truth,}
+  \DataTypeTok{estimate =}\NormalTok{ .pred}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 1 x 3
-##   .metric .estimator .estimate
-##   <chr>   <chr>          <dbl>
-## 1 rmse    standard      56505.
-\end{verbatim}
 
 \hypertarget{process-with-data-splitting}{%
 \chapter{Process with data splitting}\label{process-with-data-splitting}}
@@ -408,18 +441,19 @@ The best way to measure a model's performance at predicting new data is to actua
 
 This function ``splits'' data randomly into a single testing and a single training set: \texttt{initial\_split(data,\ prop\ =\ 3/4,\ strata,\ breaks)}. We also use \href{https://en.wikipedia.org/wiki/Stratified_sampling}{stratified sampling} in this example.
 
-\hypertarget{data-splitting}{%
-\section{Data splitting}\label{data-splitting}}
+\hypertarget{data-splitting-1}{%
+\section{Data splitting}\label{data-splitting-1}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{100}\NormalTok{) }
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{100}\NormalTok{)}
 
-\NormalTok{ames\_split \textless{}{-}}\StringTok{  }\KeywordTok{initial\_split}\NormalTok{(ames,}
-                             \DataTypeTok{strata =}\NormalTok{ Sale\_Price,}
-                             \DataTypeTok{breaks =} \DecValTok{4}\NormalTok{)}
+\NormalTok{ames\_split \textless{}{-}}\StringTok{ }\KeywordTok{initial\_split}\NormalTok{(ames,}
+  \DataTypeTok{strata =}\NormalTok{ Sale\_Price,}
+  \DataTypeTok{breaks =} \DecValTok{4}
+\NormalTok{)}
 
-\NormalTok{ames\_train \textless{}{-}}\StringTok{  }\KeywordTok{training}\NormalTok{(ames\_split)}
+\NormalTok{ames\_train \textless{}{-}}\StringTok{ }\KeywordTok{training}\NormalTok{(ames\_split)}
 \NormalTok{ames\_test \textless{}{-}}\StringTok{ }\KeywordTok{testing}\NormalTok{(ames\_split)}
 \end{Highlighting}
 \end{Shaded}
@@ -430,9 +464,9 @@ This function ``splits'' data randomly into a single testing and a single traini
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{lm\_spec\_}\DecValTok{2}\NormalTok{ \textless{}{-}}
-\StringTok{  }\KeywordTok{linear\_reg}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}\StringTok{  }
-\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\DataTypeTok{engine =} \StringTok{"lm"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{  }
-\StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\StringTok{"regression"}\NormalTok{) }
+\StringTok{  }\KeywordTok{linear\_reg}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\DataTypeTok{engine =} \StringTok{"lm"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\StringTok{"regression"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -441,10 +475,11 @@ This function ``splits'' data randomly into a single testing and a single traini
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{lm\_fit\_}\DecValTok{2}\NormalTok{ \textless{}{-}}\StringTok{ }
-\StringTok{  }\NormalTok{lm\_spec\_}\DecValTok{2} \OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\NormalTok{lm\_fit\_}\DecValTok{2}\NormalTok{ \textless{}{-}}
+\StringTok{  }\NormalTok{lm\_spec\_}\DecValTok{2} \OperatorTok{\%\textgreater{}\%}
 \StringTok{  }\KeywordTok{fit}\NormalTok{(Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{Gr\_Liv\_Area,}
-      \DataTypeTok{data =}\NormalTok{ ames\_train) }\CommentTok{\# only use training data}
+    \DataTypeTok{data =}\NormalTok{ ames\_train}
+\NormalTok{  ) }\CommentTok{\# only use training data}
 \end{Highlighting}
 \end{Shaded}
 
@@ -453,9 +488,9 @@ This function ``splits'' data randomly into a single testing and a single traini
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{price\_pred\_}\DecValTok{2}\NormalTok{ \textless{}{-}}\StringTok{ }
-\StringTok{  }\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
-\StringTok{  }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{new\_data =}\NormalTok{ ames\_test) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\NormalTok{price\_pred\_}\DecValTok{2}\NormalTok{ \textless{}{-}}
+\StringTok{  }\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{new\_data =}\NormalTok{ ames\_test) }\OperatorTok{\%\textgreater{}\%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{price\_truth =}\NormalTok{ ames\_test}\OperatorTok{$}\NormalTok{Sale\_Price)}
 \end{Highlighting}
 \end{Shaded}
@@ -465,33 +500,1255 @@ This function ``splits'' data randomly into a single testing and a single traini
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{rmse}\NormalTok{(price\_pred\_}\DecValTok{2}\NormalTok{, }
-     \DataTypeTok{truth =}\NormalTok{ price\_truth, }
-     \DataTypeTok{estimate =}\NormalTok{ .pred)}
+\KeywordTok{rmse}\NormalTok{(price\_pred\_}\DecValTok{2}\NormalTok{,}
+  \DataTypeTok{truth =}\NormalTok{ price\_truth,}
+  \DataTypeTok{estimate =}\NormalTok{ .pred}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## # A tibble: 1 x 3
-##   .metric .estimator .estimate
-##   <chr>   <chr>          <dbl>
-## 1 rmse    standard      59054.
-\end{verbatim}
+\hypertarget{part-k-fold-cross-validation}{%
+\part{K-FOLD CROSS VALIDATION}\label{part-k-fold-cross-validation}}
 
-\hypertarget{import}{%
-\chapter{Import}\label{import}}
+\emph{This section is based on Alisson Hill's excellent \href{https://alison.rbind.io/tags/tidymodels/}{tidymodels workshop}.}
 
-\hypertarget{transformation}{%
-\chapter{Transformation}\label{transformation}}
+\hypertarget{import-data}{%
+\chapter{Import data}\label{import-data}}
 
-\hypertarget{part-basics}{%
-\part{BASICS}\label{part-basics}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{ames \textless{}{-}}\StringTok{ }\KeywordTok{read\_csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/kirenz/datasets/master/ames.csv"}\NormalTok{)}
+
+\NormalTok{ames \textless{}{-}}
+\StringTok{  }\NormalTok{ames }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(Sale\_Price, Gr\_Liv\_Area)}
+
+\KeywordTok{glimpse}\NormalTok{(ames)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{build-a-model}{%
+\chapter{Build a model}\label{build-a-model}}
+
+\hypertarget{model-specification}{%
+\section{Model specification}\label{model-specification}}
+
+Build the model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidymodels)}
+
+\NormalTok{lm\_spec \textless{}{-}}
+\StringTok{  }\KeywordTok{linear\_reg}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\StringTok{"lm"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\DataTypeTok{mode =} \StringTok{"regression"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-split}{%
+\section{Data split}\label{data-split}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+
+\NormalTok{new\_split \textless{}{-}}\StringTok{ }\KeywordTok{initial\_split}\NormalTok{(ames)}
+\NormalTok{new\_train \textless{}{-}}\StringTok{ }\KeywordTok{training}\NormalTok{(new\_split)}
+\NormalTok{new\_test \textless{}{-}}\StringTok{ }\KeywordTok{testing}\NormalTok{(new\_split)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{fit-the-model}{%
+\chapter{Fit the model}\label{fit-the-model}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_fit \textless{}{-}}
+\StringTok{  }\NormalTok{lm\_spec }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{fit}\NormalTok{(Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{Gr\_Liv\_Area, }\DataTypeTok{data =}\NormalTok{ new\_train)}
+\end{Highlighting}
+\end{Shaded}
+
+Make predictions and calculate the RMSE for our training data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(new\_train) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{truth =}\NormalTok{ new\_train}\OperatorTok{$}\NormalTok{Sale\_Price) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{rmse}\NormalTok{(truth, .pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{evaluate-model}{%
+\chapter{Evaluate model}\label{evaluate-model}}
+
+To further evaluate our simple Linear Regression model, let's build a validation set. Note that this process is usually used to compare the performance of multiple models and to tune hyperparameters. In this tutorial however, we only want to demonstrate the process and therefore only use one model.
+
+We can build a set of k-Fold cross validation sets and use this set of resamples to estimate the performance of our model using the \texttt{fit\_resamples()} function. Note that this function does not do any tuning of the model parameters. The function is only used for computing performance metrics across some set of resamples. It will fit our model \texttt{lm\_spec} to each resample and evaluate on the heldout set from each resample. It is important to note, that the function does not even keep the models it trains.
+
+First of all, we build a set of 10 validation folds with the function \texttt{vfold\_cv} (we also use stratified sampling in this example):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+
+\NormalTok{cv\_folds \textless{}{-}}
+\StringTok{  }\KeywordTok{vfold\_cv}\NormalTok{(new\_train,}
+    \DataTypeTok{v =} \DecValTok{10}\NormalTok{,}
+    \DataTypeTok{strata =}\NormalTok{ Sale\_Price,}
+    \DataTypeTok{breaks =} \DecValTok{4}
+\NormalTok{  )}
+
+\NormalTok{cv\_folds}
+\end{Highlighting}
+\end{Shaded}
+
+Next, let's fit the model on each of the 10 folds with \texttt{fit\_resamples()} and store the results as \texttt{lm\_res}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_res \textless{}{-}}
+\StringTok{  }\NormalTok{lm\_spec }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{fit\_resamples}\NormalTok{(}
+\NormalTok{    Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{Gr\_Liv\_Area,}
+    \DataTypeTok{resamples =}\NormalTok{ cv\_folds}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Now we can collect the performance metrics with \texttt{collect\_metrics()}. The metrics show the average performance across all folds.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_res }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{collect\_metrics}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+If we would be interested in the results of every split, we could use the option \texttt{summarize\ =\ FALSE}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_res }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{collect\_metrics}\NormalTok{(}\DataTypeTok{summarize =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{evaluate-final-model}{%
+\chapter{Evaluate final model}\label{evaluate-final-model}}
+
+Finally, let's use our testing data and see how we can expect this model to perform on new data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(new\_test) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{truth =}\NormalTok{ new\_test}\OperatorTok{$}\NormalTok{Sale\_Price) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{rmse}\NormalTok{(truth, .pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-recipes}{%
+\part{RECIPES}\label{part-recipes}}
+
+\emph{The following content is based on the \href{https://www.tidymodels.org/start/recipes/}{tidymodels documentation} and Alisson Hill's \href{https://alison.rbind.io/tags/tidymodels/}{tidymodels workshop}.}
+
+In this tutorial, we'll explore a tidymodels package, \texttt{recipes}, which is designed to help you preprocess your data before training your model.
+
+Recipes are built as a series of preprocessing steps, such as:
+
+\begin{itemize}
+\tightlist
+\item
+  converting qualitative predictors to indicator variables (also known as dummy variables),
+\item
+  transforming data to be on a different scale (e.g., taking the logarithm of a variable),
+\item
+  transforming whole groups of predictors together,
+\item
+  extracting key features from raw variables (e.g., getting the day of the week out of a date variable),
+\end{itemize}
+
+and so on. If you are familiar with R's formula interface, a lot of this might sound familiar and like what a formula already does. Recipes can be used to do many of the same things, but they have a much wider range of possibilities. This article shows how to use recipes for modeling.
+
+In summary, the idea of the \href{https://recipes.tidymodels.org}{recipes package} is to define a recipe or blueprint that can be used to sequentially define the encodings and preprocessing of the data (i.e.~``feature engineering'') before we build our models.
+
+\hypertarget{data-preparation}{%
+\chapter{Data preparation}\label{data-preparation}}
+
+Import data and split the data into training and testing sets using \texttt{initial\_split()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(tidymodels)}
+
+\NormalTok{ames \textless{}{-}}\StringTok{ }\KeywordTok{read\_csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/kirenz/datasets/master/ames.csv"}\NormalTok{)}
+
+\NormalTok{ames \textless{}{-}}\StringTok{ }\NormalTok{ames }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{{-}}\KeywordTok{matches}\NormalTok{(}\StringTok{"Qu"}\NormalTok{))}
+
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+
+\NormalTok{new\_split \textless{}{-}}\StringTok{ }\KeywordTok{initial\_split}\NormalTok{(ames)}
+\NormalTok{new\_train \textless{}{-}}\StringTok{ }\KeywordTok{training}\NormalTok{(new\_split)}
+\NormalTok{new\_test \textless{}{-}}\StringTok{ }\KeywordTok{testing}\NormalTok{(new\_split)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{recipe}{%
+\chapter{Recipe}\label{recipe}}
+
+Next, we use a \texttt{recipe()} to build a set of steps for data preprocessing and feature engineering.
+
+\begin{itemize}
+\tightlist
+\item
+  First, we must tell the \texttt{recipe()} what our model is going to be (using a formula here) and what our training data is.
+\item
+  \texttt{step\_novel()} will convert all nominal variables to factors.
+\item
+  We then convert the factor columns into (one or more) numeric binary (0 and 1) variables for the levels of the training data.
+\item
+  We remove any numeric variables that have zero variance.
+\item
+  We normalize (center and scale) the numeric variables.
+\end{itemize}
+
+\hypertarget{recipe-1}{%
+\section{recipe()}\label{recipe-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ames\_rec \textless{}{-}}
+\StringTok{  }\KeywordTok{recipe}\NormalTok{(Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ new\_train) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_novel}\NormalTok{(}\KeywordTok{all\_nominal}\NormalTok{(), }\OperatorTok{{-}}\KeywordTok{all\_outcomes}\NormalTok{()) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_dummy}\NormalTok{(}\KeywordTok{all\_nominal}\NormalTok{()) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_zv}\NormalTok{(}\KeywordTok{all\_predictors}\NormalTok{()) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_normalize}\NormalTok{(}\KeywordTok{all\_predictors}\NormalTok{())}
+
+\CommentTok{\# Show the content of our recipe}
+\NormalTok{ames\_rec}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{prep}{%
+\section{prep()}\label{prep}}
+
+Finally, we \texttt{prep()} the \texttt{recipe()}. This means we actually do something with the steps and our training data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ames\_prep \textless{}{-}}\StringTok{ }\KeywordTok{prep}\NormalTok{(ames\_rec)}
+\end{Highlighting}
+\end{Shaded}
+
+Print a summary of our prepped recipe:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ames\_prep)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{juice}{%
+\section{juice()}\label{juice}}
+
+To obtain the Dataframe from the prepped recipe, we use the function \texttt{juice()}. When we \texttt{juice()} the recipe, we squeeze that training data back out, transformed in the ways we specified:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{juice}\NormalTok{(ames\_prep)}
+\end{Highlighting}
+\end{Shaded}
+
+The prepped recipe \texttt{ames\_prep} contains all our transformations for data preprocessing and feature engineering, \emph{as well as} the data these transformations were estimated from.
+
+\hypertarget{bake}{%
+\section{bake()}\label{bake}}
+
+We now can simply apply all of the recipe transformations to the testing data. The function to perform this is called \texttt{bake()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test\_trans \textless{}{-}}\StringTok{ }\KeywordTok{bake}\NormalTok{(ames\_prep, }\DataTypeTok{new\_data =}\NormalTok{ new\_test)}
+\end{Highlighting}
+\end{Shaded}
+
+Now it's time to \textbf{specify} and then \textbf{fit} our models.
 
 \hypertarget{model-building}{%
-\chapter{Build a model}\label{model-building}}
+\chapter{Model building}\label{model-building}}
 
-\hypertarget{build-models-with-resampling}{%
-\chapter{Build models with resampling}\label{build-models-with-resampling}}
+\hypertarget{specify-model}{%
+\section{Specify model}\label{specify-model}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_spec \textless{}{-}}
+\StringTok{  }\KeywordTok{linear\_reg}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\StringTok{"lm"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\DataTypeTok{mode =} \StringTok{"regression"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{fit-model}{%
+\section{Fit model}\label{fit-model}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_fit \textless{}{-}}
+\StringTok{  }\NormalTok{lm\_spec }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{fit}\NormalTok{(Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{., }\DataTypeTok{data =} \KeywordTok{juice}\NormalTok{(ames\_prep))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{evaluate-model-1}{%
+\section{Evaluate model}\label{evaluate-model-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+
+\NormalTok{cv\_folds \textless{}{-}}
+\StringTok{  }\KeywordTok{vfold\_cv}\NormalTok{(}\KeywordTok{juice}\NormalTok{(ames\_prep),}
+    \DataTypeTok{v =} \DecValTok{10}\NormalTok{,}
+    \DataTypeTok{strata =}\NormalTok{ Sale\_Price,}
+    \DataTypeTok{breaks =} \DecValTok{4}
+\NormalTok{  )}
+
+\NormalTok{lm\_res \textless{}{-}}
+\StringTok{  }\NormalTok{lm\_spec }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{fit\_resamples}\NormalTok{(}
+\NormalTok{    Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{.,}
+    \DataTypeTok{resamples =}\NormalTok{ cv\_folds}
+\NormalTok{  )}
+
+\NormalTok{lm\_res }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{collect\_metrics}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{evaluate-final-model-1}{%
+\section{Evaluate final model}\label{evaluate-final-model-1}}
+
+Finally, let's use our testing data and see how we can expect this model to perform on new data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_fit }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(test\_trans) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{truth =}\NormalTok{ test\_trans}\OperatorTok{$}\NormalTok{Sale\_Price) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{rmse}\NormalTok{(truth, .pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{components-of-our-recipe}{%
+\chapter{Components of our recipe}\label{components-of-our-recipe}}
+
+Let's have a closer look at the different components of the recipe.
+
+\hypertarget{recipe-2}{%
+\section{recipe()}\label{recipe-2}}
+
+First of all, we created a simple recipe (we call it \texttt{rec}) containing only an outcome (\texttt{Sale\_Price}) and predictors (all other variables in the dataset: \texttt{.}). To demonstrate the use of recipes step by step, we create a new object with the name \texttt{rec}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rec \textless{}{-}}\StringTok{ }\KeywordTok{recipe}\NormalTok{(Sale\_Price }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ ames)}
+\end{Highlighting}
+\end{Shaded}
+
+The formula \texttt{Sale\_Price\ \textasciitilde{}\ .} indicates outcomes vs predictors.
+
+\hypertarget{helper-functions}{%
+\section{Helper functions}\label{helper-functions}}
+
+Here some helper functions for selecting sets of variables:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{all\_predictors()}: Each x variable (right side of \textasciitilde)
+\item
+  \texttt{all\_outcomes()}: Each y variable (left side of \textasciitilde)
+\item
+  \texttt{all\_numeric()}: Each numeric variable
+\item
+  \texttt{all\_nominal()}: Each categorical variable (e.g.~factor, string)
+\item
+  \texttt{dplyr::select()} helpers starts\_with(`Lot\_'), etc.
+\end{itemize}
+
+\hypertarget{step_novel}{%
+\section{step\_novel()}\label{step_novel}}
+
+\href{https://recipes.tidymodels.org/reference/step_novel.html}{\texttt{step\_novel()}} will convert all nominal variables to factors. It adds a catch-all level to a factor for any new values, which lets R intelligently predict new levels in the test set. Missing values will remain missing.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rec }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_novel}\NormalTok{(}\KeywordTok{all\_nominal}\NormalTok{(), }\OperatorTok{{-}}\KeywordTok{all\_outcomes}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{step_dummy}{%
+\section{step\_dummy()}\label{step_dummy}}
+
+Converts nominal data into dummy variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rec }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_dummy}\NormalTok{(}\KeywordTok{all\_nominal}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{step_zv}{%
+\section{step\_zv()}\label{step_zv}}
+
+\texttt{step\_zv()} removes zero variance variables (variables that contain only a single value).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rec }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_zv}\NormalTok{(}\KeywordTok{all\_predictors}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+When the recipe is applied to the data set, a column could contain only zeros. This is a ``\emph{zero-variance predictor}'' that has no information within the column. While some R functions will not produce an error for such predictors, it usually causes warnings and other issues. \texttt{step\_zv()} will remove columns from the data when the training set data have a single value- This step should be added to the recipe after \texttt{step\_dummy()}.
+
+\hypertarget{step_normalize}{%
+\section{step\_normalize()}\label{step_normalize}}
+
+Centers then scales numeric variable (mean = 0, sd = 1)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rec }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_normalize}\NormalTok{(}\KeywordTok{all\_numeric}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{workflows}{%
+\chapter{Workflows}\label{workflows}}
+
+To combine the data preparation with the model building, we could use the package \href{https://workflows.tidymodels.org}{workflows}. A workflow is an object that can bundle together your pre-processing, modeling, and post-processing requests:
+
+\hypertarget{workflow}{%
+\section{workflow()}\label{workflow}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_wf \textless{}{-}}
+\StringTok{  }\KeywordTok{workflow}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_recipe}\NormalTok{(ames\_rec) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_model}\NormalTok{(lm\_spec)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{fit}{%
+\section{fit()}\label{fit}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_wf\_fit \textless{}{-}}
+\StringTok{  }\NormalTok{new\_wf }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{fit}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ new\_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{predict-rmse}{%
+\section{predict() \& rmse()}\label{predict-rmse}}
+
+Make predictions and calculate the RMSE for our training data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_wf\_fit }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(new\_train) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{truth =}\NormalTok{ new\_train}\OperatorTok{$}\NormalTok{Sale\_Price) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{rmse}\NormalTok{(truth, .pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-workflows-models}{%
+\part{WORKFLOWS \& MODELS}\label{part-workflows-models}}
+
+\emph{The following content is based on the excellent \href{https://www.tidymodels.org/start/recipes/}{tidymodels documentation}.}
+
+In this tutorial, we'll explore the tidymodels packages \texttt{recipes} and \texttt{workflows} which are designed to help you preprocess your data before training your model.
+
+\texttt{Recipes} are built as a series of preprocessing steps, such as:
+
+\begin{itemize}
+\tightlist
+\item
+  converting qualitative predictors to indicator variables (also known as dummy variables),
+\item
+  transforming data to be on a different scale (e.g., taking the logarithm of a variable),
+\item
+  transforming whole groups of predictors together,
+\item
+  extracting key features from raw variables (e.g., getting the day of the week out of a date variable),
+\end{itemize}
+
+and so on. If you are familiar with R's formula interface, a lot of this might sound familiar and like what a formula already does. Recipes can be used to do many of the same things, but they have a much wider range of possibilities. This article shows how to use recipes for modeling.
+
+To combine all of the steps discussed above with model building, we can use the package \href{https://workflows.tidymodels.org}{workflows}. A workflow is an object that can bundle together your pre-processing, modeling, and post-processing requests.
+
+To use the code in this tutorial, you will need to install the following packages:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{nycflights13},
+\item
+  \texttt{skimr}, and
+\item
+  \texttt{tidymodels.}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidymodels)}
+\CommentTok{\# for flight data:}
+\KeywordTok{library}\NormalTok{(nycflights13)}
+\CommentTok{\# for variable summaries:}
+\KeywordTok{library}\NormalTok{(skimr)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-preparation-1}{%
+\chapter{Data preparation}\label{data-preparation-1}}
+
+Let's use the \texttt{nycflights13} data to predict whether a plane arrives more than 30 minutes late. This data set contains information on 325,819 flights departing near New York City in 2013. Furthermore, it contains weather data (hourly meterological data for LGA, JFK and EWR).
+
+Let's start by loading the data and making a few changes to the variables:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flight\_data\_all \textless{}{-}}
+\StringTok{  }\NormalTok{flights }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \CommentTok{\# Convert the arrival delay to a factor}
+    \DataTypeTok{arr\_delay =} \KeywordTok{ifelse}\NormalTok{(arr\_delay }\OperatorTok{\textgreater{}=}\StringTok{ }\DecValTok{30}\NormalTok{,}
+      \StringTok{"late"}\NormalTok{,}
+      \StringTok{"on\_time"}
+\NormalTok{    ),}
+    \DataTypeTok{arr\_delay =} \KeywordTok{factor}\NormalTok{(arr\_delay),}
+    \CommentTok{\# We will use the date (not date{-}time)}
+    \CommentTok{\# in the recipe below}
+    \DataTypeTok{date =} \KeywordTok{as.Date}\NormalTok{(time\_hour)}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\CommentTok{\# Include  weather data}
+\StringTok{  }\KeywordTok{inner\_join}\NormalTok{(weather, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"origin"}\NormalTok{, }\StringTok{"time\_hour"}\NormalTok{)) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\CommentTok{\# Only retain the specific columns we will use}
+\StringTok{  }\KeywordTok{select}\NormalTok{(}
+\NormalTok{    dep\_time, flight, origin,}
+\NormalTok{    dest, air\_time, distance,}
+\NormalTok{    carrier, date, arr\_delay, time\_hour}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\CommentTok{\# Exclude missing data}
+\StringTok{  }\KeywordTok{na.omit}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\CommentTok{\# For creating models, it is}
+\StringTok{  }\CommentTok{\# better to have qualitative columns}
+\StringTok{  }\CommentTok{\# encoded as factors (instead of character strings)}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\KeywordTok{across}\NormalTok{(}\KeywordTok{where}\NormalTok{(is.character), as.factor))}
+\end{Highlighting}
+\end{Shaded}
+
+To speed up later calculations we only use a sample of the data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{flight\_data \textless{}{-}}\StringTok{ }\KeywordTok{sample\_n}\NormalTok{(}
+\NormalTok{  flight\_data\_all,}
+  \DecValTok{10000}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We can see that around 16\% of the flights in this data set arrived more than 30 minutes late:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flight\_data }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(arr\_delay) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prop =}\NormalTok{ n }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(n))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-overview-1}{%
+\section{Data overview}\label{data-overview-1}}
+
+Before we start building up our recipe, let's take a quick look at a few specific variables that will be important for both preprocessing and modeling.
+
+First, notice that the variable we created called \texttt{arr\_delay} is a factor variable; it is important that our outcome variable for training a classification model (at least a logistic regression model) is numeric.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{glimpse}\NormalTok{(flight\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+Second, there are two variables that we don't want to use as predictors in our model, but that we would like to retain as identification variables that can be used to troubleshoot poorly predicted data points. These are flight, a numeric value, and time\_hour, a date-time value.
+
+Third, there are 79 flight destinations contained in dest and 14 distinct carriers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flight\_data }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\NormalTok{skimr}\OperatorTok{::}\KeywordTok{skim}\NormalTok{(dest, carrier)}
+\end{Highlighting}
+\end{Shaded}
+
+Because we'll be using a logistic regression model in this tutorial, the variables \texttt{dest} and \texttt{carrier} will be converted to dummy variables.
+
+However, some of these values do not occur very frequently and this could complicate our analysis. We'll discuss specific steps later in this tutorial that we can add to our recipe to address this issue before modeling.
+
+\hypertarget{data-splitting-2}{%
+\chapter{Data splitting}\label{data-splitting-2}}
+
+To get started, let's split this single dataset into two: a training set and a testing set. We'll keep most of the rows in the original dataset (subset chosen randomly) in the training set. The training data will be used to fit the model, and the testing set will be used to measure model performance.
+
+To do this, we can use the \texttt{rsample} package (included in \texttt{tidymodels}) to create an object that contains the information on how to split the data, and then two more rsample functions to create data frames for the training and testing sets:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Fix the random numbers by setting the seed}
+\CommentTok{\# This enables the analysis to be reproducible}
+\CommentTok{\# when random numbers are used}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{555}\NormalTok{)}
+
+\CommentTok{\# Put 3/4 of the data into the training set}
+\NormalTok{data\_split \textless{}{-}}\StringTok{ }\KeywordTok{initial\_split}\NormalTok{(flight\_data,}
+  \DataTypeTok{prop =} \DecValTok{3} \OperatorTok{/}\StringTok{ }\DecValTok{4}
+\NormalTok{)}
+
+\CommentTok{\# Create data frames for the two sets:}
+\NormalTok{train\_data \textless{}{-}}\StringTok{ }\KeywordTok{training}\NormalTok{(data\_split)}
+\NormalTok{test\_data \textless{}{-}}\StringTok{ }\KeywordTok{testing}\NormalTok{(data\_split)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{create-recipe-and-roles}{%
+\chapter{Create recipe and roles}\label{create-recipe-and-roles}}
+
+To get started, let's create a recipe for a classification model. Before training the models, we can use a recipe to create a few new predictors and conduct some preprocessing required by the model.
+
+The \texttt{recipe()} function has two arguments:
+
+\begin{itemize}
+\item
+  \emph{A formula}. Any variable on the left-hand side of the tilde (\textasciitilde) is considered the model outcome (here, \texttt{arr\_delay}). On the right-hand side of the tilde are the predictors. Variables may be listed by name, or you can use the dot (.) to indicate all other variables as predictors.
+\item
+  \emph{The data}. A recipe is associated with the data set used to create the model. This will typically be the training set, so \texttt{data\ =\ train\_data} here. Naming a data set doesn't actually change the data itself; it is only used to catalog the names of the variables and their types, like factors, integers, dates, etc.
+\end{itemize}
+
+We can also add roles to this recipe. We can use the \texttt{update\_role()} function to let recipes know that \texttt{flight} and \texttt{time\_hour} are variables with a custom role that we call ``ID'' (a role can have any character value). Whereas our formula included all variables in the training set other than \texttt{arr\_delay} as predictors, this tells the recipe to keep these two variables but not use them as either outcomes or predictors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_rec \textless{}{-}}
+\StringTok{  }\KeywordTok{recipe}\NormalTok{(arr\_delay }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train\_data) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{update\_role}\NormalTok{(flight,}
+\NormalTok{    time\_hour,}
+    \DataTypeTok{new\_role =} \StringTok{"ID"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+This step of adding roles to a recipe is optional; the purpose of using it here is that those two variables can be retained in the data but not included in the model. This can be convenient when, after the model is fit, we want to investigate some poorly predicted value. These ID columns will be available and can be used to try to understand what went wrong.
+
+To get the current set of variables and roles, use the summary() function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(flights\_rec)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{create-features}{%
+\section{Create features}\label{create-features}}
+
+Now we can start adding steps onto our recipe using the pipe operator.
+
+\hypertarget{date}{%
+\subsection{Date}\label{date}}
+
+Perhaps it is reasonable for the \texttt{date} of the flight to have an effect on the likelihood of a late arrival. A little bit of feature engineering might go a long way to improving our model. How should the date be encoded into the model? The date column has an R date object so including that column ``as is'' will mean that the model will convert it to a numeric format equal to the number of days after a reference date:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flight\_data }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{distinct}\NormalTok{(date) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{numeric\_date =} \KeywordTok{as.numeric}\NormalTok{(date))}
+\end{Highlighting}
+\end{Shaded}
+
+It's possible that the numeric date variable is a good option for modeling. However, it might be better to add model terms derived from the date that have a better potential to be important to the model. For example, we could derive the following meaningful features from the single date variable:
+
+\begin{itemize}
+\tightlist
+\item
+  the day of the week,
+\item
+  the month, and
+\item
+  whether or not the date corresponds to a holiday.
+\end{itemize}
+
+Let's do all three of these by adding steps to our recipe:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_rec \textless{}{-}}
+\StringTok{  }\KeywordTok{recipe}\NormalTok{(arr\_delay }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{.,}
+    \DataTypeTok{data =}\NormalTok{ train\_data}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{update\_role}\NormalTok{(flight,}
+\NormalTok{    time\_hour,}
+    \DataTypeTok{new\_role =} \StringTok{"ID"}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_date}\NormalTok{(date,}
+    \DataTypeTok{features =} \KeywordTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{, }\StringTok{"month"}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_holiday}\NormalTok{(date,}
+    \DataTypeTok{holidays =}\NormalTok{ timeDate}\OperatorTok{::}\KeywordTok{listHolidays}\NormalTok{(}\StringTok{"US"}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_rm}\NormalTok{(date)}
+\end{Highlighting}
+\end{Shaded}
+
+What do each of these steps do?
+
+\begin{itemize}
+\item
+  With \texttt{step\_date()}, we created two new factor columns with the appropriate day of the week (dow) and the month.
+\item
+  With \texttt{step\_holiday()}, we created a binary variable indicating whether the current date is a holiday or not. The argument value of \texttt{timeDate::listHolidays("US"}) uses the timeDate package to list the 17 standard US holidays.
+\item
+  With \texttt{step\_rm()}, we remove the original date variable since we no longer want it in the model.
+\end{itemize}
+
+Next, we'll turn our attention to the variable types of our predictors. Because we plan to train a classifiaction model, we know that predictors will ultimately need to be numeric, as opposed to factor variables. In other words, there may be a difference in how we store our data (in factors inside a data frame), and how the underlying equations require them (a purely numeric matrix).
+
+\hypertarget{dummy-variables}{%
+\subsection{Dummy variables}\label{dummy-variables}}
+
+For factors like \texttt{dest} and \texttt{origin}, standard practice is to convert them into \emph{dummy} or indicator variables to make them numeric. These are binary values for each level of the factor. For example, our origin variable has values of ``EWR'', ``JFK'', and ``LGA''. The standard dummy variable encoding, shown below, will create two numeric columns of the data that are 1 when the originating airport is ``JFK'' or ``LGA'' and zero otherwise, respectively.
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+ORIGIN & ORIGIN\_JFK & ORIGIN\_LGA\tabularnewline
+\midrule
+\endhead
+EWR & 0 & 0\tabularnewline
+JFK & 1 & 0\tabularnewline
+LGA & 0 & 1\tabularnewline
+\bottomrule
+\end{longtable}
+
+But, unlike the standard model formula methods in R, a recipe does not automatically create these dummy variables for you; you'll need to tell your recipe to add this step. This is for two reasons. First, many models do not require numeric predictors, so dummy variables may not always be preferred. Second, recipes can also be used for purposes outside of modeling, where non-dummy versions of the variables may work better. For example, you may want to make a table or a plot with a variable as a single factor. For those reasons, you need to explicitly tell recipes to create dummy variables using step\_dummy():
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_rec \textless{}{-}}
+\StringTok{  }\KeywordTok{recipe}\NormalTok{(arr\_delay }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{.,}
+    \DataTypeTok{data =}\NormalTok{ train\_data}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{update\_role}\NormalTok{(flight,}
+\NormalTok{    time\_hour,}
+    \DataTypeTok{new\_role =} \StringTok{"ID"}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_date}\NormalTok{(date,}
+    \DataTypeTok{features =} \KeywordTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{, }\StringTok{"month"}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_holiday}\NormalTok{(date,}
+    \DataTypeTok{holidays =}\NormalTok{ timeDate}\OperatorTok{::}\KeywordTok{listHolidays}\NormalTok{(}\StringTok{"US"}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_rm}\NormalTok{(date) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_dummy}\NormalTok{(}\KeywordTok{all\_nominal}\NormalTok{(), }\OperatorTok{{-}}\KeywordTok{all\_outcomes}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+Here, we did something different than before: instead of applying a step to an individual variable, we used selectors to apply this recipe step to several variables at once.
+
+\begin{itemize}
+\item
+  The first selector, \texttt{all\_nominal()}, selects all variables that are either factors or characters.
+\item
+  The second selector, \texttt{-all\_outcomes()} removes any outcome variables from this recipe step.
+\end{itemize}
+
+With these two selectors together, our recipe step above translates to:
+
+\begin{quote}
+Create dummy variables for all of the factor or character columns unless they are outcomes.
+\end{quote}
+
+At this stage in the recipe, this step selects the \texttt{origin}, \texttt{dest}, and \texttt{carrier} variables. It also includes two new variables, \texttt{date\_dow} and \texttt{date\_month}, that were created by the earlier \texttt{step\_date()}.
+
+More generally, the recipe selectors mean that you don't always have to apply steps to individual variables one at a time. Since a recipe knows the variable type and role of each column, they can also be selected (or dropped) using this information.
+
+\hypertarget{zero-variance}{%
+\subsection{Zero variance}\label{zero-variance}}
+
+Note that since \texttt{carrier} and \texttt{dest} have some infrequently occurring values, it is possible that dummy variables might be created for values that don't exist in the training set. For example, there could be destinations that are only in the test set. The function \href{https://dplyr.tidyverse.org/reference/join.html}{\texttt{anti\_join()}} returns all rows from x (test\_data) where there are not matching values in y (train\_data), keeping just columns from x.:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test\_data }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{distinct}\NormalTok{(dest) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{anti\_join}\NormalTok{(train\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+When the recipe is applied to the training set, a column could contain only zeros. This is a ``\emph{zero-variance predictor}'' that has no information within the column. While some R functions will not produce an error for such predictors, it usually causes warnings and other issues. \texttt{step\_zv()} will remove columns from the data when the training set data have a single value, so it is added to the recipe after \texttt{step\_dummy()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_rec \textless{}{-}}
+\StringTok{  }\KeywordTok{recipe}\NormalTok{(arr\_delay }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{.,}
+    \DataTypeTok{data =}\NormalTok{ train\_data}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{update\_role}\NormalTok{(flight,}
+\NormalTok{    time\_hour,}
+    \DataTypeTok{new\_role =} \StringTok{"ID"}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_date}\NormalTok{(date,}
+    \DataTypeTok{features =} \KeywordTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{, }\StringTok{"month"}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_holiday}\NormalTok{(date,}
+    \DataTypeTok{holidays =}\NormalTok{ timeDate}\OperatorTok{::}\KeywordTok{listHolidays}\NormalTok{(}\StringTok{"US"}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_rm}\NormalTok{(date) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_dummy}\NormalTok{(}\KeywordTok{all\_nominal}\NormalTok{(), }\OperatorTok{{-}}\KeywordTok{all\_outcomes}\NormalTok{()) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_zv}\NormalTok{(}\KeywordTok{all\_predictors}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{correlations}{%
+\subsection{Correlations}\label{correlations}}
+
+As a final step, we remove predictor variables that have large absolute correlations with other variables
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_rec \textless{}{-}}
+\StringTok{  }\KeywordTok{recipe}\NormalTok{(arr\_delay }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{.,}
+    \DataTypeTok{data =}\NormalTok{ train\_data}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{update\_role}\NormalTok{(flight,}
+\NormalTok{    time\_hour,}
+    \DataTypeTok{new\_role =} \StringTok{"ID"}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_date}\NormalTok{(date,}
+    \DataTypeTok{features =} \KeywordTok{c}\NormalTok{(}\StringTok{"dow"}\NormalTok{, }\StringTok{"month"}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_holiday}\NormalTok{(date,}
+    \DataTypeTok{holidays =}\NormalTok{ timeDate}\OperatorTok{::}\KeywordTok{listHolidays}\NormalTok{(}\StringTok{"US"}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_rm}\NormalTok{(date) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_dummy}\NormalTok{(}\KeywordTok{all\_nominal}\NormalTok{(), }\OperatorTok{{-}}\KeywordTok{all\_outcomes}\NormalTok{()) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_zv}\NormalTok{(}\KeywordTok{all\_predictors}\NormalTok{()) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{step\_corr}\NormalTok{(}\KeywordTok{all\_predictors}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+Now we've created a specification of what should be done with the data.
+
+\hypertarget{model-building-1}{%
+\chapter{Model building}\label{model-building-1}}
+
+Let's use some classification algorithms to model the flight data. We start by building some models using the \texttt{parsnip} package:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.tidymodels.org/find/parsnip/}{List of algorithms}
+\end{itemize}
+
+\hypertarget{logistic-regression}{%
+\section{Logistic regression}\label{logistic-regression}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lr\_mod \textless{}{-}}
+\StringTok{  }\KeywordTok{logistic\_reg}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\StringTok{"glm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{decision-tree}{%
+\section{Decision tree}\label{decision-tree}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt\_mod \textless{}{-}}
+\StringTok{  }\KeywordTok{decision\_tree}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\StringTok{"C5.0"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{random-forest}{%
+\section{Random forest}\label{random-forest}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf\_mod \textless{}{-}}
+\StringTok{  }\KeywordTok{rand\_forest}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\StringTok{"ranger"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{boosted-tree-xgboost}{%
+\section{Boosted tree (XGBoost)}\label{boosted-tree-xgboost}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# install.packages("xgboost")}
+
+\NormalTok{xgb\_mod \textless{}{-}}
+\StringTok{  }\KeywordTok{boost\_tree}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_engine}\NormalTok{(}\StringTok{"xgboost"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{recipe-and-models}{%
+\chapter{Recipe and Models}\label{recipe-and-models}}
+
+We will want to use our recipe across several steps as we train and test our models. We will:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Process the recipe using the training set: This involves any estimation or calculations based on the training set. For our recipe, the training set will be used to determine which predictors should be converted to dummy variables and which predictors will have zero-variance in the training set, and should be slated for removal.
+\item
+  Apply the recipe to the training set: We create the final predictor set on the training set.
+\item
+  Apply the recipe to the test set: We create the final predictor set on the test set. Nothing is recomputed and no information from the test set is used here; the dummy variable and zero-variance results from the training set are applied to the test set.
+\end{enumerate}
+
+To simplify this process, we can use a \emph{model workflow}, which pairs a model and recipe together. This is a straightforward approach because different recipes are often needed for different models, so when a model and recipe are bundled, it becomes easier to train and test workflows. We'll use the \texttt{workflow} package from tidymodels to bundle our parsnip model (lr\_mod etc.) with our recipe (flights\_rec).
+
+\hypertarget{fit-models-with-workflows}{%
+\section{Fit models with workflows}\label{fit-models-with-workflows}}
+
+To combine the data preparation with the model building, we use the package \href{https://workflows.tidymodels.org}{workflows}. A workflow is an object that can bundle together your pre-processing, modeling, and post-processing requests.
+
+\hypertarget{logistic-regression-1}{%
+\subsection{Logistic regression}\label{logistic-regression-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_wflow\_lr\_mod \textless{}{-}}
+\StringTok{  }\KeywordTok{workflow}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_model}\NormalTok{(lr\_mod) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_recipe}\NormalTok{(flights\_rec)}
+
+\NormalTok{flights\_wflow\_lr\_mod}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{decision-tree-1}{%
+\subsection{Decision tree}\label{decision-tree-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_wflow\_dt\_mod \textless{}{-}}
+\StringTok{  }\KeywordTok{workflow}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_model}\NormalTok{(dt\_mod) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_recipe}\NormalTok{(flights\_rec)}
+
+\NormalTok{flights\_wflow\_dt\_mod}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{random-forest-1}{%
+\subsection{Random forest}\label{random-forest-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_wflow\_rf\_mod \textless{}{-}}
+\StringTok{  }\KeywordTok{workflow}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_model}\NormalTok{(rf\_mod) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_recipe}\NormalTok{(flights\_rec)}
+
+\NormalTok{flights\_wflow\_rf\_mod}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{xgboost}{%
+\subsection{XGBoost}\label{xgboost}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_wflow\_xgb\_mod \textless{}{-}}
+\StringTok{  }\KeywordTok{workflow}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_model}\NormalTok{(xgb\_mod) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{add\_recipe}\NormalTok{(flights\_rec)}
+
+\NormalTok{flights\_wflow\_xgb\_mod}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{train-models}{%
+\section{Train models}\label{train-models}}
+
+Now, there is a single function that can be used to prepare the recipe and train the models from the resulting predictors.
+
+\hypertarget{logistic-regression-2}{%
+\subsection{Logistic regression}\label{logistic-regression-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_lr\_mode \textless{}{-}}
+\StringTok{  }\NormalTok{flights\_wflow\_lr\_mod }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{fit}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ train\_data)}
+
+\NormalTok{flights\_fit\_lr\_mode}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{decision-tree-2}{%
+\subsection{Decision tree}\label{decision-tree-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_dt\_mode \textless{}{-}}
+\StringTok{  }\NormalTok{flights\_wflow\_dt\_mod }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{fit}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ train\_data)}
+
+\NormalTok{flights\_fit\_dt\_mode}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{random-forest-2}{%
+\subsection{Random forest}\label{random-forest-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_rf\_mode \textless{}{-}}
+\StringTok{  }\NormalTok{flights\_wflow\_rf\_mod }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{fit}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ train\_data)}
+
+\NormalTok{flights\_fit\_rf\_mode}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{xg-boost}{%
+\subsection{XG Boost}\label{xg-boost}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_xgb\_mode \textless{}{-}}
+\StringTok{  }\NormalTok{flights\_wflow\_xgb\_mod }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{fit}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ train\_data)}
+
+\NormalTok{flights\_fit\_xgb\_mode}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{model-recipe-objects}{%
+\section{Model recipe objects}\label{model-recipe-objects}}
+
+The objects above have the finalized recipe and fitted model objects inside. You may want to extract the model or recipe objects from the workflow. To do this, you can use the helper functions \texttt{pull\_workflow\_fit()} and \texttt{pull\_workflow\_prepped\_recipe()}.
+
+For example, here we pull the fitted model object then use the \texttt{broom::tidy()} function to get a tidy tibble of the Logisitc Regression model coefficients.
+
+\hypertarget{logistic-regression-3}{%
+\subsection{Logistic regression}\label{logistic-regression-3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_lr\_mode }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{pull\_workflow\_fit}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{tidy}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{decision-tree-3}{%
+\subsection{Decision tree}\label{decision-tree-3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_xgb\_mode }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{pull\_workflow\_prepped\_recipe}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{random-forest-3}{%
+\subsection{Random forest}\label{random-forest-3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_rf\_mode }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{pull\_workflow\_prepped\_recipe}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{xg-boost-1}{%
+\subsection{XG Boost}\label{xg-boost-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_xgb\_mode }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{pull\_workflow\_prepped\_recipe}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
+Our goal was to predict whether a plane arrives more than 30 minutes late. We have just:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Built the model (\texttt{lr\_mod} etc.),
+\item
+  Created a preprocessing recipe (\texttt{flights\_rec}),
+\item
+  Bundled the model and recipe (\texttt{flights\_wflow}), and
+\item
+  Trained our workflow using a single call to \texttt{fit()}.
+\end{enumerate}
+
+The next step is to use the trained workflow (\texttt{flights\_fit}) to predict with the unseen test data, which we will do with a single call to predict().
+
+\hypertarget{prediction}{%
+\chapter{Prediction}\label{prediction}}
+
+The \texttt{predict()} method applies the recipe to the new data, then passes them to the fitted model. Let`s use the logistic regression model as an example for the next steps.
+
+\hypertarget{logistic-regression-4}{%
+\section{Logistic regression}\label{logistic-regression-4}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{predict}\NormalTok{(}
+\NormalTok{  flights\_fit\_lr\_mode,}
+\NormalTok{  test\_data}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Because our outcome variable here is a factor, the output from \texttt{predict()} returns the predicted class: late versus on\_time. But, let's say we want the predicted class \emph{probabilities} for each flight instead. To return those, we can specify \texttt{type\ =\ "prob"} when we use \texttt{predict()}. We'll also bind the output with some variables from the test data and save them together:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_pred\_lr\_mod \textless{}{-}}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(flights\_fit\_lr\_mode,}
+\NormalTok{    test\_data,}
+    \DataTypeTok{type =} \StringTok{"prob"}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{bind\_cols}\NormalTok{(test\_data }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(}
+\NormalTok{      arr\_delay,}
+\NormalTok{      time\_hour,}
+\NormalTok{      flight}
+\NormalTok{    ))}
+\end{Highlighting}
+\end{Shaded}
+
+The data look like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(flights\_pred\_lr\_mod)}
+\end{Highlighting}
+\end{Shaded}
+
+Now that we have a tibble with our predicted class probabilities, how will we evaluate the performance of our workflow? We would like to calculate a metric that tells how well our model predicted late arrivals, compared to the true status of our outcome variable, \texttt{arr\_delay}.
+
+\hypertarget{roc-curve}{%
+\subsection{ROC curve}\label{roc-curve}}
+
+Let's use the area under the \href{https://bookdown.org/max/FES/measuring-performance.html\#class-metrics}{ROC curve} as our metric, computed using \texttt{roc\_curve()} and \texttt{roc\_auc()} from the \texttt{yardstick} package.
+
+To generate a ROC curve, we need the predicted class probabilities for \texttt{late} and \texttt{on\_time}, which we just calculated in the code chunk above. We can create the ROC curve with these values, using \texttt{roc\_curve()} and then piping to the \texttt{autoplot()} method:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_pred\_lr\_mod }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{roc\_curve}\NormalTok{(}
+    \DataTypeTok{truth =}\NormalTok{ arr\_delay,}
+\NormalTok{    .pred\_late}
+\NormalTok{  ) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{autoplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{auc}{%
+\subsection{AUC}\label{auc}}
+
+Similarly, \texttt{roc\_auc()} estimates the area under the curve:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_pred\_lr\_mod }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{roc\_auc}\NormalTok{(}\DataTypeTok{truth =}\NormalTok{ arr\_delay, .pred\_late)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{accuracy}{%
+\subsection{Accuracy}\label{accuracy}}
+
+We use the \texttt{metrics()} function to measure the performance of the model. It will automatically choose metrics appropriate for a given type of model. The function expects a tibble that contains the actual results (truth) and what the model predicted (estimate).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_lr\_mode }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(test\_data) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{bind\_cols}\NormalTok{(test\_data) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{metrics}\NormalTok{(}
+    \DataTypeTok{truth =}\NormalTok{ arr\_delay,}
+    \DataTypeTok{estimate =}\NormalTok{ .pred\_class}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{recall}{%
+\subsection{Recall}\label{recall}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_lr\_mode }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(test\_data) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{bind\_cols}\NormalTok{(test\_data) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{recall}\NormalTok{(}
+    \DataTypeTok{truth =}\NormalTok{ arr\_delay,}
+    \DataTypeTok{estimate =}\NormalTok{ .pred\_class}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{precision}{%
+\subsection{Precision}\label{precision}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights\_fit\_lr\_mode }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{predict}\NormalTok{(test\_data) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{bind\_cols}\NormalTok{(test\_data) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{precision}\NormalTok{(}
+    \DataTypeTok{truth =}\NormalTok{ arr\_delay,}
+    \DataTypeTok{estimate =}\NormalTok{ .pred\_class}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
 
   \bibliography{book.bib,packages.bib}
 
