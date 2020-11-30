@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Build a Model | Advanced Analytics with Tidymodels in R</title>
+  <meta name="description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Build a Model | Advanced Analytics with Tidymodels in R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Build a Model | Advanced Analytics with Tidymodels in R" />
+  
+  <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
+  
+
+<meta name="author" content="Prof. Dr. Jan Kirenz" />
+
+
+<meta name="date" content="2020-11-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="process-with-data-splitting.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Advanced Analytics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="part"><span><b>I BUILD A MODEL</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Build a Model</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#data-understanding"><i class="fa fa-check"></i><b>1.1</b> Data understanding</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#imort-data"><i class="fa fa-check"></i><b>1.1.1</b> Imort Data</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#data-overview"><i class="fa fa-check"></i><b>1.1.2</b> Data overview</a></li>
+<li class="chapter" data-level="1.1.3" data-path="intro.html"><a href="intro.html#data-splitting"><i class="fa fa-check"></i><b>1.1.3</b> Data splitting</a></li>
+<li class="chapter" data-level="1.1.4" data-path="intro.html"><a href="intro.html#data-exploration"><i class="fa fa-check"></i><b>1.1.4</b> Data exploration</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#model-type"><i class="fa fa-check"></i><b>1.2</b> Model type</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#model-training"><i class="fa fa-check"></i><b>1.3</b> Model training</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#model-predictions"><i class="fa fa-check"></i><b>1.4</b> Model predictions</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#model-evaluation"><i class="fa fa-check"></i><b>1.5</b> Model evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html"><i class="fa fa-check"></i><b>2</b> Process with data splitting</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting-1"><i class="fa fa-check"></i><b>2.1</b> Data splitting</a></li>
+<li class="chapter" data-level="2.2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-type-1"><i class="fa fa-check"></i><b>2.2</b> Model type</a></li>
+<li class="chapter" data-level="2.3" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-training-1"><i class="fa fa-check"></i><b>2.3</b> Model training</a></li>
+<li class="chapter" data-level="2.4" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-predictions-1"><i class="fa fa-check"></i><b>2.4</b> Model predictions</a></li>
+<li class="chapter" data-level="2.5" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-evaluation-1"><i class="fa fa-check"></i><b>2.5</b> Model evaluation</a></li>
+</ul></li>
+<li class="part"><span><b>II K-FOLD CROSS VALIDATION</b></span></li>
+<li class="chapter" data-level="3" data-path="import-data.html"><a href="import-data.html"><i class="fa fa-check"></i><b>3</b> Import data</a></li>
+<li class="chapter" data-level="4" data-path="build-a-model.html"><a href="build-a-model.html"><i class="fa fa-check"></i><b>4</b> Build a model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="build-a-model.html"><a href="build-a-model.html#model-specification"><i class="fa fa-check"></i><b>4.1</b> Model specification</a></li>
+<li class="chapter" data-level="4.2" data-path="build-a-model.html"><a href="build-a-model.html#data-split"><i class="fa fa-check"></i><b>4.2</b> Data split</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="fit-the-model.html"><a href="fit-the-model.html"><i class="fa fa-check"></i><b>5</b> Fit the model</a></li>
+<li class="chapter" data-level="6" data-path="evaluate-model.html"><a href="evaluate-model.html"><i class="fa fa-check"></i><b>6</b> Evaluate model</a></li>
+<li class="chapter" data-level="7" data-path="evaluate-final-model.html"><a href="evaluate-final-model.html"><i class="fa fa-check"></i><b>7</b> Evaluate final model</a></li>
+<li class="part"><span><b>III RECIPES</b></span></li>
+<li class="chapter" data-level="8" data-path="data-preparation.html"><a href="data-preparation.html"><i class="fa fa-check"></i><b>8</b> Data preparation</a></li>
+<li class="chapter" data-level="9" data-path="recipe.html"><a href="recipe.html"><i class="fa fa-check"></i><b>9</b> Recipe</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="recipe.html"><a href="recipe.html#recipe-1"><i class="fa fa-check"></i><b>9.1</b> recipe()</a></li>
+<li class="chapter" data-level="9.2" data-path="recipe.html"><a href="recipe.html#prep"><i class="fa fa-check"></i><b>9.2</b> prep()</a></li>
+<li class="chapter" data-level="9.3" data-path="recipe.html"><a href="recipe.html#juice"><i class="fa fa-check"></i><b>9.3</b> juice()</a></li>
+<li class="chapter" data-level="9.4" data-path="recipe.html"><a href="recipe.html#bake"><i class="fa fa-check"></i><b>9.4</b> bake()</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-building.html"><a href="model-building.html"><i class="fa fa-check"></i><b>10</b> Model building</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-building.html"><a href="model-building.html#specify-model"><i class="fa fa-check"></i><b>10.1</b> Specify model</a></li>
+<li class="chapter" data-level="10.2" data-path="model-building.html"><a href="model-building.html#fit-model"><i class="fa fa-check"></i><b>10.2</b> Fit model</a></li>
+<li class="chapter" data-level="10.3" data-path="model-building.html"><a href="model-building.html#evaluate-model-1"><i class="fa fa-check"></i><b>10.3</b> Evaluate model</a></li>
+<li class="chapter" data-level="10.4" data-path="model-building.html"><a href="model-building.html#evaluate-final-model-1"><i class="fa fa-check"></i><b>10.4</b> Evaluate final model</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html"><i class="fa fa-check"></i><b>11</b> Components of our recipe</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#recipe-2"><i class="fa fa-check"></i><b>11.1</b> recipe()</a></li>
+<li class="chapter" data-level="11.2" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#helper-functions"><i class="fa fa-check"></i><b>11.2</b> Helper functions</a></li>
+<li class="chapter" data-level="11.3" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#step_novel"><i class="fa fa-check"></i><b>11.3</b> step_novel()</a></li>
+<li class="chapter" data-level="11.4" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#step_dummy"><i class="fa fa-check"></i><b>11.4</b> step_dummy()</a></li>
+<li class="chapter" data-level="11.5" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#step_zv"><i class="fa fa-check"></i><b>11.5</b> step_zv()</a></li>
+<li class="chapter" data-level="11.6" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#step_normalize"><i class="fa fa-check"></i><b>11.6</b> step_normalize()</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>12</b> Workflows</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="workflows.html"><a href="workflows.html#workflow"><i class="fa fa-check"></i><b>12.1</b> workflow()</a></li>
+<li class="chapter" data-level="12.2" data-path="workflows.html"><a href="workflows.html#fit"><i class="fa fa-check"></i><b>12.2</b> fit()</a></li>
+<li class="chapter" data-level="12.3" data-path="workflows.html"><a href="workflows.html#predict-rmse"><i class="fa fa-check"></i><b>12.3</b> predict() &amp; rmse()</a></li>
+</ul></li>
+<li class="part"><span><b>IV WORKFLOWS &amp; MODELS</b></span></li>
+<li class="chapter" data-level="13" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>13</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>13.1</b> Data overview</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="data-splitting-2.html"><a href="data-splitting-2.html"><i class="fa fa-check"></i><b>14</b> Data splitting</a></li>
+<li class="chapter" data-level="15" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>15</b> Create recipe and roles</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>15.1</b> Create features</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#date"><i class="fa fa-check"></i><b>15.1.1</b> Date</a></li>
+<li class="chapter" data-level="15.1.2" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#dummy-variables"><i class="fa fa-check"></i><b>15.1.2</b> Dummy variables</a></li>
+<li class="chapter" data-level="15.1.3" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#zero-variance"><i class="fa fa-check"></i><b>15.1.3</b> Zero variance</a></li>
+<li class="chapter" data-level="15.1.4" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#correlations"><i class="fa fa-check"></i><b>15.1.4</b> Correlations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="model-building-1.html"><a href="model-building-1.html"><i class="fa fa-check"></i><b>16</b> Model building</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="model-building-1.html"><a href="model-building-1.html#logistic-regression"><i class="fa fa-check"></i><b>16.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="16.2" data-path="model-building-1.html"><a href="model-building-1.html#decision-tree"><i class="fa fa-check"></i><b>16.2</b> Decision tree</a></li>
+<li class="chapter" data-level="16.3" data-path="model-building-1.html"><a href="model-building-1.html#random-forest"><i class="fa fa-check"></i><b>16.3</b> Random forest</a></li>
+<li class="chapter" data-level="16.4" data-path="model-building-1.html"><a href="model-building-1.html#boosted-tree-xgboost"><i class="fa fa-check"></i><b>16.4</b> Boosted tree (XGBoost)</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="recipe-and-models.html"><a href="recipe-and-models.html"><i class="fa fa-check"></i><b>17</b> Recipe and Models</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#fit-models-with-workflows"><i class="fa fa-check"></i><b>17.1</b> Fit models with workflows</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-1"><i class="fa fa-check"></i><b>17.1.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="17.1.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-1"><i class="fa fa-check"></i><b>17.1.2</b> Decision tree</a></li>
+<li class="chapter" data-level="17.1.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-1"><i class="fa fa-check"></i><b>17.1.3</b> Random forest</a></li>
+<li class="chapter" data-level="17.1.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xgboost"><i class="fa fa-check"></i><b>17.1.4</b> XGBoost</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#train-models"><i class="fa fa-check"></i><b>17.2</b> Train models</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-2"><i class="fa fa-check"></i><b>17.2.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="17.2.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-2"><i class="fa fa-check"></i><b>17.2.2</b> Decision tree</a></li>
+<li class="chapter" data-level="17.2.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-2"><i class="fa fa-check"></i><b>17.2.3</b> Random forest</a></li>
+<li class="chapter" data-level="17.2.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost"><i class="fa fa-check"></i><b>17.2.4</b> XG Boost</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#model-recipe-objects"><i class="fa fa-check"></i><b>17.3</b> Model recipe objects</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-3"><i class="fa fa-check"></i><b>17.3.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="17.3.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-3"><i class="fa fa-check"></i><b>17.3.2</b> Decision tree</a></li>
+<li class="chapter" data-level="17.3.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-3"><i class="fa fa-check"></i><b>17.3.3</b> Random forest</a></li>
+<li class="chapter" data-level="17.3.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost-1"><i class="fa fa-check"></i><b>17.3.4</b> XG Boost</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#summary"><i class="fa fa-check"></i><b>17.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>18</b> Prediction</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="prediction.html"><a href="prediction.html#logistic-regression-4"><i class="fa fa-check"></i><b>18.1</b> Logistic regression</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="prediction.html"><a href="prediction.html#roc-curve"><i class="fa fa-check"></i><b>18.1.1</b> ROC curve</a></li>
+<li class="chapter" data-level="18.1.2" data-path="prediction.html"><a href="prediction.html#auc"><i class="fa fa-check"></i><b>18.1.2</b> AUC</a></li>
+<li class="chapter" data-level="18.1.3" data-path="prediction.html"><a href="prediction.html#accuracy"><i class="fa fa-check"></i><b>18.1.3</b> Accuracy</a></li>
+<li class="chapter" data-level="18.1.4" data-path="prediction.html"><a href="prediction.html#recall"><i class="fa fa-check"></i><b>18.1.4</b> Recall</a></li>
+<li class="chapter" data-level="18.1.5" data-path="prediction.html"><a href="prediction.html#precision"><i class="fa fa-check"></i><b>18.1.5</b> Precision</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Analytics with Tidymodels in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Build a Model</h1>
+<p><em>The following content is adapted from the excellent book “Hands-on machine learning with scikit-learn, keras and tensorflow” from <span class="citation">Géron (<a href="#ref-Geron2019" role="doc-biblioref">2019</a>)</span>.</em></p>
+<p>In this chapter you will learn how to specify a regression model with the tidymodels package. To use the code in this article, you will need to install the following packages:</p>
+<ul>
+<li><a href="https://www.tidyverse.org/">tidyverse</a></li>
+<li><a href="https://www.tidymodels.org/">tidymodels</a></li>
+<li><a href="https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html">skimr</a></li>
+<li><a href="https://ggobi.github.io/ggally/index.html">GGally</a></li>
+<li><a href="">ggmap</a></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="intro.html#cb1-2"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb1-3"><a href="intro.html#cb1-3"></a><span class="kw">library</span>(skimr)</span>
+<span id="cb1-4"><a href="intro.html#cb1-4"></a><span class="kw">library</span>(GGally)</span>
+<span id="cb1-5"><a href="intro.html#cb1-5"></a><span class="kw">library</span>(ggmap)</span></code></pre></div>
+<p>In this example, our goal is to build a model of housing prices in California. In particular, the model should learn from California census data and be able to predict the median house price in any district (population of 600 to 3000 people), given some predictor variables. We use the root mean square error (RMSE) as a performance measure for our regression problem.</p>
+<div id="data-understanding" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Data understanding</h2>
+<div class="note">
+<p>In Data Understanding, you will learn how to:</p>
+<ul>
+<li>Import data</li>
+<li>Get an overview about the data structure</li>
+<li>Split data into training and test set using stratified sampling</li>
+<li>Discover and visualize the data to gain insights</li>
+</ul>
+</div>
+<div id="imort-data" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Imort Data</h3>
+<p>First of all, let’s import the data:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1"></a>LINK &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/kirenz/datasets/master/housing.csv&quot;</span></span>
+<span id="cb2-2"><a href="intro.html#cb2-2"></a>housing &lt;-<span class="st"> </span><span class="kw">read_csv</span>(LINK)</span></code></pre></div>
+</div>
+<div id="data-overview" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Data overview</h3>
+<p>Next, we take a look at the data structure:</p>
+<p>California census top 4 rows of the DataFrame:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1"></a><span class="kw">head</span>(housing, <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 10
+##   longitude latitude housing_median_… total_rooms total_bedrooms population
+##       &lt;dbl&gt;    &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+## 1     -122.     37.9               41         880            129        322
+## 2     -122.     37.9               21        7099           1106       2401
+## 3     -122.     37.8               52        1467            190        496
+## 4     -122.     37.8               52        1274            235        558
+## # … with 4 more variables: households &lt;dbl&gt;, median_income &lt;dbl&gt;,
+## #   median_house_value &lt;dbl&gt;, ocean_proximity &lt;chr&gt;</code></pre>
+<p>Data info:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1"></a><span class="kw">glimpse</span>(housing)</span></code></pre></div>
+<pre><code>## Rows: 20,640
+## Columns: 10
+## $ longitude          &lt;dbl&gt; -122.23, -122.22, -122.24, -122.25, -122.25, -122.…
+## $ latitude           &lt;dbl&gt; 37.88, 37.86, 37.85, 37.85, 37.85, 37.85, 37.84, 3…
+## $ housing_median_age &lt;dbl&gt; 41, 21, 52, 52, 52, 52, 52, 52, 42, 52, 52, 52, 52…
+## $ total_rooms        &lt;dbl&gt; 880, 7099, 1467, 1274, 1627, 919, 2535, 3104, 2555…
+## $ total_bedrooms     &lt;dbl&gt; 129, 1106, 190, 235, 280, 213, 489, 687, 665, 707,…
+## $ population         &lt;dbl&gt; 322, 2401, 496, 558, 565, 413, 1094, 1157, 1206, 1…
+## $ households         &lt;dbl&gt; 126, 1138, 177, 219, 259, 193, 514, 647, 595, 714,…
+## $ median_income      &lt;dbl&gt; 8.3252, 8.3014, 7.2574, 5.6431, 3.8462, 4.0368, 3.…
+## $ median_house_value &lt;dbl&gt; 452600, 358500, 352100, 341300, 342200, 269700, 29…
+## $ ocean_proximity    &lt;chr&gt; &quot;NEAR BAY&quot;, &quot;NEAR BAY&quot;, &quot;NEAR BAY&quot;, &quot;NEAR BAY&quot;, &quot;N…</code></pre>
+<p>Data summary of numerical and categorical attributes using a function from the package <code>skimr</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1"></a><span class="kw">skim</span>(housing)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 1.1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">housing</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">20640</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">10</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">9</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ocean_proximity</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="8%" />
+<col width="11%" />
+<col width="8%" />
+<col width="8%" />
+<col width="7%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">longitude</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">-119.57</td>
+<td align="right">2.00</td>
+<td align="right">-124.35</td>
+<td align="right">-121.80</td>
+<td align="right">-118.49</td>
+<td align="right">-118.01</td>
+<td align="right">-114.31</td>
+<td align="left">▂▆▃▇▁</td>
+</tr>
+<tr class="even">
+<td align="left">latitude</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">35.63</td>
+<td align="right">2.14</td>
+<td align="right">32.54</td>
+<td align="right">33.93</td>
+<td align="right">34.26</td>
+<td align="right">37.71</td>
+<td align="right">41.95</td>
+<td align="left">▇▁▅▂▁</td>
+</tr>
+<tr class="odd">
+<td align="left">housing_median_age</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">28.64</td>
+<td align="right">12.59</td>
+<td align="right">1.00</td>
+<td align="right">18.00</td>
+<td align="right">29.00</td>
+<td align="right">37.00</td>
+<td align="right">52.00</td>
+<td align="left">▃▇▇▇▅</td>
+</tr>
+<tr class="even">
+<td align="left">total_rooms</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2635.76</td>
+<td align="right">2181.62</td>
+<td align="right">2.00</td>
+<td align="right">1447.75</td>
+<td align="right">2127.00</td>
+<td align="right">3148.00</td>
+<td align="right">39320.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">total_bedrooms</td>
+<td align="right">207</td>
+<td align="right">0.99</td>
+<td align="right">537.87</td>
+<td align="right">421.39</td>
+<td align="right">1.00</td>
+<td align="right">296.00</td>
+<td align="right">435.00</td>
+<td align="right">647.00</td>
+<td align="right">6445.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">population</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1425.48</td>
+<td align="right">1132.46</td>
+<td align="right">3.00</td>
+<td align="right">787.00</td>
+<td align="right">1166.00</td>
+<td align="right">1725.00</td>
+<td align="right">35682.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">households</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">499.54</td>
+<td align="right">382.33</td>
+<td align="right">1.00</td>
+<td align="right">280.00</td>
+<td align="right">409.00</td>
+<td align="right">605.00</td>
+<td align="right">6082.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">median_income</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3.87</td>
+<td align="right">1.90</td>
+<td align="right">0.50</td>
+<td align="right">2.56</td>
+<td align="right">3.53</td>
+<td align="right">4.74</td>
+<td align="right">15.00</td>
+<td align="left">▇▇▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">median_house_value</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">206855.82</td>
+<td align="right">115395.62</td>
+<td align="right">14999.00</td>
+<td align="right">119600.00</td>
+<td align="right">179700.00</td>
+<td align="right">264725.00</td>
+<td align="right">500001.00</td>
+<td align="left">▅▇▅▂▂</td>
+</tr>
+</tbody>
+</table>
+<p>Count levels of our categorical variable:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1"></a>housing <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb8-2"><a href="intro.html#cb8-2"></a><span class="st">  </span><span class="kw">count</span>(ocean_proximity,</span>
+<span id="cb8-3"><a href="intro.html#cb8-3"></a>        <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##   ocean_proximity     n
+##   &lt;chr&gt;           &lt;int&gt;
+## 1 &lt;1H OCEAN        9136
+## 2 INLAND           6551
+## 3 NEAR OCEAN       2658
+## 4 NEAR BAY         2290
+## 5 ISLAND              5</code></pre>
+<p>The function <code>ggscatmat</code> from the package <code>GGally</code> creates a matrix with scatterplots, densities and correlations for numeric columns. In our code, we enter the dataset <code>housing</code>, choose columns 6 to 9, a color column for our categorical variable <code>ocean_proximity</code>, and an alpha level of 0.8 (for transparency).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1"></a><span class="kw">ggscatmat</span>(housing, <span class="dt">columns =</span> <span class="dv">6</span><span class="op">:</span><span class="dv">9</span>, <span class="dt">color=</span><span class="st">&quot;ocean_proximity&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.8</span>)</span></code></pre></div>
+<p><img src="advanced-analytics_files/figure-html/unnamed-chunk-7-1.png" width="2400" /></p>
+<p>To obtain an overview of even more visualizations, we can use the function <code>ggpairs</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1"></a><span class="kw">ggpairs</span>(housing)</span></code></pre></div>
+<p><img src="advanced-analytics_files/figure-html/unnamed-chunk-8-1.png" width="2400" /></p>
+</div>
+<div id="data-splitting" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Data splitting</h3>
+<p>Let’s assume we would know that the median income is a very important attribute to predict median housing prices. Therefore, we would want to create a training and test set using stratified sampling. A <em>stratum</em> (plural strata) refers to a subset (part) of the population (entire collection of items under consideration) which is being sampled. Take a look at <a href="intro.html#fig:hist-med-income">1.1</a></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1"></a>housing <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-2"><a href="intro.html#cb12-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(median_income)) <span class="op">+</span></span>
+<span id="cb12-3"><a href="intro.html#cb12-3"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">30</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:hist-med-income"></span>
+<img src="advanced-analytics_files/figure-html/hist-med-income-1.png" alt="Histogram of Median Income" width="80%" />
+<p class="caption">
+Figure 1.1: Histogram of Median Income
+</p>
+</div>
+<p>We want to ensure that the test set is representative of the the various categories of incomes in the whole dataset. In other words, we would like to have instances for each <em>stratum</em>, or else the stimate of a strtum’s importance may be biased. This means that you should not have too many starta, and each stratum should be large enough. We use 5 strata in our example.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="intro.html#cb13-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb13-2"><a href="intro.html#cb13-2"></a></span>
+<span id="cb13-3"><a href="intro.html#cb13-3"></a>new_split &lt;-<span class="st"> </span><span class="kw">initial_split</span>(housing, </span>
+<span id="cb13-4"><a href="intro.html#cb13-4"></a>                           <span class="dt">prop =</span> <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>, </span>
+<span id="cb13-5"><a href="intro.html#cb13-5"></a>                           <span class="dt">strata =</span> median_income, </span>
+<span id="cb13-6"><a href="intro.html#cb13-6"></a>                           <span class="dt">breaks =</span> <span class="dv">5</span>)</span>
+<span id="cb13-7"><a href="intro.html#cb13-7"></a></span>
+<span id="cb13-8"><a href="intro.html#cb13-8"></a>new_train &lt;-<span class="st"> </span><span class="kw">training</span>(new_split) </span>
+<span id="cb13-9"><a href="intro.html#cb13-9"></a>new_test &lt;-<span class="st"> </span><span class="kw">testing</span>(new_split)</span></code></pre></div>
+</div>
+<div id="data-exploration" class="section level3" number="1.1.4">
+<h3><span class="header-section-number">1.1.4</span> Data exploration</h3>
+<p>A Geographical scatterplot of the data:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1"></a>housing <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-2"><a href="intro.html#cb14-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> longitude, <span class="dt">y =</span> latitude)) <span class="op">+</span></span>
+<span id="cb14-3"><a href="intro.html#cb14-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:point-long-lat"></span>
+<img src="advanced-analytics_files/figure-html/point-long-lat-1.png" alt="Scatterplot of longitude and latitude" width="80%" />
+<p class="caption">
+Figure 1.2: Scatterplot of longitude and latitude
+</p>
+</div>
+<p>A better visualization that highlights high-density areas:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="intro.html#cb15-1"></a>housing <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-2"><a href="intro.html#cb15-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> longitude, <span class="dt">y =</span> latitude)) <span class="op">+</span></span>
+<span id="cb15-3"><a href="intro.html#cb15-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) </span></code></pre></div>
+<div class="figure"><span id="fig:point-long-lat-a"></span>
+<img src="advanced-analytics_files/figure-html/point-long-lat-a-1.png" alt="Scatterplot of longitude and latitude that highlights high-density areas" width="80%" />
+<p class="caption">
+Figure 1.3: Scatterplot of longitude and latitude that highlights high-density areas
+</p>
+</div>
+<p>California housing prices: red is expensive, purple is cheap and larger circles indicate areas with a larger population.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="intro.html#cb16-1"></a>housing <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb16-2"><a href="intro.html#cb16-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> longitude, <span class="dt">y =</span> latitude)) <span class="op">+</span></span>
+<span id="cb16-3"><a href="intro.html#cb16-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">size =</span> population, <span class="dt">color =</span> median_house_value), </span>
+<span id="cb16-4"><a href="intro.html#cb16-4"></a>             <span class="dt">alpha =</span> <span class="fl">0.4</span>) <span class="op">+</span></span>
+<span id="cb16-5"><a href="intro.html#cb16-5"></a><span class="st">  </span><span class="kw">scale_colour_gradientn</span>(<span class="dt">colours=</span><span class="kw">rev</span>(<span class="kw">rainbow</span>(<span class="dv">4</span>)))</span></code></pre></div>
+<div class="figure"><span id="fig:plot-ca-prices"></span>
+<img src="advanced-analytics_files/figure-html/plot-ca-prices-1.png" alt="California housing prices" width="80%" />
+<p class="caption">
+Figure 1.4: California housing prices
+</p>
+</div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="intro.html#cb17-1"></a><span class="kw">library</span>(ggmap)</span>
+<span id="cb17-2"><a href="intro.html#cb17-2"></a></span>
+<span id="cb17-3"><a href="intro.html#cb17-3"></a><span class="kw">qmplot</span>(<span class="dt">x =</span> longitude, </span>
+<span id="cb17-4"><a href="intro.html#cb17-4"></a>       <span class="dt">y =</span> latitude, </span>
+<span id="cb17-5"><a href="intro.html#cb17-5"></a>       <span class="dt">data =</span> housing, </span>
+<span id="cb17-6"><a href="intro.html#cb17-6"></a>       <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, </span>
+<span id="cb17-7"><a href="intro.html#cb17-7"></a>       <span class="dt">color =</span> median_house_value, </span>
+<span id="cb17-8"><a href="intro.html#cb17-8"></a>       <span class="dt">size =</span> population,</span>
+<span id="cb17-9"><a href="intro.html#cb17-9"></a>       <span class="dt">alpha =</span> <span class="fl">0.4</span>) <span class="op">+</span></span>
+<span id="cb17-10"><a href="intro.html#cb17-10"></a><span class="st">  </span><span class="kw">scale_colour_gradientn</span>(<span class="dt">colours=</span><span class="kw">rev</span>(<span class="kw">rainbow</span>(<span class="dv">4</span>)))</span></code></pre></div>
+<p><img src="advanced-analytics_files/figure-html/unnamed-chunk-10-1.png" width="2400" /></p>
+</div>
+</div>
+<div id="model-type" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Model type</h2>
+<ol style="list-style-type: decimal">
+<li>Pick an <code>model type</code>: choose from this <a href="https://www.tidymodels.org/find/parsnip/">list</a></li>
+<li>Set the <code>engine</code>: choose from this <a href="https://www.tidymodels.org/find/parsnip/">list</a></li>
+<li>Set the <code>mode</code>: regression or classification</li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="intro.html#cb18-1"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb18-2"><a href="intro.html#cb18-2"></a></span>
+<span id="cb18-3"><a href="intro.html#cb18-3"></a>lm_spec &lt;-<span class="st"> </span><span class="co"># your model specification</span></span>
+<span id="cb18-4"><a href="intro.html#cb18-4"></a><span class="st">  </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># model type</span></span>
+<span id="cb18-5"><a href="intro.html#cb18-5"></a><span class="st">  </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># model engine</span></span>
+<span id="cb18-6"><a href="intro.html#cb18-6"></a><span class="st">  </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="co"># model mode</span></span>
+<span id="cb18-7"><a href="intro.html#cb18-7"></a></span>
+<span id="cb18-8"><a href="intro.html#cb18-8"></a><span class="co"># Show your model specification</span></span>
+<span id="cb18-9"><a href="intro.html#cb18-9"></a>lm_spec</span></code></pre></div>
+<pre><code>## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm</code></pre>
+</div>
+<div id="model-training" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Model training</h2>
+<p>In the training process, you run an algorithm on data and thereby produce a model. This process is also called model fitting.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="intro.html#cb20-1"></a>lm_fit &lt;-<span class="st"> </span><span class="co"># your fitted model</span></span>
+<span id="cb20-2"><a href="intro.html#cb20-2"></a><span class="st">  </span><span class="kw">fit</span>( </span>
+<span id="cb20-3"><a href="intro.html#cb20-3"></a>  lm_spec, <span class="co"># your model specification </span></span>
+<span id="cb20-4"><a href="intro.html#cb20-4"></a>  median_house_value <span class="op">~</span><span class="st"> </span>median_income, <span class="co"># a Linear Regression formula </span></span>
+<span id="cb20-5"><a href="intro.html#cb20-5"></a>  <span class="dt">data =</span> housing <span class="co"># your data</span></span>
+<span id="cb20-6"><a href="intro.html#cb20-6"></a>  )</span>
+<span id="cb20-7"><a href="intro.html#cb20-7"></a></span>
+<span id="cb20-8"><a href="intro.html#cb20-8"></a><span class="co"># Show your fitted model</span></span>
+<span id="cb20-9"><a href="intro.html#cb20-9"></a>lm_fit</span></code></pre></div>
+<pre><code>## parsnip model object
+## 
+## Fit time:  5ms 
+## 
+## Call:
+## stats::lm(formula = median_house_value ~ median_income, data = data)
+## 
+## Coefficients:
+##   (Intercept)  median_income  
+##         45086          41794</code></pre>
+</div>
+<div id="model-predictions" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Model predictions</h2>
+<p>We use our fitted model to make predictions.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="intro.html#cb22-1"></a>price_pred &lt;-<span class="st"> </span></span>
+<span id="cb22-2"><a href="intro.html#cb22-2"></a><span class="st">  </span>lm_fit <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-3"><a href="intro.html#cb22-3"></a><span class="st">  </span><span class="kw">predict</span>(<span class="dt">new_data =</span> housing) <span class="op">%&gt;%</span></span>
+<span id="cb22-4"><a href="intro.html#cb22-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">price_truth =</span> housing<span class="op">$</span>median_house_value)</span>
+<span id="cb22-5"><a href="intro.html#cb22-5"></a></span>
+<span id="cb22-6"><a href="intro.html#cb22-6"></a><span class="kw">head</span>(price_pred)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##     .pred price_truth
+##     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 393028.      452600
+## 2 392033.      358500
+## 3 348400.      352100
+## 4 280932.      341300
+## 5 205833.      342200
+## 6 213799.      269700</code></pre>
+</div>
+<div id="model-evaluation" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Model evaluation</h2>
+<p>We use the Root Mean Squared Error (RMSE) to evaluate our regression model. Therefore, we use the function <span class="math inline">\(rmse(data, truth, estimate)\)</span>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="intro.html#cb24-1"></a><span class="kw">rmse</span>(<span class="dt">data =</span> price_pred, </span>
+<span id="cb24-2"><a href="intro.html#cb24-2"></a>     <span class="dt">truth =</span> price_truth, </span>
+<span id="cb24-3"><a href="intro.html#cb24-3"></a>     <span class="dt">estimate =</span> .pred)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard      83734.</code></pre>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Geron2019">
+<p>Géron, Aurélien. 2019. <em>Hands-on machine learning with Scikit-Learn, Keras, and TensorFlow: Concepts, tools, and techniques to build intelligent systems</em>. O’Reilly Media.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="process-with-data-splitting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["advanced-analytics.pdf", "advanced-analytics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

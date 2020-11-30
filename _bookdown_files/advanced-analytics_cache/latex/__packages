@@ -20,3 +20,6 @@ rsample
 tune
 workflows
 yardstick
+skimr
+GGally
+ggmap

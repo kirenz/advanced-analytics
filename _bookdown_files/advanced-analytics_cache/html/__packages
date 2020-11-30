@@ -22,3 +22,7 @@ workflows
 yardstick
 skimr
 GGally
+ggmap
+rlang
+vctrs
+nycflights13

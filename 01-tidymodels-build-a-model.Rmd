@@ -6,9 +6,9 @@
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
-                      echo = TRUE, dpi = 300, cache.lazy = FALSE,
-                      tidy = "styler", fig.width = 8, fig.height = 5,
-                      eval=FALSE)
+                      echo = TRUE, dpi = 300, cache.lazy = TRUE,
+                      fig.width = 8, fig.height = 5,
+                      eval=TRUE)
 library(tidyverse)
 library(tidymodels)
 
@@ -99,17 +99,17 @@ housing %>%
 ```
 
 
-The function `ggscatmat` from the package `GGally` creates a matrix with scatterplots, densities and correlations for numeric columns. In our code, we enter the dataset `housing`, an color column for our categorical variable `ocean_proximity`, and an alpha level of 0.8 (for transparency).
+The function `ggscatmat` from the package `GGally` creates a matrix with scatterplots, densities and correlations for numeric columns. In our code, we enter the dataset `housing`, choose columns 6 to 9, a color column for our categorical variable `ocean_proximity`, and an alpha level of 0.8 (for transparency).
 
-```{r eval=FALSE}
+```{r }
 
-ggscatmat(housing, color="ocean_proximity", alpha=0.8)
+ggscatmat(housing, columns = 6:9, color="ocean_proximity", alpha=0.8)
 
 ```
 
 To obtain an overview of even more visualizations, we can use the function `ggpairs`:
 
-```{r eval=FALSE}
+```{r }
 
 ggpairs(housing)
 
@@ -123,6 +123,7 @@ Let's assume we would know that the median income is a very important attribute 
 housing %>% 
   ggplot(aes(median_income)) +
   geom_histogram(bins = 30)
+
 ```
 
 We want to ensure that the test set is representative of the the various categories of incomes in the whole dataset. In other words, we would like to have instances for each *stratum*, or else the stimate of a strtum's importance may be biased. This means that you should not have too many starta, and each stratum should be large enough. We use 5 strata in our example.
@@ -223,8 +224,8 @@ In the training process, you run an algorithm on data and thereby produce a mode
 lm_fit <- # your fitted model
   fit( 
   lm_spec, # your model specification 
-  Sale_Price ~ Gr_Liv_Area, # a Linear Regression formula 
-  data = ames # your data
+  median_house_value ~ median_income, # a Linear Regression formula 
+  data = housing # your data
   )
 
 # Show your fitted model
@@ -240,24 +241,10 @@ We use our fitted model to make predictions.
 
 price_pred <- 
   lm_fit %>% 
-  predict(new_data = ames) %>%
-  mutate(price_truth = ames$Sale_Price)
+  predict(new_data = housing) %>%
+  mutate(price_truth = housing$median_house_value)
 
 head(price_pred)
-
-```
-
-If we would want to make predictions for new houses, we could proceed as follows: 
-
-```{r}
-
-# New values (our x variable)
-new_homes <- 
-  tibble(Gr_Liv_Area = c(334, 1126, 1442, 1500, 1743, 5642)) 
-
-# Prediction for new houses (predict y)
-lm_fit %>%
- predict(new_data = new_homes)
 
 ```
 
@@ -287,12 +274,12 @@ This function "splits" data randomly into a single testing and a single training
 
 set.seed(100) 
 
-ames_split <-  initial_split(ames,
-                             strata = Sale_Price,
+housing_split <-  initial_split(housing,
+                             strata = median_house_value,
                              breaks = 4)
 
-ames_train <-  training(ames_split)
-ames_test <- testing(ames_split)
+housing_train <-  training(housing_split)
+housing_test <- testing(housing_split)
 
 ```
 
@@ -313,8 +300,8 @@ lm_spec_2 <-
              
 lm_fit_2 <- 
   lm_spec_2 %>% 
-  fit(Sale_Price ~ Gr_Liv_Area,
-      data = ames_train) # only use training data
+  fit(median_house_value ~ median_income,
+      data = housing_train) # only use training data
 
 ```
 
@@ -324,8 +311,8 @@ lm_fit_2 <-
  
 price_pred_2 <- 
   lm_fit %>% 
-  predict(new_data = ames_test) %>% 
-  mutate(price_truth = ames_test$Sale_Price)
+  predict(new_data = housing_test) %>% 
+  mutate(price_truth = housing_test$median_house_value)
 
 ```
 

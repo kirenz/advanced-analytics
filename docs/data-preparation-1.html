@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Data preparation | Advanced Analytics with Tidymodels in R</title>
+  <meta name="description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Data preparation | Advanced Analytics with Tidymodels in R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Data preparation | Advanced Analytics with Tidymodels in R" />
+  
+  <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
+  
+
+<meta name="author" content="Prof. Dr. Jan Kirenz" />
+
+
+<meta name="date" content="2020-11-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="workflows.html"/>
+<link rel="next" href="data-splitting-2.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Advanced Analytics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="part"><span><b>I BUILD A MODEL</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Build a Model</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#data-understanding"><i class="fa fa-check"></i><b>1.1</b> Data understanding</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#imort-data"><i class="fa fa-check"></i><b>1.1.1</b> Imort Data</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#data-overview"><i class="fa fa-check"></i><b>1.1.2</b> Data overview</a></li>
+<li class="chapter" data-level="1.1.3" data-path="intro.html"><a href="intro.html#data-splitting"><i class="fa fa-check"></i><b>1.1.3</b> Data splitting</a></li>
+<li class="chapter" data-level="1.1.4" data-path="intro.html"><a href="intro.html#data-exploration"><i class="fa fa-check"></i><b>1.1.4</b> Data exploration</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#model-type"><i class="fa fa-check"></i><b>1.2</b> Model type</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#model-training"><i class="fa fa-check"></i><b>1.3</b> Model training</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#model-predictions"><i class="fa fa-check"></i><b>1.4</b> Model predictions</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#model-evaluation"><i class="fa fa-check"></i><b>1.5</b> Model evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html"><i class="fa fa-check"></i><b>2</b> Process with data splitting</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting-1"><i class="fa fa-check"></i><b>2.1</b> Data splitting</a></li>
+<li class="chapter" data-level="2.2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-type-1"><i class="fa fa-check"></i><b>2.2</b> Model type</a></li>
+<li class="chapter" data-level="2.3" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-training-1"><i class="fa fa-check"></i><b>2.3</b> Model training</a></li>
+<li class="chapter" data-level="2.4" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-predictions-1"><i class="fa fa-check"></i><b>2.4</b> Model predictions</a></li>
+<li class="chapter" data-level="2.5" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-evaluation-1"><i class="fa fa-check"></i><b>2.5</b> Model evaluation</a></li>
+</ul></li>
+<li class="part"><span><b>II K-FOLD CROSS VALIDATION</b></span></li>
+<li class="chapter" data-level="3" data-path="import-data.html"><a href="import-data.html"><i class="fa fa-check"></i><b>3</b> Import data</a></li>
+<li class="chapter" data-level="4" data-path="build-a-model.html"><a href="build-a-model.html"><i class="fa fa-check"></i><b>4</b> Build a model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="build-a-model.html"><a href="build-a-model.html#model-specification"><i class="fa fa-check"></i><b>4.1</b> Model specification</a></li>
+<li class="chapter" data-level="4.2" data-path="build-a-model.html"><a href="build-a-model.html#data-split"><i class="fa fa-check"></i><b>4.2</b> Data split</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="fit-the-model.html"><a href="fit-the-model.html"><i class="fa fa-check"></i><b>5</b> Fit the model</a></li>
+<li class="chapter" data-level="6" data-path="evaluate-model.html"><a href="evaluate-model.html"><i class="fa fa-check"></i><b>6</b> Evaluate model</a></li>
+<li class="chapter" data-level="7" data-path="evaluate-final-model.html"><a href="evaluate-final-model.html"><i class="fa fa-check"></i><b>7</b> Evaluate final model</a></li>
+<li class="part"><span><b>III RECIPES</b></span></li>
+<li class="chapter" data-level="8" data-path="data-preparation.html"><a href="data-preparation.html"><i class="fa fa-check"></i><b>8</b> Data preparation</a></li>
+<li class="chapter" data-level="9" data-path="recipe.html"><a href="recipe.html"><i class="fa fa-check"></i><b>9</b> Recipe</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="recipe.html"><a href="recipe.html#recipe-1"><i class="fa fa-check"></i><b>9.1</b> recipe()</a></li>
+<li class="chapter" data-level="9.2" data-path="recipe.html"><a href="recipe.html#prep"><i class="fa fa-check"></i><b>9.2</b> prep()</a></li>
+<li class="chapter" data-level="9.3" data-path="recipe.html"><a href="recipe.html#juice"><i class="fa fa-check"></i><b>9.3</b> juice()</a></li>
+<li class="chapter" data-level="9.4" data-path="recipe.html"><a href="recipe.html#bake"><i class="fa fa-check"></i><b>9.4</b> bake()</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-building.html"><a href="model-building.html"><i class="fa fa-check"></i><b>10</b> Model building</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-building.html"><a href="model-building.html#specify-model"><i class="fa fa-check"></i><b>10.1</b> Specify model</a></li>
+<li class="chapter" data-level="10.2" data-path="model-building.html"><a href="model-building.html#fit-model"><i class="fa fa-check"></i><b>10.2</b> Fit model</a></li>
+<li class="chapter" data-level="10.3" data-path="model-building.html"><a href="model-building.html#evaluate-model-1"><i class="fa fa-check"></i><b>10.3</b> Evaluate model</a></li>
+<li class="chapter" data-level="10.4" data-path="model-building.html"><a href="model-building.html#evaluate-final-model-1"><i class="fa fa-check"></i><b>10.4</b> Evaluate final model</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html"><i class="fa fa-check"></i><b>11</b> Components of our recipe</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#recipe-2"><i class="fa fa-check"></i><b>11.1</b> recipe()</a></li>
+<li class="chapter" data-level="11.2" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#helper-functions"><i class="fa fa-check"></i><b>11.2</b> Helper functions</a></li>
+<li class="chapter" data-level="11.3" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#step_novel"><i class="fa fa-check"></i><b>11.3</b> step_novel()</a></li>
+<li class="chapter" data-level="11.4" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#step_dummy"><i class="fa fa-check"></i><b>11.4</b> step_dummy()</a></li>
+<li class="chapter" data-level="11.5" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#step_zv"><i class="fa fa-check"></i><b>11.5</b> step_zv()</a></li>
+<li class="chapter" data-level="11.6" data-path="components-of-our-recipe.html"><a href="components-of-our-recipe.html#step_normalize"><i class="fa fa-check"></i><b>11.6</b> step_normalize()</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>12</b> Workflows</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="workflows.html"><a href="workflows.html#workflow"><i class="fa fa-check"></i><b>12.1</b> workflow()</a></li>
+<li class="chapter" data-level="12.2" data-path="workflows.html"><a href="workflows.html#fit"><i class="fa fa-check"></i><b>12.2</b> fit()</a></li>
+<li class="chapter" data-level="12.3" data-path="workflows.html"><a href="workflows.html#predict-rmse"><i class="fa fa-check"></i><b>12.3</b> predict() &amp; rmse()</a></li>
+</ul></li>
+<li class="part"><span><b>IV WORKFLOWS &amp; MODELS</b></span></li>
+<li class="chapter" data-level="13" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>13</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>13.1</b> Data overview</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="data-splitting-2.html"><a href="data-splitting-2.html"><i class="fa fa-check"></i><b>14</b> Data splitting</a></li>
+<li class="chapter" data-level="15" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>15</b> Create recipe and roles</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>15.1</b> Create features</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#date"><i class="fa fa-check"></i><b>15.1.1</b> Date</a></li>
+<li class="chapter" data-level="15.1.2" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#dummy-variables"><i class="fa fa-check"></i><b>15.1.2</b> Dummy variables</a></li>
+<li class="chapter" data-level="15.1.3" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#zero-variance"><i class="fa fa-check"></i><b>15.1.3</b> Zero variance</a></li>
+<li class="chapter" data-level="15.1.4" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#correlations"><i class="fa fa-check"></i><b>15.1.4</b> Correlations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="model-building-1.html"><a href="model-building-1.html"><i class="fa fa-check"></i><b>16</b> Model building</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="model-building-1.html"><a href="model-building-1.html#logistic-regression"><i class="fa fa-check"></i><b>16.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="16.2" data-path="model-building-1.html"><a href="model-building-1.html#decision-tree"><i class="fa fa-check"></i><b>16.2</b> Decision tree</a></li>
+<li class="chapter" data-level="16.3" data-path="model-building-1.html"><a href="model-building-1.html#random-forest"><i class="fa fa-check"></i><b>16.3</b> Random forest</a></li>
+<li class="chapter" data-level="16.4" data-path="model-building-1.html"><a href="model-building-1.html#boosted-tree-xgboost"><i class="fa fa-check"></i><b>16.4</b> Boosted tree (XGBoost)</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="recipe-and-models.html"><a href="recipe-and-models.html"><i class="fa fa-check"></i><b>17</b> Recipe and Models</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#fit-models-with-workflows"><i class="fa fa-check"></i><b>17.1</b> Fit models with workflows</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-1"><i class="fa fa-check"></i><b>17.1.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="17.1.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-1"><i class="fa fa-check"></i><b>17.1.2</b> Decision tree</a></li>
+<li class="chapter" data-level="17.1.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-1"><i class="fa fa-check"></i><b>17.1.3</b> Random forest</a></li>
+<li class="chapter" data-level="17.1.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xgboost"><i class="fa fa-check"></i><b>17.1.4</b> XGBoost</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#train-models"><i class="fa fa-check"></i><b>17.2</b> Train models</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-2"><i class="fa fa-check"></i><b>17.2.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="17.2.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-2"><i class="fa fa-check"></i><b>17.2.2</b> Decision tree</a></li>
+<li class="chapter" data-level="17.2.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-2"><i class="fa fa-check"></i><b>17.2.3</b> Random forest</a></li>
+<li class="chapter" data-level="17.2.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost"><i class="fa fa-check"></i><b>17.2.4</b> XG Boost</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#model-recipe-objects"><i class="fa fa-check"></i><b>17.3</b> Model recipe objects</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-3"><i class="fa fa-check"></i><b>17.3.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="17.3.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-3"><i class="fa fa-check"></i><b>17.3.2</b> Decision tree</a></li>
+<li class="chapter" data-level="17.3.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-3"><i class="fa fa-check"></i><b>17.3.3</b> Random forest</a></li>
+<li class="chapter" data-level="17.3.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost-1"><i class="fa fa-check"></i><b>17.3.4</b> XG Boost</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#summary"><i class="fa fa-check"></i><b>17.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>18</b> Prediction</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="prediction.html"><a href="prediction.html#logistic-regression-4"><i class="fa fa-check"></i><b>18.1</b> Logistic regression</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="prediction.html"><a href="prediction.html#roc-curve"><i class="fa fa-check"></i><b>18.1.1</b> ROC curve</a></li>
+<li class="chapter" data-level="18.1.2" data-path="prediction.html"><a href="prediction.html#auc"><i class="fa fa-check"></i><b>18.1.2</b> AUC</a></li>
+<li class="chapter" data-level="18.1.3" data-path="prediction.html"><a href="prediction.html#accuracy"><i class="fa fa-check"></i><b>18.1.3</b> Accuracy</a></li>
+<li class="chapter" data-level="18.1.4" data-path="prediction.html"><a href="prediction.html#recall"><i class="fa fa-check"></i><b>18.1.4</b> Recall</a></li>
+<li class="chapter" data-level="18.1.5" data-path="prediction.html"><a href="prediction.html#precision"><i class="fa fa-check"></i><b>18.1.5</b> Precision</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Analytics with Tidymodels in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-preparation-1" class="section level1" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Data preparation</h1>
+<p>Let’s use the <code>nycflights13</code> data to predict whether a plane arrives more than 30 minutes late. This data set contains information on 325,819 flights departing near New York City in 2013. Furthermore, it contains weather data (hourly meterological data for LGA, JFK and EWR).</p>
+<p>Let’s start by loading the data and making a few changes to the variables:</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="data-preparation-1.html#cb77-1"></a>flight_data_all &lt;-<span class="st"> </span></span>
+<span id="cb77-2"><a href="data-preparation-1.html#cb77-2"></a><span class="st">  </span>flights <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb77-3"><a href="data-preparation-1.html#cb77-3"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb77-4"><a href="data-preparation-1.html#cb77-4"></a>    <span class="co"># Convert the arrival delay to a factor</span></span>
+<span id="cb77-5"><a href="data-preparation-1.html#cb77-5"></a>    <span class="dt">arr_delay =</span> <span class="kw">ifelse</span>(arr_delay <span class="op">&gt;=</span><span class="st"> </span><span class="dv">30</span>, </span>
+<span id="cb77-6"><a href="data-preparation-1.html#cb77-6"></a>                       <span class="st">&quot;late&quot;</span>, </span>
+<span id="cb77-7"><a href="data-preparation-1.html#cb77-7"></a>                       <span class="st">&quot;on_time&quot;</span>),</span>
+<span id="cb77-8"><a href="data-preparation-1.html#cb77-8"></a>    <span class="dt">arr_delay =</span> <span class="kw">factor</span>(arr_delay),</span>
+<span id="cb77-9"><a href="data-preparation-1.html#cb77-9"></a>    <span class="co"># We will use the date (not date-time) </span></span>
+<span id="cb77-10"><a href="data-preparation-1.html#cb77-10"></a>    <span class="co"># in the recipe below</span></span>
+<span id="cb77-11"><a href="data-preparation-1.html#cb77-11"></a>    <span class="dt">date =</span> <span class="kw">as.Date</span>(time_hour)</span>
+<span id="cb77-12"><a href="data-preparation-1.html#cb77-12"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb77-13"><a href="data-preparation-1.html#cb77-13"></a><span class="st">  </span><span class="co"># Include  weather data</span></span>
+<span id="cb77-14"><a href="data-preparation-1.html#cb77-14"></a><span class="st">  </span><span class="kw">inner_join</span>(weather, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;origin&quot;</span>, <span class="st">&quot;time_hour&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb77-15"><a href="data-preparation-1.html#cb77-15"></a><span class="st">  </span><span class="co"># Only retain the specific columns we will use</span></span>
+<span id="cb77-16"><a href="data-preparation-1.html#cb77-16"></a><span class="st">  </span><span class="kw">select</span>(dep_time, flight, origin, </span>
+<span id="cb77-17"><a href="data-preparation-1.html#cb77-17"></a>         dest, air_time, distance, </span>
+<span id="cb77-18"><a href="data-preparation-1.html#cb77-18"></a>         carrier, date, arr_delay, time_hour) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb77-19"><a href="data-preparation-1.html#cb77-19"></a><span class="st">  </span><span class="co"># Exclude missing data</span></span>
+<span id="cb77-20"><a href="data-preparation-1.html#cb77-20"></a><span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb77-21"><a href="data-preparation-1.html#cb77-21"></a><span class="st">  </span><span class="co"># For creating models, it is </span></span>
+<span id="cb77-22"><a href="data-preparation-1.html#cb77-22"></a><span class="st">  </span><span class="co"># better to have qualitative columns</span></span>
+<span id="cb77-23"><a href="data-preparation-1.html#cb77-23"></a><span class="st">  </span><span class="co"># encoded as factors (instead of character strings)</span></span>
+<span id="cb77-24"><a href="data-preparation-1.html#cb77-24"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="kw">across</span>(<span class="kw">where</span>(is.character), as.factor))</span></code></pre></div>
+<p>To speed up later calculations we only use a sample of the data:</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="data-preparation-1.html#cb78-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb78-2"><a href="data-preparation-1.html#cb78-2"></a></span>
+<span id="cb78-3"><a href="data-preparation-1.html#cb78-3"></a>flight_data &lt;-<span class="st"> </span><span class="kw">sample_n</span>(flight_data_all, </span>
+<span id="cb78-4"><a href="data-preparation-1.html#cb78-4"></a>                        <span class="dv">10000</span>)</span></code></pre></div>
+<p>We can see that around 16% of the flights in this data set arrived more than 30 minutes late:</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="data-preparation-1.html#cb79-1"></a>flight_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb79-2"><a href="data-preparation-1.html#cb79-2"></a><span class="st">  </span><span class="kw">count</span>(arr_delay) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb79-3"><a href="data-preparation-1.html#cb79-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop =</span> n<span class="op">/</span><span class="kw">sum</span>(n))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##   arr_delay     n  prop
+##   &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;
+## 1 late       1589 0.159
+## 2 on_time    8411 0.841</code></pre>
+<div id="data-overview-1" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Data overview</h2>
+<p>Before we start building up our recipe, let’s take a quick look at a few specific variables that will be important for both preprocessing and modeling.</p>
+<p>First, notice that the variable we created called <code>arr_delay</code> is a factor variable; it is important that our outcome variable for training a classification model (at least a logistic regression model) is numeric.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="data-preparation-1.html#cb81-1"></a><span class="kw">glimpse</span>(flight_data)</span></code></pre></div>
+<pre><code>## Rows: 10,000
+## Columns: 10
+## $ dep_time  &lt;int&gt; 825, 657, 1835, 1827, 1600, 1039, 1142, 1723, 1446, 2140, 2…
+## $ flight    &lt;int&gt; 120, 4122, 4517, 373, 4502, 4589, 4646, 4195, 3588, 3660, 1…
+## $ origin    &lt;fct&gt; JFK, EWR, LGA, JFK, EWR, LGA, LGA, EWR, LGA, LGA, JFK, EWR,…
+## $ dest      &lt;fct&gt; LAX, SDF, CRW, CLT, BNA, DTW, MSP, BNA, MSP, BNA, LAX, DCA,…
+## $ air_time  &lt;dbl&gt; 316, 104, 75, 90, 119, 93, 139, 130, 138, 104, 323, 36, 126…
+## $ distance  &lt;dbl&gt; 2475, 642, 444, 541, 748, 502, 1020, 748, 1020, 764, 2475, …
+## $ carrier   &lt;fct&gt; DL, EV, MQ, US, EV, MQ, MQ, EV, MQ, MQ, AA, EV, EV, EV, EV,…
+## $ date      &lt;date&gt; 2013-05-03, 2013-03-04, 2013-02-20, 2013-04-02, 2013-06-13…
+## $ arr_delay &lt;fct&gt; on_time, on_time, on_time, on_time, late, on_time, on_time,…
+## $ time_hour &lt;dttm&gt; 2013-05-03 08:00:00, 2013-03-04 07:00:00, 2013-02-20 18:00…</code></pre>
+<p>Second, there are two variables that we don’t want to use as predictors in our model, but that we would like to retain as identification variables that can be used to troubleshoot poorly predicted data points. These are flight, a numeric value, and time_hour, a date-time value.</p>
+<p>Third, there are 79 flight destinations contained in dest and 14 distinct carriers.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="data-preparation-1.html#cb83-1"></a>flight_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb83-2"><a href="data-preparation-1.html#cb83-2"></a><span class="st">  </span>skimr<span class="op">::</span><span class="kw">skim</span>(dest, carrier) </span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-53">Table 13.1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">10000</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">10</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">dest</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">97</td>
+<td align="left">ATL: 523, LAX: 506, BOS: 496, ORD: 482</td>
+</tr>
+<tr class="even">
+<td align="left">carrier</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">15</td>
+<td align="left">UA: 1757, EV: 1598, B6: 1589, DL: 1435</td>
+</tr>
+</tbody>
+</table>
+<p>Because we’ll be using a logistic regression model in this tutorial, the variables <code>dest</code> and <code>carrier</code> will be converted to dummy variables.</p>
+<p>However, some of these values do not occur very frequently and this could complicate our analysis. We’ll discuss specific steps later in this tutorial that we can add to our recipe to address this issue before modeling.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="workflows.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-splitting-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["advanced-analytics.pdf", "advanced-analytics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

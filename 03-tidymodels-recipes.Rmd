@@ -249,7 +249,9 @@ rec %>%
 
 # Workflows
 
-To combine the data preparation with the model building, we could use the package [workflows](https://workflows.tidymodels.org). A workflow is an object that can bundle together your pre-processing, modeling, and post-processing requests:
+To combine the data preparation with the model building, we alternatively could use the package [workflows](https://workflows.tidymodels.org). 
+
+A workflow is an object that can bundle together your pre-processing, modeling, and post-processing requests. Note that you don't have to use the `prep()`, `bake()` or `juice()` if you use workflows
 
 ## workflow()
 
