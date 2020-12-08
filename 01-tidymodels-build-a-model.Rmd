@@ -1,7 +1,7 @@
 
 # (PART) BUILD A MODEL {-} 
 
-# Build a Model {#intro}
+# Introduction {#intro}
 
 
 ```{r setup, include=FALSE}
@@ -10,6 +10,9 @@ knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 8, fig.height = 5,
                       eval=TRUE)
 library(tidyverse)
+library(skimr)
+library(GGally)
+library(ggmap)
 library(tidymodels)
 
 theme_set(theme_classic())
@@ -17,15 +20,16 @@ theme_set(theme_classic())
 
 *The following content is adapted from the excellent book “Hands-on machine learning with scikit-learn, keras and tensorflow” from @Geron2019.*
 
-In this chapter you will learn how to specify a regression model with the tidymodels package. To use the code in this article, you will need to install the following packages: 
+In this chapter you will learn how to specify a simple regression model with the tidymodels package. To use the code in this article, you will need to install the following packages: 
 
 * [tidyverse](https://www.tidyverse.org/) 
 * [tidymodels](https://www.tidymodels.org/) 
 * [skimr](https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html) 
 * [GGally](https://ggobi.github.io/ggally/index.html)
-* [ggmap]()
+* [ggmap](https://github.com/dkahle/ggmap)
 
 ```{r}
+
 library(tidyverse)
 library(tidymodels)
 library(skimr)
@@ -37,7 +41,7 @@ library(ggmap)
 
 In this example, our goal is to build a model of housing prices in California. In particular, the model should learn from California census data and be able to predict the median house price in any district (population of 600 to 3000 people), given some predictor variables. We use the root mean square error (RMSE) as a performance measure for our regression problem.
 
-## Data understanding
+# Data understanding
 
 
 :::note
@@ -49,18 +53,18 @@ In Data Understanding, you will learn how to:
 - Discover and visualize the data to gain insights 
 :::
 
-### Imort Data
+## Imort Data
 
 First of all, let's import the data:
 
 ```{r}
 
 LINK <- "https://raw.githubusercontent.com/kirenz/datasets/master/housing.csv"
-housing <- read_csv(LINK)
+housing_df <- read_csv(LINK)
 
 ```
 
-### Data overview
+## Data overview
 
 Next, we take a look at the data structure:
 
@@ -68,7 +72,7 @@ California census top 4 rows of the DataFrame:
 
 ```{r}
 
-head(housing, 4)
+head(housing_df, 4)
 
 ```
 
@@ -76,7 +80,7 @@ Data info:
 
 ```{r}
 
-glimpse(housing)
+glimpse(housing_df)
 
 ```
 
@@ -84,7 +88,7 @@ Data summary of numerical and categorical attributes using a function from the p
 
 ```{r}
 
-skim(housing)
+skim(housing_df)
 
 ```
 
@@ -92,18 +96,18 @@ Count levels of our categorical variable:
 
 ```{r}
 
-housing %>% 
+housing_df %>% 
   count(ocean_proximity,
         sort = TRUE)
 
 ```
 
 
-The function `ggscatmat` from the package `GGally` creates a matrix with scatterplots, densities and correlations for numeric columns. In our code, we enter the dataset `housing`, choose columns 6 to 9, a color column for our categorical variable `ocean_proximity`, and an alpha level of 0.8 (for transparency).
+The function `ggscatmat` from the package `GGally` creates a matrix with scatterplots, densities and correlations for numeric columns. In our code, we enter the dataset `housing_df`, choose columns 6 to 9, a color column for our categorical variable `ocean_proximity`, and an alpha level of 0.8 (for transparency).
 
 ```{r }
 
-ggscatmat(housing, columns = 6:9, color="ocean_proximity", alpha=0.8)
+ggscatmat(housing_df, columns = 6:9, color="ocean_proximity", alpha=0.8)
 
 ```
 
@@ -111,28 +115,32 @@ To obtain an overview of even more visualizations, we can use the function `ggpa
 
 ```{r }
 
-ggpairs(housing)
+ggpairs(housing_df)
 
 ```
 
-### Data splitting
+## Data splitting
 
-Let's assume we would know that the median income is a very important attribute to predict median housing prices. Therefore, we would want to create a training and test set using stratified sampling. A *stratum* (plural strata) refers to a subset (part) of the population (entire collection of items under consideration) which is being sampled. Take a look at \@ref(fig:hist-med-income)
+Let's assume we would know that the median income is a very important attribute to predict median housing prices. Therefore, we would want to create a training and test set using stratified sampling. 
+
+A *stratum* (plural strata) refers to a subset (part) of the population (entire collection of items under consideration) which is being sampled. Take a look at \@ref(fig:hist-med-income)
+
 
 ```{r hist-med-income, fig.cap="Histogram of Median Income", out.width='80%'}
-housing %>% 
+
+housing_df %>% 
   ggplot(aes(median_income)) +
   geom_histogram(bins = 30)
 
 ```
 
-We want to ensure that the test set is representative of the the various categories of incomes in the whole dataset. In other words, we would like to have instances for each *stratum*, or else the stimate of a strtum's importance may be biased. This means that you should not have too many starta, and each stratum should be large enough. We use 5 strata in our example.
+We want to ensure that the test set is representative of the various categories of incomes in the whole dataset. In other words, we would like to have instances for each *stratum*, or else the estimate of a stratum's importance may be biased. This means that you should not have too many strata, and each stratum should be large enough. We use 5 strata in our example.
 
 
 ```{r}
 set.seed(42)
 
-new_split <- initial_split(housing, 
+new_split <- initial_split(housing_df, 
                            prop = 3/4, 
                            strata = median_income, 
                            breaks = 5)
@@ -142,13 +150,13 @@ new_test <- testing(new_split)
 
 ```
 
-### Data exploration
+## Data exploration
 
 A Geographical scatterplot of the data:
 
 ```{r point-long-lat, fig.cap="Scatterplot of longitude and latitude", out.width='80%'}
 
-housing %>% 
+housing_df %>% 
   ggplot(aes(x = longitude, y = latitude)) +
   geom_point(color = "cornflowerblue")
 
@@ -158,18 +166,22 @@ A better visualization that highlights high-density areas:
 
 ```{r point-long-lat-a, fig.cap="Scatterplot of longitude and latitude that highlights high-density areas", out.width='80%'}
 
-housing %>% 
+housing_df %>% 
   ggplot(aes(x = longitude, y = latitude)) +
   geom_point(color = "cornflowerblue", alpha = 0.1) 
   
-
 ```
 
-California housing prices: red is expensive, purple is cheap and larger circles indicate areas with a larger population.
+California housing prices: 
 
-```{r plot-ca-prices, fig.cap="California housing prices", out.width='80%'}
+- red is expensive, 
+- purple is cheap and 
+- larger circles indicate areas with a larger population.
 
-housing %>% 
+
+```{r plot-ca-prices, fig.cap="California housing_df prices", out.width='80%'}
+
+housing_df %>% 
   ggplot(aes(x = longitude, y = latitude)) +
   geom_point(aes(size = population, color = median_house_value), 
              alpha = 0.4) +
@@ -184,7 +196,7 @@ library(ggmap)
 
 qmplot(x = longitude, 
        y = latitude, 
-       data = housing, 
+       data = housing_df, 
        geom = "point", 
        color = median_house_value, 
        size = population,
@@ -193,10 +205,11 @@ qmplot(x = longitude,
 
 ```
 
+# Model building
 
-## Model type
+## Model specification
 
-1. Pick an `model type`: choose from this [list](https://www.tidymodels.org/find/parsnip/)
+1. Pick a `model type`: choose from this [list](https://www.tidymodels.org/find/parsnip/)
 2. Set the `engine`: choose from this [list](https://www.tidymodels.org/find/parsnip/)
 3. Set the `mode`: regression or classification
 
@@ -218,14 +231,13 @@ lm_spec
 
 In the training process, you run an algorithm on data and thereby produce a model. This process is also called model fitting.
 
-
 ```{r}
 
 lm_fit <- # your fitted model
+  lm_spec %>%  # your model specification  
   fit( 
-  lm_spec, # your model specification 
   median_house_value ~ median_income, # a Linear Regression formula 
-  data = housing # your data
+  data = housing_df # your data
   )
 
 # Show your fitted model
@@ -241,8 +253,8 @@ We use our fitted model to make predictions.
 
 price_pred <- 
   lm_fit %>% 
-  predict(new_data = housing) %>%
-  mutate(price_truth = housing$median_house_value)
+  predict(new_data = housing_df) %>%
+  mutate(price_truth = housing_df$median_house_value)
 
 head(price_pred)
 
@@ -274,7 +286,7 @@ This function "splits" data randomly into a single testing and a single training
 
 set.seed(100) 
 
-housing_split <-  initial_split(housing,
+housing_split <-  initial_split(housing_df,
                              strata = median_house_value,
                              breaks = 4)
 
@@ -283,7 +295,7 @@ housing_test <- testing(housing_split)
 
 ```
 
-## Model type
+## Model specification
 
 ```{r}
 
@@ -306,6 +318,8 @@ lm_fit_2 <-
 ```
 
 ## Model predictions
+
+Let's make predictions for our test data:
 
 ```{r}
  

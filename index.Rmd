@@ -22,6 +22,3 @@ We’ll cover key concepts in statistical learning and machine learning includin
 ***
 
 This online book is licensed using the [Creative Commons Attribution-NonCommercial 2.0 Generic (CC BY-NC 2.0) License](https://creativecommons.org/licenses/by-nc/2.0/). 
-
-
-\
