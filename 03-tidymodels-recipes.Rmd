@@ -194,38 +194,34 @@ lm_spec <-
 
 ```{r}
 
-new_wf <-
+lm_wflow <-
  workflow() %>%
- add_recipe(housing_rec) %>%
- add_model(lm_spec)
+ add_model(lm_spec) %>% 
+ add_recipe(housing_rec)
 
 ```
 
 ## Evaluate model
 
+Now we can fit the model and collect the performance metrics with `collect_metrics()`:
+
+
 
 ```{r}
 
-new_wf_eval <-
-  new_wf %>% 
+
+lm_wflow_eval <- 
+  lm_wflow %>% 
   fit_resamples(
-    median_house_value ~ median_income, 
+    median_house_value ~ ., 
     resamples = cv_folds
-    )
+    ) 
+
+lm_wflow_eval%>% 
+    collect_metrics()
 
 ```
 
-
-### Performance metrics
-
-Now we can collect the performance metrics with `collect_metrics()`:
-
-```{r}
-
-new_wf_eval %>% 
-  collect_metrics()
-
-```
 
 
 # Train model
@@ -235,11 +231,8 @@ Let`s fit the model with our training data:
 ```{r}
 
 lm_fit <- 
-  new_wf_eval %>% 
-  fit( 
-  median_house_value ~ median_income, # best model
-  data = new_train 
-  )
+  lm_wflow %>% 
+  fit(data = new_train)
 
 # Show your fitted model
 lm_fit
