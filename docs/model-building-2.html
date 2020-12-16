@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 13 Model building | Advanced Analytics with Tidymodels in R</title>
+  <title>Chapter 12 Model building | Advanced Analytics with Tidymodels in R</title>
   <meta name="description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 13 Model building | Advanced Analytics with Tidymodels in R" />
+  <meta property="og:title" content="Chapter 12 Model building | Advanced Analytics with Tidymodels in R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 13 Model building | Advanced Analytics with Tidymodels in R" />
+  <meta name="twitter:title" content="Chapter 12 Model building | Advanced Analytics with Tidymodels in R" />
   
   <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Prof. Dr. Jan Kirenz" />
 
 
-<meta name="date" content="2020-12-09" />
+<meta name="date" content="2020-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -152,114 +152,106 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="model-building.html"><a href="model-building.html#model-predictions"><i class="fa fa-check"></i><b>3.3</b> Model predictions</a></li>
 <li class="chapter" data-level="3.4" data-path="model-building.html"><a href="model-building.html#model-evaluation"><i class="fa fa-check"></i><b>3.4</b> Model evaluation</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html"><i class="fa fa-check"></i><b>4</b> Process with data splitting</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting-1"><i class="fa fa-check"></i><b>4.1</b> Data splitting</a></li>
-<li class="chapter" data-level="4.2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-specification-1"><i class="fa fa-check"></i><b>4.2</b> Model specification</a></li>
-<li class="chapter" data-level="4.3" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-training-1"><i class="fa fa-check"></i><b>4.3</b> Model training</a></li>
-<li class="chapter" data-level="4.4" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-predictions-1"><i class="fa fa-check"></i><b>4.4</b> Model predictions</a></li>
-<li class="chapter" data-level="4.5" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-evaluation-1"><i class="fa fa-check"></i><b>4.5</b> Model evaluation</a></li>
-</ul></li>
 <li class="part"><span><b>II RESAMPLING</b></span></li>
-<li class="chapter" data-level="5" data-path="validation-set.html"><a href="validation-set.html"><i class="fa fa-check"></i><b>5</b> Validation set</a></li>
-<li class="chapter" data-level="6" data-path="data-understanding-1.html"><a href="data-understanding-1.html"><i class="fa fa-check"></i><b>6</b> Data understanding</a>
+<li class="chapter" data-level="4" data-path="validation-set.html"><a href="validation-set.html"><i class="fa fa-check"></i><b>4</b> Validation set</a></li>
+<li class="chapter" data-level="5" data-path="data-understanding-1.html"><a href="data-understanding-1.html"><i class="fa fa-check"></i><b>5</b> Data understanding</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="data-understanding-1.html"><a href="data-understanding-1.html#import-data"><i class="fa fa-check"></i><b>6.1</b> Import data</a></li>
-<li class="chapter" data-level="6.2" data-path="data-understanding-1.html"><a href="data-understanding-1.html#data-splitting-2"><i class="fa fa-check"></i><b>6.2</b> Data splitting</a></li>
-<li class="chapter" data-level="6.3" data-path="data-understanding-1.html"><a href="data-understanding-1.html#validation-set-1"><i class="fa fa-check"></i><b>6.3</b> Validation set</a></li>
+<li class="chapter" data-level="5.1" data-path="data-understanding-1.html"><a href="data-understanding-1.html#import-data"><i class="fa fa-check"></i><b>5.1</b> Import data</a></li>
+<li class="chapter" data-level="5.2" data-path="data-understanding-1.html"><a href="data-understanding-1.html#data-splitting-1"><i class="fa fa-check"></i><b>5.2</b> Data splitting</a></li>
+<li class="chapter" data-level="5.3" data-path="data-understanding-1.html"><a href="data-understanding-1.html#validation-set-1"><i class="fa fa-check"></i><b>5.3</b> Validation set</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="model-building-1.html"><a href="model-building-1.html"><i class="fa fa-check"></i><b>7</b> Model building</a>
+<li class="chapter" data-level="6" data-path="model-building-1.html"><a href="model-building-1.html"><i class="fa fa-check"></i><b>6</b> Model building</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="model-building-1.html"><a href="model-building-1.html#model-specification-2"><i class="fa fa-check"></i><b>7.1</b> Model specification</a></li>
-<li class="chapter" data-level="7.2" data-path="model-building-1.html"><a href="model-building-1.html#evaluate-models"><i class="fa fa-check"></i><b>7.2</b> Evaluate models</a></li>
-<li class="chapter" data-level="7.3" data-path="model-building-1.html"><a href="model-building-1.html#fit-model-1"><i class="fa fa-check"></i><b>7.3</b> Fit model 1</a></li>
-<li class="chapter" data-level="7.4" data-path="model-building-1.html"><a href="model-building-1.html#fit-model-2"><i class="fa fa-check"></i><b>7.4</b> Fit model 2</a></li>
-<li class="chapter" data-level="7.5" data-path="model-building-1.html"><a href="model-building-1.html#performance-metrics"><i class="fa fa-check"></i><b>7.5</b> Performance metrics</a></li>
+<li class="chapter" data-level="6.1" data-path="model-building-1.html"><a href="model-building-1.html#model-specification-1"><i class="fa fa-check"></i><b>6.1</b> Model specification</a></li>
+<li class="chapter" data-level="6.2" data-path="model-building-1.html"><a href="model-building-1.html#evaluate-models"><i class="fa fa-check"></i><b>6.2</b> Evaluate models</a></li>
+<li class="chapter" data-level="6.3" data-path="model-building-1.html"><a href="model-building-1.html#fit-model-1"><i class="fa fa-check"></i><b>6.3</b> Fit model 1</a></li>
+<li class="chapter" data-level="6.4" data-path="model-building-1.html"><a href="model-building-1.html#fit-model-2"><i class="fa fa-check"></i><b>6.4</b> Fit model 2</a></li>
+<li class="chapter" data-level="6.5" data-path="model-building-1.html"><a href="model-building-1.html#performance-metrics"><i class="fa fa-check"></i><b>6.5</b> Performance metrics</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="train-best-model.html"><a href="train-best-model.html"><i class="fa fa-check"></i><b>8</b> Train best model</a></li>
-<li class="chapter" data-level="9" data-path="evaluate-final-model.html"><a href="evaluate-final-model.html"><i class="fa fa-check"></i><b>9</b> Evaluate final model</a></li>
+<li class="chapter" data-level="7" data-path="train-best-model.html"><a href="train-best-model.html"><i class="fa fa-check"></i><b>7</b> Train best model</a></li>
+<li class="chapter" data-level="8" data-path="evaluate-final-model.html"><a href="evaluate-final-model.html"><i class="fa fa-check"></i><b>8</b> Evaluate final model</a></li>
 <li class="part"><span><b>III RECIPES</b></span></li>
-<li class="chapter" data-level="10" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>10</b> Data preprocessing</a></li>
-<li class="chapter" data-level="11" data-path="data-understanding-2.html"><a href="data-understanding-2.html"><i class="fa fa-check"></i><b>11</b> Data understanding</a>
+<li class="chapter" data-level="9" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>9</b> Data preprocessing</a></li>
+<li class="chapter" data-level="10" data-path="data-understanding-2.html"><a href="data-understanding-2.html"><i class="fa fa-check"></i><b>10</b> Data understanding</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="data-understanding-2.html"><a href="data-understanding-2.html#import-data-1"><i class="fa fa-check"></i><b>11.1</b> Import data</a></li>
-<li class="chapter" data-level="11.2" data-path="data-understanding-2.html"><a href="data-understanding-2.html#data-splitting-3"><i class="fa fa-check"></i><b>11.2</b> Data splitting</a></li>
-<li class="chapter" data-level="11.3" data-path="data-understanding-2.html"><a href="data-understanding-2.html#validation-set-2"><i class="fa fa-check"></i><b>11.3</b> Validation set</a></li>
+<li class="chapter" data-level="10.1" data-path="data-understanding-2.html"><a href="data-understanding-2.html#import-data-1"><i class="fa fa-check"></i><b>10.1</b> Import data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-understanding-2.html"><a href="data-understanding-2.html#data-splitting-2"><i class="fa fa-check"></i><b>10.2</b> Data splitting</a></li>
+<li class="chapter" data-level="10.3" data-path="data-understanding-2.html"><a href="data-understanding-2.html#validation-set-2"><i class="fa fa-check"></i><b>10.3</b> Validation set</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="data-preparation.html"><a href="data-preparation.html"><i class="fa fa-check"></i><b>12</b> Data preparation</a>
+<li class="chapter" data-level="11" data-path="data-preparation.html"><a href="data-preparation.html"><i class="fa fa-check"></i><b>11</b> Data preparation</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="data-preparation.html"><a href="data-preparation.html#recipe"><i class="fa fa-check"></i><b>12.1</b> recipe()</a></li>
-<li class="chapter" data-level="12.2" data-path="data-preparation.html"><a href="data-preparation.html#helper-functions"><i class="fa fa-check"></i><b>12.2</b> Helper functions</a></li>
-<li class="chapter" data-level="12.3" data-path="data-preparation.html"><a href="data-preparation.html#step_novel"><i class="fa fa-check"></i><b>12.3</b> step_novel()</a></li>
-<li class="chapter" data-level="12.4" data-path="data-preparation.html"><a href="data-preparation.html#step_dummy"><i class="fa fa-check"></i><b>12.4</b> step_dummy()</a></li>
-<li class="chapter" data-level="12.5" data-path="data-preparation.html"><a href="data-preparation.html#step_zv"><i class="fa fa-check"></i><b>12.5</b> step_zv()</a></li>
-<li class="chapter" data-level="12.6" data-path="data-preparation.html"><a href="data-preparation.html#step_normalize"><i class="fa fa-check"></i><b>12.6</b> step_normalize()</a></li>
+<li class="chapter" data-level="11.1" data-path="data-preparation.html"><a href="data-preparation.html#recipe"><i class="fa fa-check"></i><b>11.1</b> recipe()</a></li>
+<li class="chapter" data-level="11.2" data-path="data-preparation.html"><a href="data-preparation.html#helper-functions"><i class="fa fa-check"></i><b>11.2</b> Helper functions</a></li>
+<li class="chapter" data-level="11.3" data-path="data-preparation.html"><a href="data-preparation.html#step_novel"><i class="fa fa-check"></i><b>11.3</b> step_novel()</a></li>
+<li class="chapter" data-level="11.4" data-path="data-preparation.html"><a href="data-preparation.html#step_dummy"><i class="fa fa-check"></i><b>11.4</b> step_dummy()</a></li>
+<li class="chapter" data-level="11.5" data-path="data-preparation.html"><a href="data-preparation.html#step_zv"><i class="fa fa-check"></i><b>11.5</b> step_zv()</a></li>
+<li class="chapter" data-level="11.6" data-path="data-preparation.html"><a href="data-preparation.html#step_normalize"><i class="fa fa-check"></i><b>11.6</b> step_normalize()</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="model-building-2.html"><a href="model-building-2.html"><i class="fa fa-check"></i><b>13</b> Model building</a>
+<li class="chapter" data-level="12" data-path="model-building-2.html"><a href="model-building-2.html"><i class="fa fa-check"></i><b>12</b> Model building</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="model-building-2.html"><a href="model-building-2.html#specify-model"><i class="fa fa-check"></i><b>13.1</b> Specify model</a></li>
-<li class="chapter" data-level="13.2" data-path="model-building-2.html"><a href="model-building-2.html#create-workflow"><i class="fa fa-check"></i><b>13.2</b> Create workflow</a></li>
-<li class="chapter" data-level="13.3" data-path="model-building-2.html"><a href="model-building-2.html#evaluate-model"><i class="fa fa-check"></i><b>13.3</b> Evaluate model</a></li>
+<li class="chapter" data-level="12.1" data-path="model-building-2.html"><a href="model-building-2.html#specify-model"><i class="fa fa-check"></i><b>12.1</b> Specify model</a></li>
+<li class="chapter" data-level="12.2" data-path="model-building-2.html"><a href="model-building-2.html#create-workflow"><i class="fa fa-check"></i><b>12.2</b> Create workflow</a></li>
+<li class="chapter" data-level="12.3" data-path="model-building-2.html"><a href="model-building-2.html#evaluate-model"><i class="fa fa-check"></i><b>12.3</b> Evaluate model</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="train-model.html"><a href="train-model.html"><i class="fa fa-check"></i><b>14</b> Train model</a></li>
-<li class="chapter" data-level="15" data-path="evaluate-model-1.html"><a href="evaluate-model-1.html"><i class="fa fa-check"></i><b>15</b> Evaluate model</a></li>
+<li class="chapter" data-level="13" data-path="train-model.html"><a href="train-model.html"><i class="fa fa-check"></i><b>13</b> Train model</a></li>
+<li class="chapter" data-level="14" data-path="evaluate-model-1.html"><a href="evaluate-model-1.html"><i class="fa fa-check"></i><b>14</b> Evaluate model</a></li>
 <li class="part"><span><b>IV WORKFLOWS &amp; MODELS</b></span></li>
-<li class="chapter" data-level="16" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>16</b> Data preparation</a>
+<li class="chapter" data-level="15" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>15</b> Data preparation</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>16.1</b> Data overview</a></li>
+<li class="chapter" data-level="15.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>15.1</b> Data overview</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="data-splitting-4.html"><a href="data-splitting-4.html"><i class="fa fa-check"></i><b>17</b> Data splitting</a></li>
-<li class="chapter" data-level="18" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>18</b> Create recipe and roles</a>
+<li class="chapter" data-level="16" data-path="data-splitting-3.html"><a href="data-splitting-3.html"><i class="fa fa-check"></i><b>16</b> Data splitting</a></li>
+<li class="chapter" data-level="17" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>17</b> Create recipe and roles</a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>18.1</b> Create features</a>
+<li class="chapter" data-level="17.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>17.1</b> Create features</a>
 <ul>
-<li class="chapter" data-level="18.1.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#date"><i class="fa fa-check"></i><b>18.1.1</b> Date</a></li>
-<li class="chapter" data-level="18.1.2" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#dummy-variables"><i class="fa fa-check"></i><b>18.1.2</b> Dummy variables</a></li>
-<li class="chapter" data-level="18.1.3" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#zero-variance"><i class="fa fa-check"></i><b>18.1.3</b> Zero variance</a></li>
-<li class="chapter" data-level="18.1.4" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#correlations"><i class="fa fa-check"></i><b>18.1.4</b> Correlations</a></li>
+<li class="chapter" data-level="17.1.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#date"><i class="fa fa-check"></i><b>17.1.1</b> Date</a></li>
+<li class="chapter" data-level="17.1.2" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#dummy-variables"><i class="fa fa-check"></i><b>17.1.2</b> Dummy variables</a></li>
+<li class="chapter" data-level="17.1.3" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#zero-variance"><i class="fa fa-check"></i><b>17.1.3</b> Zero variance</a></li>
+<li class="chapter" data-level="17.1.4" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#correlations"><i class="fa fa-check"></i><b>17.1.4</b> Correlations</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="model-building-3.html"><a href="model-building-3.html"><i class="fa fa-check"></i><b>19</b> Model building</a>
+<li class="chapter" data-level="18" data-path="model-building-3.html"><a href="model-building-3.html"><i class="fa fa-check"></i><b>18</b> Model building</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="model-building-3.html"><a href="model-building-3.html#logistic-regression"><i class="fa fa-check"></i><b>19.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="19.2" data-path="model-building-3.html"><a href="model-building-3.html#decision-tree"><i class="fa fa-check"></i><b>19.2</b> Decision tree</a></li>
-<li class="chapter" data-level="19.3" data-path="model-building-3.html"><a href="model-building-3.html#random-forest"><i class="fa fa-check"></i><b>19.3</b> Random forest</a></li>
-<li class="chapter" data-level="19.4" data-path="model-building-3.html"><a href="model-building-3.html#boosted-tree-xgboost"><i class="fa fa-check"></i><b>19.4</b> Boosted tree (XGBoost)</a></li>
+<li class="chapter" data-level="18.1" data-path="model-building-3.html"><a href="model-building-3.html#logistic-regression"><i class="fa fa-check"></i><b>18.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="18.2" data-path="model-building-3.html"><a href="model-building-3.html#decision-tree"><i class="fa fa-check"></i><b>18.2</b> Decision tree</a></li>
+<li class="chapter" data-level="18.3" data-path="model-building-3.html"><a href="model-building-3.html#random-forest"><i class="fa fa-check"></i><b>18.3</b> Random forest</a></li>
+<li class="chapter" data-level="18.4" data-path="model-building-3.html"><a href="model-building-3.html#boosted-tree-xgboost"><i class="fa fa-check"></i><b>18.4</b> Boosted tree (XGBoost)</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="recipe-and-models.html"><a href="recipe-and-models.html"><i class="fa fa-check"></i><b>20</b> Recipe and Models</a>
+<li class="chapter" data-level="19" data-path="recipe-and-models.html"><a href="recipe-and-models.html"><i class="fa fa-check"></i><b>19</b> Recipe and Models</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#fit-models-with-workflows"><i class="fa fa-check"></i><b>20.1</b> Fit models with workflows</a>
+<li class="chapter" data-level="19.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#fit-models-with-workflows"><i class="fa fa-check"></i><b>19.1</b> Fit models with workflows</a>
 <ul>
-<li class="chapter" data-level="20.1.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-1"><i class="fa fa-check"></i><b>20.1.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="20.1.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-1"><i class="fa fa-check"></i><b>20.1.2</b> Decision tree</a></li>
-<li class="chapter" data-level="20.1.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-1"><i class="fa fa-check"></i><b>20.1.3</b> Random forest</a></li>
-<li class="chapter" data-level="20.1.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xgboost"><i class="fa fa-check"></i><b>20.1.4</b> XGBoost</a></li>
+<li class="chapter" data-level="19.1.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-1"><i class="fa fa-check"></i><b>19.1.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="19.1.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-1"><i class="fa fa-check"></i><b>19.1.2</b> Decision tree</a></li>
+<li class="chapter" data-level="19.1.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-1"><i class="fa fa-check"></i><b>19.1.3</b> Random forest</a></li>
+<li class="chapter" data-level="19.1.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xgboost"><i class="fa fa-check"></i><b>19.1.4</b> XGBoost</a></li>
 </ul></li>
-<li class="chapter" data-level="20.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#train-models"><i class="fa fa-check"></i><b>20.2</b> Train models</a>
+<li class="chapter" data-level="19.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#train-models"><i class="fa fa-check"></i><b>19.2</b> Train models</a>
 <ul>
-<li class="chapter" data-level="20.2.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-2"><i class="fa fa-check"></i><b>20.2.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="20.2.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-2"><i class="fa fa-check"></i><b>20.2.2</b> Decision tree</a></li>
-<li class="chapter" data-level="20.2.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-2"><i class="fa fa-check"></i><b>20.2.3</b> Random forest</a></li>
-<li class="chapter" data-level="20.2.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost"><i class="fa fa-check"></i><b>20.2.4</b> XG Boost</a></li>
+<li class="chapter" data-level="19.2.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-2"><i class="fa fa-check"></i><b>19.2.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="19.2.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-2"><i class="fa fa-check"></i><b>19.2.2</b> Decision tree</a></li>
+<li class="chapter" data-level="19.2.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-2"><i class="fa fa-check"></i><b>19.2.3</b> Random forest</a></li>
+<li class="chapter" data-level="19.2.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost"><i class="fa fa-check"></i><b>19.2.4</b> XG Boost</a></li>
 </ul></li>
-<li class="chapter" data-level="20.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#model-recipe-objects"><i class="fa fa-check"></i><b>20.3</b> Model recipe objects</a>
+<li class="chapter" data-level="19.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#model-recipe-objects"><i class="fa fa-check"></i><b>19.3</b> Model recipe objects</a>
 <ul>
-<li class="chapter" data-level="20.3.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-3"><i class="fa fa-check"></i><b>20.3.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="20.3.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-3"><i class="fa fa-check"></i><b>20.3.2</b> Decision tree</a></li>
-<li class="chapter" data-level="20.3.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-3"><i class="fa fa-check"></i><b>20.3.3</b> Random forest</a></li>
-<li class="chapter" data-level="20.3.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost-1"><i class="fa fa-check"></i><b>20.3.4</b> XG Boost</a></li>
+<li class="chapter" data-level="19.3.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-3"><i class="fa fa-check"></i><b>19.3.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="19.3.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-3"><i class="fa fa-check"></i><b>19.3.2</b> Decision tree</a></li>
+<li class="chapter" data-level="19.3.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-3"><i class="fa fa-check"></i><b>19.3.3</b> Random forest</a></li>
+<li class="chapter" data-level="19.3.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost-1"><i class="fa fa-check"></i><b>19.3.4</b> XG Boost</a></li>
 </ul></li>
-<li class="chapter" data-level="20.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#summary"><i class="fa fa-check"></i><b>20.4</b> Summary</a></li>
+<li class="chapter" data-level="19.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#summary"><i class="fa fa-check"></i><b>19.4</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>21</b> Prediction</a>
+<li class="chapter" data-level="20" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>20</b> Prediction</a>
 <ul>
-<li class="chapter" data-level="21.1" data-path="prediction.html"><a href="prediction.html#logistic-regression-4"><i class="fa fa-check"></i><b>21.1</b> Logistic regression</a>
+<li class="chapter" data-level="20.1" data-path="prediction.html"><a href="prediction.html#logistic-regression-4"><i class="fa fa-check"></i><b>20.1</b> Logistic regression</a>
 <ul>
-<li class="chapter" data-level="21.1.1" data-path="prediction.html"><a href="prediction.html#roc-curve"><i class="fa fa-check"></i><b>21.1.1</b> ROC curve</a></li>
-<li class="chapter" data-level="21.1.2" data-path="prediction.html"><a href="prediction.html#auc"><i class="fa fa-check"></i><b>21.1.2</b> AUC</a></li>
-<li class="chapter" data-level="21.1.3" data-path="prediction.html"><a href="prediction.html#accuracy"><i class="fa fa-check"></i><b>21.1.3</b> Accuracy</a></li>
-<li class="chapter" data-level="21.1.4" data-path="prediction.html"><a href="prediction.html#recall"><i class="fa fa-check"></i><b>21.1.4</b> Recall</a></li>
-<li class="chapter" data-level="21.1.5" data-path="prediction.html"><a href="prediction.html#precision"><i class="fa fa-check"></i><b>21.1.5</b> Precision</a></li>
+<li class="chapter" data-level="20.1.1" data-path="prediction.html"><a href="prediction.html#roc-curve"><i class="fa fa-check"></i><b>20.1.1</b> ROC curve</a></li>
+<li class="chapter" data-level="20.1.2" data-path="prediction.html"><a href="prediction.html#auc"><i class="fa fa-check"></i><b>20.1.2</b> AUC</a></li>
+<li class="chapter" data-level="20.1.3" data-path="prediction.html"><a href="prediction.html#accuracy"><i class="fa fa-check"></i><b>20.1.3</b> Accuracy</a></li>
+<li class="chapter" data-level="20.1.4" data-path="prediction.html"><a href="prediction.html#recall"><i class="fa fa-check"></i><b>20.1.4</b> Recall</a></li>
+<li class="chapter" data-level="20.1.5" data-path="prediction.html"><a href="prediction.html#precision"><i class="fa fa-check"></i><b>20.1.5</b> Precision</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -283,36 +275,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-building-2" class="section level1" number="13">
-<h1><span class="header-section-number">Chapter 13</span> Model building</h1>
+<div id="model-building-2" class="section level1" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Model building</h1>
 <p>To combine the data preparation with the model building, we use the package <a href="https://workflows.tidymodels.org">workflows</a>.</p>
 <p>A workflow is an object that can bundle together your pre-processing, modeling, and post-processing requests.</p>
-<div id="specify-model" class="section level2" number="13.1">
-<h2><span class="header-section-number">13.1</span> Specify model</h2>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="model-building-2.html#cb64-1" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> </span>
-<span id="cb64-2"><a href="model-building-2.html#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb64-3"><a href="model-building-2.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;lm&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb64-4"><a href="model-building-2.html#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>)</span></code></pre></div>
+<div id="specify-model" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Specify model</h2>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="model-building-2.html#cb58-1" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> </span>
+<span id="cb58-2"><a href="model-building-2.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href="model-building-2.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;lm&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-4"><a href="model-building-2.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>)</span></code></pre></div>
 </div>
-<div id="create-workflow" class="section level2" number="13.2">
-<h2><span class="header-section-number">13.2</span> Create workflow</h2>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="model-building-2.html#cb65-1" aria-hidden="true" tabindex="-1"></a>lm_wflow <span class="ot">&lt;-</span></span>
-<span id="cb65-2"><a href="model-building-2.html#cb65-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb65-3"><a href="model-building-2.html#cb65-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">add_model</span>(lm_spec) <span class="sc">%&gt;%</span> </span>
-<span id="cb65-4"><a href="model-building-2.html#cb65-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">add_recipe</span>(housing_rec)</span></code></pre></div>
+<div id="create-workflow" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Create workflow</h2>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="model-building-2.html#cb59-1" aria-hidden="true" tabindex="-1"></a>lm_wflow <span class="ot">&lt;-</span></span>
+<span id="cb59-2"><a href="model-building-2.html#cb59-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb59-3"><a href="model-building-2.html#cb59-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">add_model</span>(lm_spec) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-4"><a href="model-building-2.html#cb59-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">add_recipe</span>(housing_rec)</span></code></pre></div>
 </div>
-<div id="evaluate-model" class="section level2" number="13.3">
-<h2><span class="header-section-number">13.3</span> Evaluate model</h2>
+<div id="evaluate-model" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Evaluate model</h2>
 <p>Now we can fit the model and collect the performance metrics with <code>collect_metrics()</code>:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="model-building-2.html#cb66-1" aria-hidden="true" tabindex="-1"></a>lm_wflow_eval <span class="ot">&lt;-</span> </span>
-<span id="cb66-2"><a href="model-building-2.html#cb66-2" aria-hidden="true" tabindex="-1"></a>  lm_wflow <span class="sc">%&gt;%</span> </span>
-<span id="cb66-3"><a href="model-building-2.html#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(</span>
-<span id="cb66-4"><a href="model-building-2.html#cb66-4" aria-hidden="true" tabindex="-1"></a>    median_house_value <span class="sc">~</span> ., </span>
-<span id="cb66-5"><a href="model-building-2.html#cb66-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> cv_folds</span>
-<span id="cb66-6"><a href="model-building-2.html#cb66-6" aria-hidden="true" tabindex="-1"></a>    ) </span>
-<span id="cb66-7"><a href="model-building-2.html#cb66-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-8"><a href="model-building-2.html#cb66-8" aria-hidden="true" tabindex="-1"></a>lm_wflow_eval<span class="sc">%&gt;%</span> </span>
-<span id="cb66-9"><a href="model-building-2.html#cb66-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">collect_metrics</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="model-building-2.html#cb60-1" aria-hidden="true" tabindex="-1"></a>lm_wflow_eval <span class="ot">&lt;-</span> </span>
+<span id="cb60-2"><a href="model-building-2.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  lm_wflow <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href="model-building-2.html#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb60-4"><a href="model-building-2.html#cb60-4" aria-hidden="true" tabindex="-1"></a>    median_house_value <span class="sc">~</span> ., </span>
+<span id="cb60-5"><a href="model-building-2.html#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> cv_folds</span>
+<span id="cb60-6"><a href="model-building-2.html#cb60-6" aria-hidden="true" tabindex="-1"></a>    ) </span>
+<span id="cb60-7"><a href="model-building-2.html#cb60-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-8"><a href="model-building-2.html#cb60-8" aria-hidden="true" tabindex="-1"></a>lm_wflow_eval<span class="sc">%&gt;%</span> </span>
+<span id="cb60-9"><a href="model-building-2.html#cb60-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">collect_metrics</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 6
 ##   .metric .estimator      mean     n  std_err .config             
 ##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;               

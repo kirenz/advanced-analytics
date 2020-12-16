@@ -237,7 +237,7 @@ lm_fit <- # your fitted model
   lm_spec %>%  # your model specification  
   fit( 
   median_house_value ~ median_income, # a Linear Regression formula 
-  data = housing_df # your data
+  data = new_train # your data
   )
 
 # Show your fitted model
@@ -253,8 +253,8 @@ We use our fitted model to make predictions.
 
 price_pred <- 
   lm_fit %>% 
-  predict(new_data = housing_df) %>%
-  mutate(price_truth = housing_df$median_house_value)
+  predict(new_data = new_train) %>%
+  mutate(price_truth = new_train$median_house_value)
 
 head(price_pred)
 
@@ -268,73 +268,6 @@ We use the Root Mean Squared Error (RMSE) to evaluate our regression model. Ther
 ```{r}
 
 rmse(data = price_pred, 
-     truth = price_truth, 
-     estimate = .pred)
-
-```
-
-
-# Process with data splitting
-
-The best way to measure a model's performance at predicting new data is to actually predict new data.
-
-This function "splits" data randomly into a single testing and a single training set: `initial_split(data, prop = 3/4, strata, breaks)`. We also use [stratified sampling](https://en.wikipedia.org/wiki/Stratified_sampling) in this example.
-
-## Data splitting
-
-```{r}
-
-set.seed(100) 
-
-housing_split <-  initial_split(housing_df,
-                             strata = median_house_value,
-                             breaks = 4)
-
-housing_train <-  training(housing_split)
-housing_test <- testing(housing_split)
-
-```
-
-## Model specification
-
-```{r}
-
-lm_spec_2 <-
-  linear_reg() %>%  
-  set_engine(engine = "lm") %>%  
-  set_mode("regression") 
-
-```
-
-## Model training
-
-```{r}
-             
-lm_fit_2 <- 
-  lm_spec_2 %>% 
-  fit(median_house_value ~ median_income,
-      data = housing_train) # only use training data
-
-```
-
-## Model predictions
-
-Let's make predictions for our test data:
-
-```{r}
- 
-price_pred_2 <- 
-  lm_fit %>% 
-  predict(new_data = housing_test) %>% 
-  mutate(price_truth = housing_test$median_house_value)
-
-```
-
-## Model evaluation
-
-```{r}
-
-rmse(price_pred_2, 
      truth = price_truth, 
      estimate = .pred)
 

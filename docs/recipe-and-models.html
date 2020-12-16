@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 20 Recipe and Models | Advanced Analytics with Tidymodels in R</title>
+  <title>Chapter 19 Recipe and Models | Advanced Analytics with Tidymodels in R</title>
   <meta name="description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 20 Recipe and Models | Advanced Analytics with Tidymodels in R" />
+  <meta property="og:title" content="Chapter 19 Recipe and Models | Advanced Analytics with Tidymodels in R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 20 Recipe and Models | Advanced Analytics with Tidymodels in R" />
+  <meta name="twitter:title" content="Chapter 19 Recipe and Models | Advanced Analytics with Tidymodels in R" />
   
   <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Prof. Dr. Jan Kirenz" />
 
 
-<meta name="date" content="2020-12-09" />
+<meta name="date" content="2020-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -152,114 +152,106 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="model-building.html"><a href="model-building.html#model-predictions"><i class="fa fa-check"></i><b>3.3</b> Model predictions</a></li>
 <li class="chapter" data-level="3.4" data-path="model-building.html"><a href="model-building.html#model-evaluation"><i class="fa fa-check"></i><b>3.4</b> Model evaluation</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html"><i class="fa fa-check"></i><b>4</b> Process with data splitting</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#data-splitting-1"><i class="fa fa-check"></i><b>4.1</b> Data splitting</a></li>
-<li class="chapter" data-level="4.2" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-specification-1"><i class="fa fa-check"></i><b>4.2</b> Model specification</a></li>
-<li class="chapter" data-level="4.3" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-training-1"><i class="fa fa-check"></i><b>4.3</b> Model training</a></li>
-<li class="chapter" data-level="4.4" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-predictions-1"><i class="fa fa-check"></i><b>4.4</b> Model predictions</a></li>
-<li class="chapter" data-level="4.5" data-path="process-with-data-splitting.html"><a href="process-with-data-splitting.html#model-evaluation-1"><i class="fa fa-check"></i><b>4.5</b> Model evaluation</a></li>
-</ul></li>
 <li class="part"><span><b>II RESAMPLING</b></span></li>
-<li class="chapter" data-level="5" data-path="validation-set.html"><a href="validation-set.html"><i class="fa fa-check"></i><b>5</b> Validation set</a></li>
-<li class="chapter" data-level="6" data-path="data-understanding-1.html"><a href="data-understanding-1.html"><i class="fa fa-check"></i><b>6</b> Data understanding</a>
+<li class="chapter" data-level="4" data-path="validation-set.html"><a href="validation-set.html"><i class="fa fa-check"></i><b>4</b> Validation set</a></li>
+<li class="chapter" data-level="5" data-path="data-understanding-1.html"><a href="data-understanding-1.html"><i class="fa fa-check"></i><b>5</b> Data understanding</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="data-understanding-1.html"><a href="data-understanding-1.html#import-data"><i class="fa fa-check"></i><b>6.1</b> Import data</a></li>
-<li class="chapter" data-level="6.2" data-path="data-understanding-1.html"><a href="data-understanding-1.html#data-splitting-2"><i class="fa fa-check"></i><b>6.2</b> Data splitting</a></li>
-<li class="chapter" data-level="6.3" data-path="data-understanding-1.html"><a href="data-understanding-1.html#validation-set-1"><i class="fa fa-check"></i><b>6.3</b> Validation set</a></li>
+<li class="chapter" data-level="5.1" data-path="data-understanding-1.html"><a href="data-understanding-1.html#import-data"><i class="fa fa-check"></i><b>5.1</b> Import data</a></li>
+<li class="chapter" data-level="5.2" data-path="data-understanding-1.html"><a href="data-understanding-1.html#data-splitting-1"><i class="fa fa-check"></i><b>5.2</b> Data splitting</a></li>
+<li class="chapter" data-level="5.3" data-path="data-understanding-1.html"><a href="data-understanding-1.html#validation-set-1"><i class="fa fa-check"></i><b>5.3</b> Validation set</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="model-building-1.html"><a href="model-building-1.html"><i class="fa fa-check"></i><b>7</b> Model building</a>
+<li class="chapter" data-level="6" data-path="model-building-1.html"><a href="model-building-1.html"><i class="fa fa-check"></i><b>6</b> Model building</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="model-building-1.html"><a href="model-building-1.html#model-specification-2"><i class="fa fa-check"></i><b>7.1</b> Model specification</a></li>
-<li class="chapter" data-level="7.2" data-path="model-building-1.html"><a href="model-building-1.html#evaluate-models"><i class="fa fa-check"></i><b>7.2</b> Evaluate models</a></li>
-<li class="chapter" data-level="7.3" data-path="model-building-1.html"><a href="model-building-1.html#fit-model-1"><i class="fa fa-check"></i><b>7.3</b> Fit model 1</a></li>
-<li class="chapter" data-level="7.4" data-path="model-building-1.html"><a href="model-building-1.html#fit-model-2"><i class="fa fa-check"></i><b>7.4</b> Fit model 2</a></li>
-<li class="chapter" data-level="7.5" data-path="model-building-1.html"><a href="model-building-1.html#performance-metrics"><i class="fa fa-check"></i><b>7.5</b> Performance metrics</a></li>
+<li class="chapter" data-level="6.1" data-path="model-building-1.html"><a href="model-building-1.html#model-specification-1"><i class="fa fa-check"></i><b>6.1</b> Model specification</a></li>
+<li class="chapter" data-level="6.2" data-path="model-building-1.html"><a href="model-building-1.html#evaluate-models"><i class="fa fa-check"></i><b>6.2</b> Evaluate models</a></li>
+<li class="chapter" data-level="6.3" data-path="model-building-1.html"><a href="model-building-1.html#fit-model-1"><i class="fa fa-check"></i><b>6.3</b> Fit model 1</a></li>
+<li class="chapter" data-level="6.4" data-path="model-building-1.html"><a href="model-building-1.html#fit-model-2"><i class="fa fa-check"></i><b>6.4</b> Fit model 2</a></li>
+<li class="chapter" data-level="6.5" data-path="model-building-1.html"><a href="model-building-1.html#performance-metrics"><i class="fa fa-check"></i><b>6.5</b> Performance metrics</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="train-best-model.html"><a href="train-best-model.html"><i class="fa fa-check"></i><b>8</b> Train best model</a></li>
-<li class="chapter" data-level="9" data-path="evaluate-final-model.html"><a href="evaluate-final-model.html"><i class="fa fa-check"></i><b>9</b> Evaluate final model</a></li>
+<li class="chapter" data-level="7" data-path="train-best-model.html"><a href="train-best-model.html"><i class="fa fa-check"></i><b>7</b> Train best model</a></li>
+<li class="chapter" data-level="8" data-path="evaluate-final-model.html"><a href="evaluate-final-model.html"><i class="fa fa-check"></i><b>8</b> Evaluate final model</a></li>
 <li class="part"><span><b>III RECIPES</b></span></li>
-<li class="chapter" data-level="10" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>10</b> Data preprocessing</a></li>
-<li class="chapter" data-level="11" data-path="data-understanding-2.html"><a href="data-understanding-2.html"><i class="fa fa-check"></i><b>11</b> Data understanding</a>
+<li class="chapter" data-level="9" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>9</b> Data preprocessing</a></li>
+<li class="chapter" data-level="10" data-path="data-understanding-2.html"><a href="data-understanding-2.html"><i class="fa fa-check"></i><b>10</b> Data understanding</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="data-understanding-2.html"><a href="data-understanding-2.html#import-data-1"><i class="fa fa-check"></i><b>11.1</b> Import data</a></li>
-<li class="chapter" data-level="11.2" data-path="data-understanding-2.html"><a href="data-understanding-2.html#data-splitting-3"><i class="fa fa-check"></i><b>11.2</b> Data splitting</a></li>
-<li class="chapter" data-level="11.3" data-path="data-understanding-2.html"><a href="data-understanding-2.html#validation-set-2"><i class="fa fa-check"></i><b>11.3</b> Validation set</a></li>
+<li class="chapter" data-level="10.1" data-path="data-understanding-2.html"><a href="data-understanding-2.html#import-data-1"><i class="fa fa-check"></i><b>10.1</b> Import data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-understanding-2.html"><a href="data-understanding-2.html#data-splitting-2"><i class="fa fa-check"></i><b>10.2</b> Data splitting</a></li>
+<li class="chapter" data-level="10.3" data-path="data-understanding-2.html"><a href="data-understanding-2.html#validation-set-2"><i class="fa fa-check"></i><b>10.3</b> Validation set</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="data-preparation.html"><a href="data-preparation.html"><i class="fa fa-check"></i><b>12</b> Data preparation</a>
+<li class="chapter" data-level="11" data-path="data-preparation.html"><a href="data-preparation.html"><i class="fa fa-check"></i><b>11</b> Data preparation</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="data-preparation.html"><a href="data-preparation.html#recipe"><i class="fa fa-check"></i><b>12.1</b> recipe()</a></li>
-<li class="chapter" data-level="12.2" data-path="data-preparation.html"><a href="data-preparation.html#helper-functions"><i class="fa fa-check"></i><b>12.2</b> Helper functions</a></li>
-<li class="chapter" data-level="12.3" data-path="data-preparation.html"><a href="data-preparation.html#step_novel"><i class="fa fa-check"></i><b>12.3</b> step_novel()</a></li>
-<li class="chapter" data-level="12.4" data-path="data-preparation.html"><a href="data-preparation.html#step_dummy"><i class="fa fa-check"></i><b>12.4</b> step_dummy()</a></li>
-<li class="chapter" data-level="12.5" data-path="data-preparation.html"><a href="data-preparation.html#step_zv"><i class="fa fa-check"></i><b>12.5</b> step_zv()</a></li>
-<li class="chapter" data-level="12.6" data-path="data-preparation.html"><a href="data-preparation.html#step_normalize"><i class="fa fa-check"></i><b>12.6</b> step_normalize()</a></li>
+<li class="chapter" data-level="11.1" data-path="data-preparation.html"><a href="data-preparation.html#recipe"><i class="fa fa-check"></i><b>11.1</b> recipe()</a></li>
+<li class="chapter" data-level="11.2" data-path="data-preparation.html"><a href="data-preparation.html#helper-functions"><i class="fa fa-check"></i><b>11.2</b> Helper functions</a></li>
+<li class="chapter" data-level="11.3" data-path="data-preparation.html"><a href="data-preparation.html#step_novel"><i class="fa fa-check"></i><b>11.3</b> step_novel()</a></li>
+<li class="chapter" data-level="11.4" data-path="data-preparation.html"><a href="data-preparation.html#step_dummy"><i class="fa fa-check"></i><b>11.4</b> step_dummy()</a></li>
+<li class="chapter" data-level="11.5" data-path="data-preparation.html"><a href="data-preparation.html#step_zv"><i class="fa fa-check"></i><b>11.5</b> step_zv()</a></li>
+<li class="chapter" data-level="11.6" data-path="data-preparation.html"><a href="data-preparation.html#step_normalize"><i class="fa fa-check"></i><b>11.6</b> step_normalize()</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="model-building-2.html"><a href="model-building-2.html"><i class="fa fa-check"></i><b>13</b> Model building</a>
+<li class="chapter" data-level="12" data-path="model-building-2.html"><a href="model-building-2.html"><i class="fa fa-check"></i><b>12</b> Model building</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="model-building-2.html"><a href="model-building-2.html#specify-model"><i class="fa fa-check"></i><b>13.1</b> Specify model</a></li>
-<li class="chapter" data-level="13.2" data-path="model-building-2.html"><a href="model-building-2.html#create-workflow"><i class="fa fa-check"></i><b>13.2</b> Create workflow</a></li>
-<li class="chapter" data-level="13.3" data-path="model-building-2.html"><a href="model-building-2.html#evaluate-model"><i class="fa fa-check"></i><b>13.3</b> Evaluate model</a></li>
+<li class="chapter" data-level="12.1" data-path="model-building-2.html"><a href="model-building-2.html#specify-model"><i class="fa fa-check"></i><b>12.1</b> Specify model</a></li>
+<li class="chapter" data-level="12.2" data-path="model-building-2.html"><a href="model-building-2.html#create-workflow"><i class="fa fa-check"></i><b>12.2</b> Create workflow</a></li>
+<li class="chapter" data-level="12.3" data-path="model-building-2.html"><a href="model-building-2.html#evaluate-model"><i class="fa fa-check"></i><b>12.3</b> Evaluate model</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="train-model.html"><a href="train-model.html"><i class="fa fa-check"></i><b>14</b> Train model</a></li>
-<li class="chapter" data-level="15" data-path="evaluate-model-1.html"><a href="evaluate-model-1.html"><i class="fa fa-check"></i><b>15</b> Evaluate model</a></li>
+<li class="chapter" data-level="13" data-path="train-model.html"><a href="train-model.html"><i class="fa fa-check"></i><b>13</b> Train model</a></li>
+<li class="chapter" data-level="14" data-path="evaluate-model-1.html"><a href="evaluate-model-1.html"><i class="fa fa-check"></i><b>14</b> Evaluate model</a></li>
 <li class="part"><span><b>IV WORKFLOWS &amp; MODELS</b></span></li>
-<li class="chapter" data-level="16" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>16</b> Data preparation</a>
+<li class="chapter" data-level="15" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>15</b> Data preparation</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>16.1</b> Data overview</a></li>
+<li class="chapter" data-level="15.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>15.1</b> Data overview</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="data-splitting-4.html"><a href="data-splitting-4.html"><i class="fa fa-check"></i><b>17</b> Data splitting</a></li>
-<li class="chapter" data-level="18" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>18</b> Create recipe and roles</a>
+<li class="chapter" data-level="16" data-path="data-splitting-3.html"><a href="data-splitting-3.html"><i class="fa fa-check"></i><b>16</b> Data splitting</a></li>
+<li class="chapter" data-level="17" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>17</b> Create recipe and roles</a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>18.1</b> Create features</a>
+<li class="chapter" data-level="17.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>17.1</b> Create features</a>
 <ul>
-<li class="chapter" data-level="18.1.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#date"><i class="fa fa-check"></i><b>18.1.1</b> Date</a></li>
-<li class="chapter" data-level="18.1.2" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#dummy-variables"><i class="fa fa-check"></i><b>18.1.2</b> Dummy variables</a></li>
-<li class="chapter" data-level="18.1.3" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#zero-variance"><i class="fa fa-check"></i><b>18.1.3</b> Zero variance</a></li>
-<li class="chapter" data-level="18.1.4" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#correlations"><i class="fa fa-check"></i><b>18.1.4</b> Correlations</a></li>
+<li class="chapter" data-level="17.1.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#date"><i class="fa fa-check"></i><b>17.1.1</b> Date</a></li>
+<li class="chapter" data-level="17.1.2" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#dummy-variables"><i class="fa fa-check"></i><b>17.1.2</b> Dummy variables</a></li>
+<li class="chapter" data-level="17.1.3" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#zero-variance"><i class="fa fa-check"></i><b>17.1.3</b> Zero variance</a></li>
+<li class="chapter" data-level="17.1.4" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#correlations"><i class="fa fa-check"></i><b>17.1.4</b> Correlations</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="model-building-3.html"><a href="model-building-3.html"><i class="fa fa-check"></i><b>19</b> Model building</a>
+<li class="chapter" data-level="18" data-path="model-building-3.html"><a href="model-building-3.html"><i class="fa fa-check"></i><b>18</b> Model building</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="model-building-3.html"><a href="model-building-3.html#logistic-regression"><i class="fa fa-check"></i><b>19.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="19.2" data-path="model-building-3.html"><a href="model-building-3.html#decision-tree"><i class="fa fa-check"></i><b>19.2</b> Decision tree</a></li>
-<li class="chapter" data-level="19.3" data-path="model-building-3.html"><a href="model-building-3.html#random-forest"><i class="fa fa-check"></i><b>19.3</b> Random forest</a></li>
-<li class="chapter" data-level="19.4" data-path="model-building-3.html"><a href="model-building-3.html#boosted-tree-xgboost"><i class="fa fa-check"></i><b>19.4</b> Boosted tree (XGBoost)</a></li>
+<li class="chapter" data-level="18.1" data-path="model-building-3.html"><a href="model-building-3.html#logistic-regression"><i class="fa fa-check"></i><b>18.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="18.2" data-path="model-building-3.html"><a href="model-building-3.html#decision-tree"><i class="fa fa-check"></i><b>18.2</b> Decision tree</a></li>
+<li class="chapter" data-level="18.3" data-path="model-building-3.html"><a href="model-building-3.html#random-forest"><i class="fa fa-check"></i><b>18.3</b> Random forest</a></li>
+<li class="chapter" data-level="18.4" data-path="model-building-3.html"><a href="model-building-3.html#boosted-tree-xgboost"><i class="fa fa-check"></i><b>18.4</b> Boosted tree (XGBoost)</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="recipe-and-models.html"><a href="recipe-and-models.html"><i class="fa fa-check"></i><b>20</b> Recipe and Models</a>
+<li class="chapter" data-level="19" data-path="recipe-and-models.html"><a href="recipe-and-models.html"><i class="fa fa-check"></i><b>19</b> Recipe and Models</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#fit-models-with-workflows"><i class="fa fa-check"></i><b>20.1</b> Fit models with workflows</a>
+<li class="chapter" data-level="19.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#fit-models-with-workflows"><i class="fa fa-check"></i><b>19.1</b> Fit models with workflows</a>
 <ul>
-<li class="chapter" data-level="20.1.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-1"><i class="fa fa-check"></i><b>20.1.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="20.1.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-1"><i class="fa fa-check"></i><b>20.1.2</b> Decision tree</a></li>
-<li class="chapter" data-level="20.1.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-1"><i class="fa fa-check"></i><b>20.1.3</b> Random forest</a></li>
-<li class="chapter" data-level="20.1.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xgboost"><i class="fa fa-check"></i><b>20.1.4</b> XGBoost</a></li>
+<li class="chapter" data-level="19.1.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-1"><i class="fa fa-check"></i><b>19.1.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="19.1.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-1"><i class="fa fa-check"></i><b>19.1.2</b> Decision tree</a></li>
+<li class="chapter" data-level="19.1.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-1"><i class="fa fa-check"></i><b>19.1.3</b> Random forest</a></li>
+<li class="chapter" data-level="19.1.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xgboost"><i class="fa fa-check"></i><b>19.1.4</b> XGBoost</a></li>
 </ul></li>
-<li class="chapter" data-level="20.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#train-models"><i class="fa fa-check"></i><b>20.2</b> Train models</a>
+<li class="chapter" data-level="19.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#train-models"><i class="fa fa-check"></i><b>19.2</b> Train models</a>
 <ul>
-<li class="chapter" data-level="20.2.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-2"><i class="fa fa-check"></i><b>20.2.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="20.2.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-2"><i class="fa fa-check"></i><b>20.2.2</b> Decision tree</a></li>
-<li class="chapter" data-level="20.2.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-2"><i class="fa fa-check"></i><b>20.2.3</b> Random forest</a></li>
-<li class="chapter" data-level="20.2.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost"><i class="fa fa-check"></i><b>20.2.4</b> XG Boost</a></li>
+<li class="chapter" data-level="19.2.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-2"><i class="fa fa-check"></i><b>19.2.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="19.2.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-2"><i class="fa fa-check"></i><b>19.2.2</b> Decision tree</a></li>
+<li class="chapter" data-level="19.2.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-2"><i class="fa fa-check"></i><b>19.2.3</b> Random forest</a></li>
+<li class="chapter" data-level="19.2.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost"><i class="fa fa-check"></i><b>19.2.4</b> XG Boost</a></li>
 </ul></li>
-<li class="chapter" data-level="20.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#model-recipe-objects"><i class="fa fa-check"></i><b>20.3</b> Model recipe objects</a>
+<li class="chapter" data-level="19.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#model-recipe-objects"><i class="fa fa-check"></i><b>19.3</b> Model recipe objects</a>
 <ul>
-<li class="chapter" data-level="20.3.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-3"><i class="fa fa-check"></i><b>20.3.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="20.3.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-3"><i class="fa fa-check"></i><b>20.3.2</b> Decision tree</a></li>
-<li class="chapter" data-level="20.3.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-3"><i class="fa fa-check"></i><b>20.3.3</b> Random forest</a></li>
-<li class="chapter" data-level="20.3.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost-1"><i class="fa fa-check"></i><b>20.3.4</b> XG Boost</a></li>
+<li class="chapter" data-level="19.3.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-3"><i class="fa fa-check"></i><b>19.3.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="19.3.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-3"><i class="fa fa-check"></i><b>19.3.2</b> Decision tree</a></li>
+<li class="chapter" data-level="19.3.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-3"><i class="fa fa-check"></i><b>19.3.3</b> Random forest</a></li>
+<li class="chapter" data-level="19.3.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost-1"><i class="fa fa-check"></i><b>19.3.4</b> XG Boost</a></li>
 </ul></li>
-<li class="chapter" data-level="20.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#summary"><i class="fa fa-check"></i><b>20.4</b> Summary</a></li>
+<li class="chapter" data-level="19.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#summary"><i class="fa fa-check"></i><b>19.4</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>21</b> Prediction</a>
+<li class="chapter" data-level="20" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>20</b> Prediction</a>
 <ul>
-<li class="chapter" data-level="21.1" data-path="prediction.html"><a href="prediction.html#logistic-regression-4"><i class="fa fa-check"></i><b>21.1</b> Logistic regression</a>
+<li class="chapter" data-level="20.1" data-path="prediction.html"><a href="prediction.html#logistic-regression-4"><i class="fa fa-check"></i><b>20.1</b> Logistic regression</a>
 <ul>
-<li class="chapter" data-level="21.1.1" data-path="prediction.html"><a href="prediction.html#roc-curve"><i class="fa fa-check"></i><b>21.1.1</b> ROC curve</a></li>
-<li class="chapter" data-level="21.1.2" data-path="prediction.html"><a href="prediction.html#auc"><i class="fa fa-check"></i><b>21.1.2</b> AUC</a></li>
-<li class="chapter" data-level="21.1.3" data-path="prediction.html"><a href="prediction.html#accuracy"><i class="fa fa-check"></i><b>21.1.3</b> Accuracy</a></li>
-<li class="chapter" data-level="21.1.4" data-path="prediction.html"><a href="prediction.html#recall"><i class="fa fa-check"></i><b>21.1.4</b> Recall</a></li>
-<li class="chapter" data-level="21.1.5" data-path="prediction.html"><a href="prediction.html#precision"><i class="fa fa-check"></i><b>21.1.5</b> Precision</a></li>
+<li class="chapter" data-level="20.1.1" data-path="prediction.html"><a href="prediction.html#roc-curve"><i class="fa fa-check"></i><b>20.1.1</b> ROC curve</a></li>
+<li class="chapter" data-level="20.1.2" data-path="prediction.html"><a href="prediction.html#auc"><i class="fa fa-check"></i><b>20.1.2</b> AUC</a></li>
+<li class="chapter" data-level="20.1.3" data-path="prediction.html"><a href="prediction.html#accuracy"><i class="fa fa-check"></i><b>20.1.3</b> Accuracy</a></li>
+<li class="chapter" data-level="20.1.4" data-path="prediction.html"><a href="prediction.html#recall"><i class="fa fa-check"></i><b>20.1.4</b> Recall</a></li>
+<li class="chapter" data-level="20.1.5" data-path="prediction.html"><a href="prediction.html#precision"><i class="fa fa-check"></i><b>20.1.5</b> Precision</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -283,8 +275,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="recipe-and-models" class="section level1" number="20">
-<h1><span class="header-section-number">Chapter 20</span> Recipe and Models</h1>
+<div id="recipe-and-models" class="section level1" number="19">
+<h1><span class="header-section-number">Chapter 19</span> Recipe and Models</h1>
 <p>We will want to use our recipe across several steps as we train and test our models. We will:</p>
 <ol style="list-style-type: decimal">
 <li><p>Process the recipe using the training set: This involves any estimation or calculations based on the training set. For our recipe, the training set will be used to determine which predictors should be converted to dummy variables and which predictors will have zero-variance in the training set, and should be slated for removal.</p></li>
@@ -292,17 +284,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Apply the recipe to the test set: We create the final predictor set on the test set. Nothing is recomputed and no information from the test set is used here; the dummy variable and zero-variance results from the training set are applied to the test set.</p></li>
 </ol>
 <p>To simplify this process, we can use a <em>model workflow</em>, which pairs a model and recipe together. This is a straightforward approach because different recipes are often needed for different models, so when a model and recipe are bundled, it becomes easier to train and test workflows. We’ll use the <code>workflow</code> package from tidymodels to bundle our parsnip model (lr_mod etc.) with our recipe (flights_rec).</p>
-<div id="fit-models-with-workflows" class="section level2" number="20.1">
-<h2><span class="header-section-number">20.1</span> Fit models with workflows</h2>
+<div id="fit-models-with-workflows" class="section level2" number="19.1">
+<h2><span class="header-section-number">19.1</span> Fit models with workflows</h2>
 <p>To combine the data preparation with the model building, we use the package <a href="https://workflows.tidymodels.org">workflows</a>. A workflow is an object that can bundle together your pre-processing, modeling, and post-processing requests.</p>
-<div id="logistic-regression-1" class="section level3" number="20.1.1">
-<h3><span class="header-section-number">20.1.1</span> Logistic regression</h3>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="recipe-and-models.html#cb96-1" aria-hidden="true" tabindex="-1"></a>flights_wflow_lr_mod <span class="ot">&lt;-</span> </span>
-<span id="cb96-2"><a href="recipe-and-models.html#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb96-3"><a href="recipe-and-models.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(lr_mod) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-4"><a href="recipe-and-models.html#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(flights_rec)</span>
-<span id="cb96-5"><a href="recipe-and-models.html#cb96-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-6"><a href="recipe-and-models.html#cb96-6" aria-hidden="true" tabindex="-1"></a>flights_wflow_lr_mod</span></code></pre></div>
+<div id="logistic-regression-1" class="section level3" number="19.1.1">
+<h3><span class="header-section-number">19.1.1</span> Logistic regression</h3>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="recipe-and-models.html#cb90-1" aria-hidden="true" tabindex="-1"></a>flights_wflow_lr_mod <span class="ot">&lt;-</span> </span>
+<span id="cb90-2"><a href="recipe-and-models.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb90-3"><a href="recipe-and-models.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(lr_mod) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-4"><a href="recipe-and-models.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(flights_rec)</span>
+<span id="cb90-5"><a href="recipe-and-models.html#cb90-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-6"><a href="recipe-and-models.html#cb90-6" aria-hidden="true" tabindex="-1"></a>flights_wflow_lr_mod</span></code></pre></div>
 <pre><code>## ══ Workflow ════════════════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: logistic_reg()
@@ -322,14 +314,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Computational engine: glm</code></pre>
 </div>
-<div id="decision-tree-1" class="section level3" number="20.1.2">
-<h3><span class="header-section-number">20.1.2</span> Decision tree</h3>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="recipe-and-models.html#cb98-1" aria-hidden="true" tabindex="-1"></a>flights_wflow_dt_mod <span class="ot">&lt;-</span> </span>
-<span id="cb98-2"><a href="recipe-and-models.html#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb98-3"><a href="recipe-and-models.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(dt_mod) <span class="sc">%&gt;%</span> </span>
-<span id="cb98-4"><a href="recipe-and-models.html#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(flights_rec)</span>
-<span id="cb98-5"><a href="recipe-and-models.html#cb98-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-6"><a href="recipe-and-models.html#cb98-6" aria-hidden="true" tabindex="-1"></a>flights_wflow_dt_mod</span></code></pre></div>
+<div id="decision-tree-1" class="section level3" number="19.1.2">
+<h3><span class="header-section-number">19.1.2</span> Decision tree</h3>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="recipe-and-models.html#cb92-1" aria-hidden="true" tabindex="-1"></a>flights_wflow_dt_mod <span class="ot">&lt;-</span> </span>
+<span id="cb92-2"><a href="recipe-and-models.html#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb92-3"><a href="recipe-and-models.html#cb92-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(dt_mod) <span class="sc">%&gt;%</span> </span>
+<span id="cb92-4"><a href="recipe-and-models.html#cb92-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(flights_rec)</span>
+<span id="cb92-5"><a href="recipe-and-models.html#cb92-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-6"><a href="recipe-and-models.html#cb92-6" aria-hidden="true" tabindex="-1"></a>flights_wflow_dt_mod</span></code></pre></div>
 <pre><code>## ══ Workflow ════════════════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: decision_tree()
@@ -349,14 +341,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Computational engine: C5.0</code></pre>
 </div>
-<div id="random-forest-1" class="section level3" number="20.1.3">
-<h3><span class="header-section-number">20.1.3</span> Random forest</h3>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="recipe-and-models.html#cb100-1" aria-hidden="true" tabindex="-1"></a>flights_wflow_rf_mod <span class="ot">&lt;-</span> </span>
-<span id="cb100-2"><a href="recipe-and-models.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb100-3"><a href="recipe-and-models.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_mod) <span class="sc">%&gt;%</span> </span>
-<span id="cb100-4"><a href="recipe-and-models.html#cb100-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(flights_rec)</span>
-<span id="cb100-5"><a href="recipe-and-models.html#cb100-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-6"><a href="recipe-and-models.html#cb100-6" aria-hidden="true" tabindex="-1"></a>flights_wflow_rf_mod</span></code></pre></div>
+<div id="random-forest-1" class="section level3" number="19.1.3">
+<h3><span class="header-section-number">19.1.3</span> Random forest</h3>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="recipe-and-models.html#cb94-1" aria-hidden="true" tabindex="-1"></a>flights_wflow_rf_mod <span class="ot">&lt;-</span> </span>
+<span id="cb94-2"><a href="recipe-and-models.html#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb94-3"><a href="recipe-and-models.html#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_mod) <span class="sc">%&gt;%</span> </span>
+<span id="cb94-4"><a href="recipe-and-models.html#cb94-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(flights_rec)</span>
+<span id="cb94-5"><a href="recipe-and-models.html#cb94-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-6"><a href="recipe-and-models.html#cb94-6" aria-hidden="true" tabindex="-1"></a>flights_wflow_rf_mod</span></code></pre></div>
 <pre><code>## ══ Workflow ════════════════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: rand_forest()
@@ -376,14 +368,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Computational engine: ranger</code></pre>
 </div>
-<div id="xgboost" class="section level3" number="20.1.4">
-<h3><span class="header-section-number">20.1.4</span> XGBoost</h3>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="recipe-and-models.html#cb102-1" aria-hidden="true" tabindex="-1"></a>flights_wflow_xgb_mod <span class="ot">&lt;-</span> </span>
-<span id="cb102-2"><a href="recipe-and-models.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb102-3"><a href="recipe-and-models.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(xgb_mod) <span class="sc">%&gt;%</span> </span>
-<span id="cb102-4"><a href="recipe-and-models.html#cb102-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(flights_rec)</span>
-<span id="cb102-5"><a href="recipe-and-models.html#cb102-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-6"><a href="recipe-and-models.html#cb102-6" aria-hidden="true" tabindex="-1"></a>flights_wflow_xgb_mod</span></code></pre></div>
+<div id="xgboost" class="section level3" number="19.1.4">
+<h3><span class="header-section-number">19.1.4</span> XGBoost</h3>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="recipe-and-models.html#cb96-1" aria-hidden="true" tabindex="-1"></a>flights_wflow_xgb_mod <span class="ot">&lt;-</span> </span>
+<span id="cb96-2"><a href="recipe-and-models.html#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb96-3"><a href="recipe-and-models.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(xgb_mod) <span class="sc">%&gt;%</span> </span>
+<span id="cb96-4"><a href="recipe-and-models.html#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(flights_rec)</span>
+<span id="cb96-5"><a href="recipe-and-models.html#cb96-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-6"><a href="recipe-and-models.html#cb96-6" aria-hidden="true" tabindex="-1"></a>flights_wflow_xgb_mod</span></code></pre></div>
 <pre><code>## ══ Workflow ════════════════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: boost_tree()
@@ -404,16 +396,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Computational engine: xgboost</code></pre>
 </div>
 </div>
-<div id="train-models" class="section level2" number="20.2">
-<h2><span class="header-section-number">20.2</span> Train models</h2>
+<div id="train-models" class="section level2" number="19.2">
+<h2><span class="header-section-number">19.2</span> Train models</h2>
 <p>Now, there is a single function that can be used to prepare the recipe and train the models from the resulting predictors.</p>
-<div id="logistic-regression-2" class="section level3" number="20.2.1">
-<h3><span class="header-section-number">20.2.1</span> Logistic regression</h3>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="recipe-and-models.html#cb104-1" aria-hidden="true" tabindex="-1"></a>flights_fit_lr_mode <span class="ot">&lt;-</span> </span>
-<span id="cb104-2"><a href="recipe-and-models.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  flights_wflow_lr_mod <span class="sc">%&gt;%</span> </span>
-<span id="cb104-3"><a href="recipe-and-models.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
-<span id="cb104-4"><a href="recipe-and-models.html#cb104-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-5"><a href="recipe-and-models.html#cb104-5" aria-hidden="true" tabindex="-1"></a>flights_fit_lr_mode</span></code></pre></div>
+<div id="logistic-regression-2" class="section level3" number="19.2.1">
+<h3><span class="header-section-number">19.2.1</span> Logistic regression</h3>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="recipe-and-models.html#cb98-1" aria-hidden="true" tabindex="-1"></a>flights_fit_lr_mode <span class="ot">&lt;-</span> </span>
+<span id="cb98-2"><a href="recipe-and-models.html#cb98-2" aria-hidden="true" tabindex="-1"></a>  flights_wflow_lr_mod <span class="sc">%&gt;%</span> </span>
+<span id="cb98-3"><a href="recipe-and-models.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb98-4"><a href="recipe-and-models.html#cb98-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-5"><a href="recipe-and-models.html#cb98-5" aria-hidden="true" tabindex="-1"></a>flights_fit_lr_mode</span></code></pre></div>
 <pre><code>## ══ Workflow [trained] ══════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: logistic_reg()
@@ -483,13 +475,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ...
 ## and 106 more lines.</code></pre>
 </div>
-<div id="decision-tree-2" class="section level3" number="20.2.2">
-<h3><span class="header-section-number">20.2.2</span> Decision tree</h3>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="recipe-and-models.html#cb106-1" aria-hidden="true" tabindex="-1"></a>flights_fit_dt_mode <span class="ot">&lt;-</span> </span>
-<span id="cb106-2"><a href="recipe-and-models.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  flights_wflow_dt_mod <span class="sc">%&gt;%</span> </span>
-<span id="cb106-3"><a href="recipe-and-models.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
-<span id="cb106-4"><a href="recipe-and-models.html#cb106-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb106-5"><a href="recipe-and-models.html#cb106-5" aria-hidden="true" tabindex="-1"></a>flights_fit_dt_mode</span></code></pre></div>
+<div id="decision-tree-2" class="section level3" number="19.2.2">
+<h3><span class="header-section-number">19.2.2</span> Decision tree</h3>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="recipe-and-models.html#cb100-1" aria-hidden="true" tabindex="-1"></a>flights_fit_dt_mode <span class="ot">&lt;-</span> </span>
+<span id="cb100-2"><a href="recipe-and-models.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  flights_wflow_dt_mod <span class="sc">%&gt;%</span> </span>
+<span id="cb100-3"><a href="recipe-and-models.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb100-4"><a href="recipe-and-models.html#cb100-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-5"><a href="recipe-and-models.html#cb100-5" aria-hidden="true" tabindex="-1"></a>flights_fit_dt_mode</span></code></pre></div>
 <pre><code>## ══ Workflow [trained] ══════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: decision_tree()
@@ -518,13 +510,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Non-standard options: attempt to group attributes</code></pre>
 </div>
-<div id="random-forest-2" class="section level3" number="20.2.3">
-<h3><span class="header-section-number">20.2.3</span> Random forest</h3>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="recipe-and-models.html#cb108-1" aria-hidden="true" tabindex="-1"></a>flights_fit_rf_mode <span class="ot">&lt;-</span> </span>
-<span id="cb108-2"><a href="recipe-and-models.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  flights_wflow_rf_mod <span class="sc">%&gt;%</span> </span>
-<span id="cb108-3"><a href="recipe-and-models.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
-<span id="cb108-4"><a href="recipe-and-models.html#cb108-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-5"><a href="recipe-and-models.html#cb108-5" aria-hidden="true" tabindex="-1"></a>flights_fit_rf_mode</span></code></pre></div>
+<div id="random-forest-2" class="section level3" number="19.2.3">
+<h3><span class="header-section-number">19.2.3</span> Random forest</h3>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="recipe-and-models.html#cb102-1" aria-hidden="true" tabindex="-1"></a>flights_fit_rf_mode <span class="ot">&lt;-</span> </span>
+<span id="cb102-2"><a href="recipe-and-models.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  flights_wflow_rf_mod <span class="sc">%&gt;%</span> </span>
+<span id="cb102-3"><a href="recipe-and-models.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb102-4"><a href="recipe-and-models.html#cb102-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-5"><a href="recipe-and-models.html#cb102-5" aria-hidden="true" tabindex="-1"></a>flights_fit_rf_mode</span></code></pre></div>
 <pre><code>## ══ Workflow [trained] ══════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: rand_forest()
@@ -555,13 +547,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Splitrule:                        gini 
 ## OOB prediction error (Brier s.):  0.1151285</code></pre>
 </div>
-<div id="xg-boost" class="section level3" number="20.2.4">
-<h3><span class="header-section-number">20.2.4</span> XG Boost</h3>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="recipe-and-models.html#cb110-1" aria-hidden="true" tabindex="-1"></a>flights_fit_xgb_mode <span class="ot">&lt;-</span> </span>
-<span id="cb110-2"><a href="recipe-and-models.html#cb110-2" aria-hidden="true" tabindex="-1"></a>  flights_wflow_xgb_mod <span class="sc">%&gt;%</span> </span>
-<span id="cb110-3"><a href="recipe-and-models.html#cb110-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
-<span id="cb110-4"><a href="recipe-and-models.html#cb110-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-5"><a href="recipe-and-models.html#cb110-5" aria-hidden="true" tabindex="-1"></a>flights_fit_xgb_mode</span></code></pre></div>
+<div id="xg-boost" class="section level3" number="19.2.4">
+<h3><span class="header-section-number">19.2.4</span> XG Boost</h3>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="recipe-and-models.html#cb104-1" aria-hidden="true" tabindex="-1"></a>flights_fit_xgb_mode <span class="ot">&lt;-</span> </span>
+<span id="cb104-2"><a href="recipe-and-models.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  flights_wflow_xgb_mod <span class="sc">%&gt;%</span> </span>
+<span id="cb104-3"><a href="recipe-and-models.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb104-4"><a href="recipe-and-models.html#cb104-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-5"><a href="recipe-and-models.html#cb104-5" aria-hidden="true" tabindex="-1"></a>flights_fit_xgb_mode</span></code></pre></div>
 <pre><code>## ══ Workflow [trained] ══════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: boost_tree()
@@ -602,15 +594,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       15       0.128267</code></pre>
 </div>
 </div>
-<div id="model-recipe-objects" class="section level2" number="20.3">
-<h2><span class="header-section-number">20.3</span> Model recipe objects</h2>
+<div id="model-recipe-objects" class="section level2" number="19.3">
+<h2><span class="header-section-number">19.3</span> Model recipe objects</h2>
 <p>The objects above have the finalized recipe and fitted model objects inside. You may want to extract the model or recipe objects from the workflow. To do this, you can use the helper functions <code>pull_workflow_fit()</code> and <code>pull_workflow_prepped_recipe()</code>.</p>
 <p>For example, here we pull the fitted model object then use the <code>broom::tidy()</code> function to get a tidy tibble of the Logisitc Regression model coefficients.</p>
-<div id="logistic-regression-3" class="section level3" number="20.3.1">
-<h3><span class="header-section-number">20.3.1</span> Logistic regression</h3>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="recipe-and-models.html#cb112-1" aria-hidden="true" tabindex="-1"></a>flights_fit_lr_mode <span class="sc">%&gt;%</span> </span>
-<span id="cb112-2"><a href="recipe-and-models.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_fit</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb112-3"><a href="recipe-and-models.html#cb112-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
+<div id="logistic-regression-3" class="section level3" number="19.3.1">
+<h3><span class="header-section-number">19.3.1</span> Logistic regression</h3>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="recipe-and-models.html#cb106-1" aria-hidden="true" tabindex="-1"></a>flights_fit_lr_mode <span class="sc">%&gt;%</span> </span>
+<span id="cb106-2"><a href="recipe-and-models.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_fit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb106-3"><a href="recipe-and-models.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 148 x 5
 ##    term                         estimate   std.error statistic  p.value
 ##    &lt;chr&gt;                           &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -626,10 +618,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 date_USInaugurationDay        0.450     1.06         0.425  6.71e- 1
 ## # … with 138 more rows</code></pre>
 </div>
-<div id="decision-tree-3" class="section level3" number="20.3.2">
-<h3><span class="header-section-number">20.3.2</span> Decision tree</h3>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="recipe-and-models.html#cb114-1" aria-hidden="true" tabindex="-1"></a>flights_fit_xgb_mode <span class="sc">%&gt;%</span> </span>
-<span id="cb114-2"><a href="recipe-and-models.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_prepped_recipe</span>()</span></code></pre></div>
+<div id="decision-tree-3" class="section level3" number="19.3.2">
+<h3><span class="header-section-number">19.3.2</span> Decision tree</h3>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="recipe-and-models.html#cb108-1" aria-hidden="true" tabindex="-1"></a>flights_fit_xgb_mode <span class="sc">%&gt;%</span> </span>
+<span id="cb108-2"><a href="recipe-and-models.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_prepped_recipe</span>()</span></code></pre></div>
 <pre><code>## Data Recipe
 ## 
 ## Inputs:
@@ -650,10 +642,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Zero variance filter removed dest_ANC, dest_EYW, dest_HDN, ... [trained]
 ## Correlation filter removed distance [trained]</code></pre>
 </div>
-<div id="random-forest-3" class="section level3" number="20.3.3">
-<h3><span class="header-section-number">20.3.3</span> Random forest</h3>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="recipe-and-models.html#cb116-1" aria-hidden="true" tabindex="-1"></a>flights_fit_rf_mode <span class="sc">%&gt;%</span> </span>
-<span id="cb116-2"><a href="recipe-and-models.html#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_prepped_recipe</span>()</span></code></pre></div>
+<div id="random-forest-3" class="section level3" number="19.3.3">
+<h3><span class="header-section-number">19.3.3</span> Random forest</h3>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="recipe-and-models.html#cb110-1" aria-hidden="true" tabindex="-1"></a>flights_fit_rf_mode <span class="sc">%&gt;%</span> </span>
+<span id="cb110-2"><a href="recipe-and-models.html#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_prepped_recipe</span>()</span></code></pre></div>
 <pre><code>## Data Recipe
 ## 
 ## Inputs:
@@ -674,10 +666,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Zero variance filter removed dest_ANC, dest_EYW, dest_HDN, ... [trained]
 ## Correlation filter removed distance [trained]</code></pre>
 </div>
-<div id="xg-boost-1" class="section level3" number="20.3.4">
-<h3><span class="header-section-number">20.3.4</span> XG Boost</h3>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="recipe-and-models.html#cb118-1" aria-hidden="true" tabindex="-1"></a>flights_fit_xgb_mode <span class="sc">%&gt;%</span> </span>
-<span id="cb118-2"><a href="recipe-and-models.html#cb118-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull_workflow_prepped_recipe</span>()</span></code></pre></div>
+<div id="xg-boost-1" class="section level3" number="19.3.4">
+<h3><span class="header-section-number">19.3.4</span> XG Boost</h3>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="recipe-and-models.html#cb112-1" aria-hidden="true" tabindex="-1"></a>flights_fit_xgb_mode <span class="sc">%&gt;%</span> </span>
+<span id="cb112-2"><a href="recipe-and-models.html#cb112-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull_workflow_prepped_recipe</span>()</span></code></pre></div>
 <pre><code>## Data Recipe
 ## 
 ## Inputs:
@@ -699,8 +691,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Correlation filter removed distance [trained]</code></pre>
 </div>
 </div>
-<div id="summary" class="section level2" number="20.4">
-<h2><span class="header-section-number">20.4</span> Summary</h2>
+<div id="summary" class="section level2" number="19.4">
+<h2><span class="header-section-number">19.4</span> Summary</h2>
 <p>Our goal was to predict whether a plane arrives more than 30 minutes late. We have just:</p>
 <ol style="list-style-type: decimal">
 <li><p>Built the model (<code>lr_mod</code> etc.),</p></li>
