@@ -45,6 +45,7 @@ specify-model
 create-workflow
 evaluate-model
 last-fit-and-evaluation
+workflows
 data-preparation-1
 data-overview-1
 data-splitting-3

@@ -225,7 +225,7 @@ lm_wflow_eval%>%
 
 # Last fit and evaluation 
 
-Fit the final best model to the training set and evaluate the test set with the function [`last_fit()`](https://tune.tidymodels.org/reference/last_fit.html)
+Fit the final best model to the training set and evaluate the test set with the function [`last_fit()`](https://tune.tidymodels.org/reference/last_fit.html):
 
 
 ```{r}
