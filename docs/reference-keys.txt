@@ -3,7 +3,7 @@ fig:hist-med-income
 fig:point-long-lat
 fig:point-long-lat-a
 fig:plot-ca-prices
-tab:unnamed-chunk-45
+tab:unnamed-chunk-44
 intro
 data-understanding
 imort-data
@@ -44,8 +44,7 @@ model-building-2
 specify-model
 create-workflow
 evaluate-model
-train-model
-evaluate-model-1
+last-fit-and-evaluation
 data-preparation-1
 data-overview-1
 data-splitting-3

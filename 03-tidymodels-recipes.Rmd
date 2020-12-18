@@ -223,30 +223,17 @@ lm_wflow_eval%>%
 ```
 
 
-# Train model
+# Last fit and evaluation 
 
-Let`s fit the model with our training data: 
+Fit the final best model to the training set and evaluate the test set with the function [`last_fit()`](https://tune.tidymodels.org/reference/last_fit.html)
 
-```{r}
-
-lm_fit <- 
-  lm_wflow %>% 
-  fit(data = new_train)
-
-# Show your fitted model
-lm_fit
-
-```
-
-# Evaluate model
-
-Finally, let's use our testing data and see how we can expect our model to perform on new data.
 
 ```{r}
 
-lm_fit %>% 
- predict(new_test) %>%
- mutate(truth = new_test$median_house_value) %>%
- rmse(truth, .pred)
+last_fit_lm <- last_fit(lm_wflow, split = new_split)
+
+# Show RMSE and RSQ
+last_fit_lm %>% 
+  collect_metrics()
 
 ```

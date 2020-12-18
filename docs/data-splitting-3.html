@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 16 Data splitting | Advanced Analytics with Tidymodels in R</title>
+  <title>Chapter 15 Data splitting | Advanced Analytics with Tidymodels in R</title>
   <meta name="description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 16 Data splitting | Advanced Analytics with Tidymodels in R" />
+  <meta property="og:title" content="Chapter 15 Data splitting | Advanced Analytics with Tidymodels in R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 16 Data splitting | Advanced Analytics with Tidymodels in R" />
+  <meta name="twitter:title" content="Chapter 15 Data splitting | Advanced Analytics with Tidymodels in R" />
   
   <meta name="twitter:description" content="How to build, evaluate, compare, and tune predictive models with Tidymodels in R." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Prof. Dr. Jan Kirenz" />
 
 
-<meta name="date" content="2020-12-16" />
+<meta name="date" content="2020-12-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -193,65 +193,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.2" data-path="model-building-2.html"><a href="model-building-2.html#create-workflow"><i class="fa fa-check"></i><b>12.2</b> Create workflow</a></li>
 <li class="chapter" data-level="12.3" data-path="model-building-2.html"><a href="model-building-2.html#evaluate-model"><i class="fa fa-check"></i><b>12.3</b> Evaluate model</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="train-model.html"><a href="train-model.html"><i class="fa fa-check"></i><b>13</b> Train model</a></li>
-<li class="chapter" data-level="14" data-path="evaluate-model-1.html"><a href="evaluate-model-1.html"><i class="fa fa-check"></i><b>14</b> Evaluate model</a></li>
+<li class="chapter" data-level="13" data-path="last-fit-and-evaluation.html"><a href="last-fit-and-evaluation.html"><i class="fa fa-check"></i><b>13</b> Last fit and evaluation</a></li>
 <li class="part"><span><b>IV WORKFLOWS &amp; MODELS</b></span></li>
-<li class="chapter" data-level="15" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>15</b> Data preparation</a>
+<li class="chapter" data-level="14" data-path="data-preparation-1.html"><a href="data-preparation-1.html"><i class="fa fa-check"></i><b>14</b> Data preparation</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>15.1</b> Data overview</a></li>
+<li class="chapter" data-level="14.1" data-path="data-preparation-1.html"><a href="data-preparation-1.html#data-overview-1"><i class="fa fa-check"></i><b>14.1</b> Data overview</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="data-splitting-3.html"><a href="data-splitting-3.html"><i class="fa fa-check"></i><b>16</b> Data splitting</a></li>
-<li class="chapter" data-level="17" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>17</b> Create recipe and roles</a>
+<li class="chapter" data-level="15" data-path="data-splitting-3.html"><a href="data-splitting-3.html"><i class="fa fa-check"></i><b>15</b> Data splitting</a></li>
+<li class="chapter" data-level="16" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html"><i class="fa fa-check"></i><b>16</b> Create recipe and roles</a>
 <ul>
-<li class="chapter" data-level="17.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>17.1</b> Create features</a>
+<li class="chapter" data-level="16.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#create-features"><i class="fa fa-check"></i><b>16.1</b> Create features</a>
 <ul>
-<li class="chapter" data-level="17.1.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#date"><i class="fa fa-check"></i><b>17.1.1</b> Date</a></li>
-<li class="chapter" data-level="17.1.2" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#dummy-variables"><i class="fa fa-check"></i><b>17.1.2</b> Dummy variables</a></li>
-<li class="chapter" data-level="17.1.3" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#zero-variance"><i class="fa fa-check"></i><b>17.1.3</b> Zero variance</a></li>
-<li class="chapter" data-level="17.1.4" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#correlations"><i class="fa fa-check"></i><b>17.1.4</b> Correlations</a></li>
+<li class="chapter" data-level="16.1.1" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#date"><i class="fa fa-check"></i><b>16.1.1</b> Date</a></li>
+<li class="chapter" data-level="16.1.2" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#dummy-variables"><i class="fa fa-check"></i><b>16.1.2</b> Dummy variables</a></li>
+<li class="chapter" data-level="16.1.3" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#zero-variance"><i class="fa fa-check"></i><b>16.1.3</b> Zero variance</a></li>
+<li class="chapter" data-level="16.1.4" data-path="create-recipe-and-roles.html"><a href="create-recipe-and-roles.html#correlations"><i class="fa fa-check"></i><b>16.1.4</b> Correlations</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="model-building-3.html"><a href="model-building-3.html"><i class="fa fa-check"></i><b>18</b> Model building</a>
+<li class="chapter" data-level="17" data-path="model-building-3.html"><a href="model-building-3.html"><i class="fa fa-check"></i><b>17</b> Model building</a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="model-building-3.html"><a href="model-building-3.html#logistic-regression"><i class="fa fa-check"></i><b>18.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="18.2" data-path="model-building-3.html"><a href="model-building-3.html#decision-tree"><i class="fa fa-check"></i><b>18.2</b> Decision tree</a></li>
-<li class="chapter" data-level="18.3" data-path="model-building-3.html"><a href="model-building-3.html#random-forest"><i class="fa fa-check"></i><b>18.3</b> Random forest</a></li>
-<li class="chapter" data-level="18.4" data-path="model-building-3.html"><a href="model-building-3.html#boosted-tree-xgboost"><i class="fa fa-check"></i><b>18.4</b> Boosted tree (XGBoost)</a></li>
+<li class="chapter" data-level="17.1" data-path="model-building-3.html"><a href="model-building-3.html#logistic-regression"><i class="fa fa-check"></i><b>17.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="17.2" data-path="model-building-3.html"><a href="model-building-3.html#decision-tree"><i class="fa fa-check"></i><b>17.2</b> Decision tree</a></li>
+<li class="chapter" data-level="17.3" data-path="model-building-3.html"><a href="model-building-3.html#random-forest"><i class="fa fa-check"></i><b>17.3</b> Random forest</a></li>
+<li class="chapter" data-level="17.4" data-path="model-building-3.html"><a href="model-building-3.html#boosted-tree-xgboost"><i class="fa fa-check"></i><b>17.4</b> Boosted tree (XGBoost)</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="recipe-and-models.html"><a href="recipe-and-models.html"><i class="fa fa-check"></i><b>19</b> Recipe and Models</a>
+<li class="chapter" data-level="18" data-path="recipe-and-models.html"><a href="recipe-and-models.html"><i class="fa fa-check"></i><b>18</b> Recipe and Models</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#fit-models-with-workflows"><i class="fa fa-check"></i><b>19.1</b> Fit models with workflows</a>
+<li class="chapter" data-level="18.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#fit-models-with-workflows"><i class="fa fa-check"></i><b>18.1</b> Fit models with workflows</a>
 <ul>
-<li class="chapter" data-level="19.1.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-1"><i class="fa fa-check"></i><b>19.1.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="19.1.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-1"><i class="fa fa-check"></i><b>19.1.2</b> Decision tree</a></li>
-<li class="chapter" data-level="19.1.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-1"><i class="fa fa-check"></i><b>19.1.3</b> Random forest</a></li>
-<li class="chapter" data-level="19.1.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xgboost"><i class="fa fa-check"></i><b>19.1.4</b> XGBoost</a></li>
+<li class="chapter" data-level="18.1.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-1"><i class="fa fa-check"></i><b>18.1.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="18.1.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-1"><i class="fa fa-check"></i><b>18.1.2</b> Decision tree</a></li>
+<li class="chapter" data-level="18.1.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-1"><i class="fa fa-check"></i><b>18.1.3</b> Random forest</a></li>
+<li class="chapter" data-level="18.1.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xgboost"><i class="fa fa-check"></i><b>18.1.4</b> XGBoost</a></li>
 </ul></li>
-<li class="chapter" data-level="19.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#train-models"><i class="fa fa-check"></i><b>19.2</b> Train models</a>
+<li class="chapter" data-level="18.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#train-models"><i class="fa fa-check"></i><b>18.2</b> Train models</a>
 <ul>
-<li class="chapter" data-level="19.2.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-2"><i class="fa fa-check"></i><b>19.2.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="19.2.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-2"><i class="fa fa-check"></i><b>19.2.2</b> Decision tree</a></li>
-<li class="chapter" data-level="19.2.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-2"><i class="fa fa-check"></i><b>19.2.3</b> Random forest</a></li>
-<li class="chapter" data-level="19.2.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost"><i class="fa fa-check"></i><b>19.2.4</b> XG Boost</a></li>
+<li class="chapter" data-level="18.2.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-2"><i class="fa fa-check"></i><b>18.2.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="18.2.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-2"><i class="fa fa-check"></i><b>18.2.2</b> Decision tree</a></li>
+<li class="chapter" data-level="18.2.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-2"><i class="fa fa-check"></i><b>18.2.3</b> Random forest</a></li>
+<li class="chapter" data-level="18.2.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost"><i class="fa fa-check"></i><b>18.2.4</b> XG Boost</a></li>
 </ul></li>
-<li class="chapter" data-level="19.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#model-recipe-objects"><i class="fa fa-check"></i><b>19.3</b> Model recipe objects</a>
+<li class="chapter" data-level="18.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#model-recipe-objects"><i class="fa fa-check"></i><b>18.3</b> Model recipe objects</a>
 <ul>
-<li class="chapter" data-level="19.3.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-3"><i class="fa fa-check"></i><b>19.3.1</b> Logistic regression</a></li>
-<li class="chapter" data-level="19.3.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-3"><i class="fa fa-check"></i><b>19.3.2</b> Decision tree</a></li>
-<li class="chapter" data-level="19.3.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-3"><i class="fa fa-check"></i><b>19.3.3</b> Random forest</a></li>
-<li class="chapter" data-level="19.3.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost-1"><i class="fa fa-check"></i><b>19.3.4</b> XG Boost</a></li>
+<li class="chapter" data-level="18.3.1" data-path="recipe-and-models.html"><a href="recipe-and-models.html#logistic-regression-3"><i class="fa fa-check"></i><b>18.3.1</b> Logistic regression</a></li>
+<li class="chapter" data-level="18.3.2" data-path="recipe-and-models.html"><a href="recipe-and-models.html#decision-tree-3"><i class="fa fa-check"></i><b>18.3.2</b> Decision tree</a></li>
+<li class="chapter" data-level="18.3.3" data-path="recipe-and-models.html"><a href="recipe-and-models.html#random-forest-3"><i class="fa fa-check"></i><b>18.3.3</b> Random forest</a></li>
+<li class="chapter" data-level="18.3.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#xg-boost-1"><i class="fa fa-check"></i><b>18.3.4</b> XG Boost</a></li>
 </ul></li>
-<li class="chapter" data-level="19.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#summary"><i class="fa fa-check"></i><b>19.4</b> Summary</a></li>
+<li class="chapter" data-level="18.4" data-path="recipe-and-models.html"><a href="recipe-and-models.html#summary"><i class="fa fa-check"></i><b>18.4</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>20</b> Prediction</a>
+<li class="chapter" data-level="19" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>19</b> Prediction</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="prediction.html"><a href="prediction.html#logistic-regression-4"><i class="fa fa-check"></i><b>20.1</b> Logistic regression</a>
+<li class="chapter" data-level="19.1" data-path="prediction.html"><a href="prediction.html#logistic-regression-4"><i class="fa fa-check"></i><b>19.1</b> Logistic regression</a>
 <ul>
-<li class="chapter" data-level="20.1.1" data-path="prediction.html"><a href="prediction.html#roc-curve"><i class="fa fa-check"></i><b>20.1.1</b> ROC curve</a></li>
-<li class="chapter" data-level="20.1.2" data-path="prediction.html"><a href="prediction.html#auc"><i class="fa fa-check"></i><b>20.1.2</b> AUC</a></li>
-<li class="chapter" data-level="20.1.3" data-path="prediction.html"><a href="prediction.html#accuracy"><i class="fa fa-check"></i><b>20.1.3</b> Accuracy</a></li>
-<li class="chapter" data-level="20.1.4" data-path="prediction.html"><a href="prediction.html#recall"><i class="fa fa-check"></i><b>20.1.4</b> Recall</a></li>
-<li class="chapter" data-level="20.1.5" data-path="prediction.html"><a href="prediction.html#precision"><i class="fa fa-check"></i><b>20.1.5</b> Precision</a></li>
+<li class="chapter" data-level="19.1.1" data-path="prediction.html"><a href="prediction.html#roc-curve"><i class="fa fa-check"></i><b>19.1.1</b> ROC curve</a></li>
+<li class="chapter" data-level="19.1.2" data-path="prediction.html"><a href="prediction.html#auc"><i class="fa fa-check"></i><b>19.1.2</b> AUC</a></li>
+<li class="chapter" data-level="19.1.3" data-path="prediction.html"><a href="prediction.html#accuracy"><i class="fa fa-check"></i><b>19.1.3</b> Accuracy</a></li>
+<li class="chapter" data-level="19.1.4" data-path="prediction.html"><a href="prediction.html#recall"><i class="fa fa-check"></i><b>19.1.4</b> Recall</a></li>
+<li class="chapter" data-level="19.1.5" data-path="prediction.html"><a href="prediction.html#precision"><i class="fa fa-check"></i><b>19.1.5</b> Precision</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -275,22 +274,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-splitting-3" class="section level1" number="16">
-<h1><span class="header-section-number">Chapter 16</span> Data splitting</h1>
+<div id="data-splitting-3" class="section level1" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Data splitting</h1>
 <p>To get started, let’s split this single dataset into two: a training set and a testing set. We’ll keep most of the rows in the original dataset (subset chosen randomly) in the training set. The training data will be used to fit the model, and the testing set will be used to measure model performance.</p>
 <p>To do this, we can use the <code>rsample</code> package (included in <code>tidymodels</code>) to create an object that contains the information on how to split the data, and then two more rsample functions to create data frames for the training and testing sets:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="data-splitting-3.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fix the random numbers by setting the seed </span></span>
-<span id="cb74-2"><a href="data-splitting-3.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This enables the analysis to be reproducible </span></span>
-<span id="cb74-3"><a href="data-splitting-3.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="co"># when random numbers are used </span></span>
-<span id="cb74-4"><a href="data-splitting-3.html#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">555</span>)</span>
-<span id="cb74-5"><a href="data-splitting-3.html#cb74-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-6"><a href="data-splitting-3.html#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Put 3/4 of the data into the training set </span></span>
-<span id="cb74-7"><a href="data-splitting-3.html#cb74-7" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(flight_data, </span>
-<span id="cb74-8"><a href="data-splitting-3.html#cb74-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">prop =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">4</span>)</span>
-<span id="cb74-9"><a href="data-splitting-3.html#cb74-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-10"><a href="data-splitting-3.html#cb74-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frames for the two sets:</span></span>
-<span id="cb74-11"><a href="data-splitting-3.html#cb74-11" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
-<span id="cb74-12"><a href="data-splitting-3.html#cb74-12" aria-hidden="true" tabindex="-1"></a>test_data  <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="data-splitting-3.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fix the random numbers by setting the seed </span></span>
+<span id="cb72-2"><a href="data-splitting-3.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This enables the analysis to be reproducible </span></span>
+<span id="cb72-3"><a href="data-splitting-3.html#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="co"># when random numbers are used </span></span>
+<span id="cb72-4"><a href="data-splitting-3.html#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">555</span>)</span>
+<span id="cb72-5"><a href="data-splitting-3.html#cb72-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-6"><a href="data-splitting-3.html#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Put 3/4 of the data into the training set </span></span>
+<span id="cb72-7"><a href="data-splitting-3.html#cb72-7" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(flight_data, </span>
+<span id="cb72-8"><a href="data-splitting-3.html#cb72-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">prop =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">4</span>)</span>
+<span id="cb72-9"><a href="data-splitting-3.html#cb72-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-10"><a href="data-splitting-3.html#cb72-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frames for the two sets:</span></span>
+<span id="cb72-11"><a href="data-splitting-3.html#cb72-11" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb72-12"><a href="data-splitting-3.html#cb72-12" aria-hidden="true" tabindex="-1"></a>test_data  <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code></pre></div>
 </div>
             </section>
 
