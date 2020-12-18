@@ -223,7 +223,6 @@ lm_wflow_eval%>%
 ```
 
 
-
 # Train model
 
 Let`s fit the model with our training data: 
