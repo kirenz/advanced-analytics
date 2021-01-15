@@ -29,7 +29,9 @@ library(tidymodels)
 # for flight data:
 library(nycflights13)
 # for variable summaries:
-library(skimr)    
+library(skimr)   
+
+
 
 ```
 
@@ -340,7 +342,8 @@ Let’s use some classification algorithms to model the flight data. We start by
 
 lr_mod <- 
   logistic_reg() %>% 
-  set_engine("glm")
+  set_engine("glm") %>% 
+  set_mode("classification")
 
 ```
 
